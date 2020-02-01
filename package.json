@@ -1,8 +1,8 @@
 {
-  "name": "@ganbarodigital/<<YOUR-PACKAGE-NAME>>",
+  "name": "@ganbarodigital/ts-lib-apperror",
   "version": "0.0.1",
-  "description": "Converts human-readable UUIDs to bytes",
-  "repository": "github:ganbarodigital/<<YOUR-PACKAGE-NAME>>",
+  "description": "Structured errors for easier reporting and handling",
+  "repository": "github:ganbarodigital/ts-lib-apperror",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "scripts": {
@@ -17,7 +17,10 @@
   "contributors": [
     "Stuart Herbert <stuherbert@ganbarodigital.com> (https://ganbarodigital.com)"
   ],
-  "keywords": [],
+  "keywords": [
+    "errors",
+    "logging"
+  ],
   "files": [
     "lib/**/*",
     "CHANGELOG.md",
