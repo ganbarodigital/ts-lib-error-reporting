@@ -31,6 +31,12 @@
 // ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
+import { ErrorType } from "./ErrorType";
 
-export * from "./ErrorType";
-export * from "./isErrorType";
+/**
+ * type guard. confirms if a proposed name for an ErrorType fits
+ * our legal scheme or not.
+ */
+export function isErrorType(input: unknown): input is ErrorType {
+    return (input instanceof ErrorType);
+}

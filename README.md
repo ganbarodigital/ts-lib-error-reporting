@@ -9,6 +9,7 @@ This library offers a structured `AppError` type, based on [RFC 7807][RFC 7807].
 - [V1 API](#v1-api)
   - [ErrorTypeStruct](#errortypestruct)
   - [ErrorType](#errortype)
+  - [isErrorType()](#iserrortype)
 - [NPM Scripts](#npm-scripts)
   - [npm run clean](#npm-run-clean)
   - [npm run build](#npm-run-build)
@@ -109,6 +110,16 @@ const invalidUuidDataErrorType = ErrorType.from({
     context: packageNameFrom("@ganbarodigital/ts-lib-uuid-parser/v1"),
     name: "invalid-uuid-data-error",
 });
+```
+
+### isErrorType()
+
+```typescript
+/**
+ * type guard. confirms if a proposed name for an ErrorType fits
+ * our legal scheme or not.
+ */
+export function isErrorType(input: unknown): input is ErrorType;
 ```
 
 ## NPM Scripts

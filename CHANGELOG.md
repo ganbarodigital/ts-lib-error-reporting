@@ -25,8 +25,9 @@ The following changes have been completed, and will be included in the next tagg
 
 ### New
 
-* Added `ErrorTypeStruct`
-* Added `ErrorType`
+* Added `ErrorTypeStruct` interface
+* Added `ErrorType` value object type
+* Added `isErrorType()` type-guard
 
 ### Fixes
 

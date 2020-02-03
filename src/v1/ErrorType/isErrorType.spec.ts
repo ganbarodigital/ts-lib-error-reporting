@@ -31,6 +31,48 @@
 // ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
+import { packageNameFrom } from "@ganbarodigital/ts-lib-packagename/lib/v1";
+import { OnError } from "@ganbarodigital/ts-on-error/lib/V1";
+import { expect } from "chai";
+import { describe } from "mocha";
 
-export * from "./ErrorType";
-export * from "./isErrorType";
+import { ErrorType } from "./ErrorType";
+import { isErrorType } from "./isErrorType";
+
+describe("isErrorType()", () => {
+    it("is a type-guard for ErrorType objects", () => {
+        const onError: OnError = (reason: symbol, desc: string, extra: object): never => {
+            throw Error("ON ERROR CALLED!!");
+        }
+        const inputValue = {
+            context: packageNameFrom("@ganbarodigital/ts-lib-apperror/v1", onError),
+            name: "unit-test-failure",
+        };
+
+        const unit = ErrorType.from(inputValue);
+
+        if (isErrorType(unit)) {
+            expect(true).to.equal(true);
+        } else {
+            expect(false).to.equal(true, "isErrorType() type-guard failed");
+        }
+    });
+
+    it("rejects other objects", () => {
+        const onError: OnError = (reason: symbol, desc: string, extra: object): never => {
+            throw Error("ON ERROR CALLED!!");
+        }
+        const inputValue = {
+            context: packageNameFrom("@ganbarodigital/ts-lib-apperror/v1", onError),
+            name: "unit-test-failure",
+        };
+
+        const unit = ErrorType.from(inputValue);
+
+        if (isErrorType(inputValue)) {
+            expect(false).to.equal(true, "isErrorType() type-guard failed");
+        } else {
+            expect(true).to.equal(true);
+        }
+    });
+});
