@@ -10,7 +10,7 @@
     "lint": "tslint -p ./tsconfig.json",
     "prepublishOnly": "npm test && npm run lint",
     "prepack": "npm run build",
-    "test": "npm run clean && tsc -p ./tsconfig-test.json && jasmine-ts --config=\"src/spec/support/jasmine.json\" \"src/**/*.spec.ts\"",
+    "test": "npm run clean && tsc -p ./tsconfig-test.json && mocha -r ts-node/register \"src/**/*.spec.ts\"",
     "cover": "rimraf coverage && rimraf .nyc_output && nyc --cache=false npm run test",
     "clean": "rimraf lib"
   },
@@ -29,13 +29,14 @@
   ],
   "license": "BSD-3-Clause",
   "dependencies": {
+    "@ganbarodigital/ts-lib-packagename": "^0.1.0",
+    "@ganbarodigital/ts-lib-value-objects": "file:../ts-lib-value-objects",
     "@types/node": "^13.1.2",
     "tslint": "^5.20.1",
     "typescript": "^3.7.4"
   },
   "devDependencies": {
     "@types/chai": "^4.2.8",
-    "@types/jasmine": "^3.5.0",
     "@types/mocha": "^7.0.1",
     "chai": "^4.2.0",
     "chai-bytes": "^0.1.2",
