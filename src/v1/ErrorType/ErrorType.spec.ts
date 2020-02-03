@@ -108,4 +108,22 @@ describe("ErrorType", () => {
             expect(actualValue).to.equal(expectedValue);
         });
     });
+
+    describe(".toString()", () => {
+        it("returns the fully-qualified name of this error type", () => {
+            const onError: OnError = (reason: symbol, desc: string, extra: object): never => {
+                throw Error("ON ERROR CALLED!!");
+            };
+            const inputValue = {
+                context: packageNameFrom("@ganbarodigital/ts-lib-apperror/v1", onError),
+                name: "unit-test-failure",
+            };
+            const expectedValue = "@ganbarodigital/ts-lib-apperror/v1/unit-test-failure";
+
+            const unit = ErrorType.from(inputValue);
+            const actualValue = unit.toString();
+
+            expect(actualValue).to.equal(expectedValue);
+        });
+    });
 });
