@@ -33,4 +33,5 @@
 //
 
 export * from "./ErrorType";
+export * from "./ErrorTypeStruct";
 export * from "./isErrorType";

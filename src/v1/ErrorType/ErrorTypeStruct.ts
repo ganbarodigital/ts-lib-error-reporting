@@ -32,52 +32,12 @@
 // POSSIBILITY OF SUCH DAMAGE.
 //
 import { PackageName } from "@ganbarodigital/ts-lib-packagename/lib/v1";
-import { ValueObject } from "@ganbarodigital/ts-lib-value-objects/lib/v2";
-
-import { ErrorTypeStruct } from "./ErrorTypeStruct";
 
 /**
- * the unique ID of each type of error
- *
- * this is used in structured problem reports to tell developers:
- *
- * - which package the error was declared in
- * - which error inside that package was reported
- *
- * this is used in application error handlers to complete an RFC-7809
- * structured problem report
+ * the unique ID of each type of error, as an anonymous object structure
+ * for convenience
  */
-export class ErrorType extends ValueObject<ErrorTypeStruct> {
-    /**
-     * smart constructor
-     */
-    public static from(input: ErrorTypeStruct): ErrorType {
-        return new ErrorType(input);
-    }
-
-    /**
-     * returns the name of the package that defined this error.
-     *
-     * this may include the name of a sub-module.
-     */
-    public get context(): PackageName {
-        return this.value.context;
-    }
-
-    /**
-     * returns this error's name.
-     *
-     * error names are unique within each `this.context` only.
-     */
-    public get name(): string {
-        return this.value.name;
-    }
-
-    /**
-     * returns the fully-qualified name of this error type, suitable
-     * for putting into an RFC-7809 structured problem report
-     */
-    public toString(): string {
-        return this.value.context + "/" + this.value.name;
-    }
+export interface ErrorTypeStruct {
+    context: PackageName;
+    name: string;
 }
