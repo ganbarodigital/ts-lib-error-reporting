@@ -43,7 +43,7 @@ describe("ErrorType", () => {
         it("creates a new ErrorType", () => {
             const onError: OnError = (reason: symbol, desc: string, extra: object): never => {
                 throw Error("ON ERROR CALLED!!");
-            }
+            };
             const inputValue = {
                 context: packageNameFrom("@ganbarodigital/ts-lib-apperror/v1", onError),
                 name: "unit-test-failure",
@@ -59,7 +59,7 @@ describe("ErrorType", () => {
         it("returns the wrapped value", () => {
             const onError: OnError = (reason: symbol, desc: string, extra: object): never => {
                 throw Error("ON ERROR CALLED!!");
-            }
+            };
             const inputValue = {
                 context: packageNameFrom("@ganbarodigital/ts-lib-apperror/v1", onError),
                 name: "unit-test-failure",
@@ -77,7 +77,7 @@ describe("ErrorType", () => {
         it("is the `context` field from the wrapped value", () => {
             const onError: OnError = (reason: symbol, desc: string, extra: object): never => {
                 throw Error("ON ERROR CALLED!!");
-            }
+            };
             const inputValue = {
                 context: packageNameFrom("@ganbarodigital/ts-lib-apperror/v1", onError),
                 name: "unit-test-failure",
@@ -95,7 +95,7 @@ describe("ErrorType", () => {
         it("is the `name` field from the wrapped value", () => {
             const onError: OnError = (reason: symbol, desc: string, extra: object): never => {
                 throw Error("ON ERROR CALLED!!");
-            }
+            };
             const inputValue = {
                 context: packageNameFrom("@ganbarodigital/ts-lib-apperror/v1", onError),
                 name: "unit-test-failure",
