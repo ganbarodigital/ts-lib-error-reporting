@@ -25,6 +25,9 @@ The following changes have been completed, and will be included in the next tagg
 
 ### New
 
+* Added `ErrorTypeStruct`
+* Added `ErrorType`
+
 ### Fixes
 
 ### Dependencies

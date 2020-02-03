@@ -4,6 +4,17 @@
 
 This library offers a structured `AppError` type, based on [RFC 7807][RFC 7807]. It gives you a standard structure to use for creating Errors that are easy to report and handle.
 
+- [Introduction](#introduction)
+- [Quick Start](#quick-start)
+- [V1 API](#v1-api)
+  - [ErrorTypeStruct](#errortypestruct)
+  - [ErrorType](#errortype)
+- [NPM Scripts](#npm-scripts)
+  - [npm run clean](#npm-run-clean)
+  - [npm run build](#npm-run-build)
+  - [npm run test](#npm-run-test)
+  - [npm run cover](#npm-run-cover)
+
 ## Quick Start
 
 ```
@@ -13,14 +24,92 @@ npm install @ganbarodigital/ts-lib-apperror
 
 ```typescript
 // add this import to your Typescript code
-import { AppError, ErrorConfig } from "@ganbarodigital/ts-lib-apperror/V1"
+import { ErrorType } from "@ganbarodigital/ts-lib-apperror/lib/v1"
 ```
 
 __VS Code users:__ once you've added a single import anywhere in your project, you'll then be able to auto-import anything else that this library exports.
 
 ## V1 API
 
-TBD.
+### ErrorTypeStruct
+
+```typescript
+import { PackageName } from "@ganbarodigital/ts-lib-packagename/lib/v1";
+
+/**
+ * the unique ID of each type of error, as an anonymous object structure
+ * for convenience
+ */
+export interface ErrorTypeStruct {
+    context: PackageName;
+    name: string;
+}
+```
+
+### ErrorType
+
+```typescript
+import { PackageName } from "@ganbarodigital/ts-lib-packagename/lib/v1";
+import { ValueObject } from "@ganbarodigital/ts-lib-value-objects/lib/v2";
+
+/**
+ * the unique ID of each type of error
+ *
+ * this is used in structured problem reports to tell developers:
+ *
+ * - which package the error was declared in
+ * - which error inside that package was reported
+ *
+ * this is used in application error handlers to complete an RFC-7809
+ * structured problem report
+ */
+export class ErrorType extends ValueObject<ErrorTypeStruct> {
+    /**
+     * smart constructor
+     */
+    public static from(input: ErrorTypeStruct): ErrorType {
+        return new ErrorType(input);
+    }
+
+    /**
+     * returns the name of the package that defined this error.
+     *
+     * this may include the name of a sub-module.
+     */
+    public get context(): PackageName {
+        return this.value.context;
+    }
+
+    /**
+     * returns this error's name.
+     *
+     * error names are unique within each `this.context` only.
+     */
+    public get name(): string {
+        return this.value.name;
+    }
+
+    /**
+     * returns the fully-qualified name of this error type, suitable
+     * for putting into an RFC-7809 structured problem report
+     */
+    public toString(): string {
+        return this.value.context + "/" + this.value.name;
+    }
+}
+```
+
+For example:
+
+```typescript
+import { packageNameFrom } from "@ganbarodigital/ts-lib-packagename/lib/v1";
+import { ErrorType } from "@ganbarodigital/ts-lib-apperror/lib/v1";
+
+const invalidUuidDataErrorType = ErrorType.from({
+    context: packageNameFrom("@ganbarodigital/ts-lib-uuid-parser/v1"),
+    name: "invalid-uuid-data-error",
+});
+```
 
 ## NPM Scripts
 
