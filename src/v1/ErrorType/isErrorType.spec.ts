@@ -67,8 +67,6 @@ describe("isErrorType()", () => {
             name: "unit-test-failure",
         };
 
-        const unit = ErrorType.from(inputValue);
-
         if (isErrorType(inputValue)) {
             expect(false).to.equal(true, "isErrorType() type-guard failed");
         } else {
