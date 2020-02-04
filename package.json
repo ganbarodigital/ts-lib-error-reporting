@@ -6,11 +6,11 @@
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "scripts": {
-    "build": "npm run clean && tsc -p ./tsconfig.json",
-    "lint": "tslint -p ./tsconfig.json",
+    "build": "npm run clean && tsc",
+    "lint": "tslint -p tsconfig.json",
     "prepublishOnly": "npm test && npm run lint",
     "prepack": "npm run build",
-    "test": "npm run clean && tsc -p ./tsconfig-test.json && mocha -r ts-node/register \"src/**/*.spec.ts\"",
+    "test": "npm run clean && tsc && mocha -r ts-node/register \"src/**/*.spec.ts\"",
     "cover": "rimraf coverage && rimraf .nyc_output && nyc --cache=false npm run test",
     "clean": "rimraf lib"
   },
