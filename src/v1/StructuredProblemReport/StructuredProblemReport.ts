@@ -31,6 +31,8 @@
 // ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
+import { HttpStatusCode } from "@ganbarodigital/ts-lib-http-types/lib/v1";
+import { PackageName } from "@ganbarodigital/ts-lib-packagename/lib/v1";
 import { ValueObject } from "@ganbarodigital/ts-lib-value-objects/lib/v2";
 
 import { ErrorTable } from "../ErrorTable";
@@ -62,6 +64,67 @@ export class StructuredProblemReport<
         input: StructuredProblemReportStruct<T, N, M, E>,
     ): StructuredProblemReport<T, N, M, E> {
         return new StructuredProblemReport(input);
+    }
+
+    /**
+     * a human-readable description of what the problem is
+     *
+     * NOTE: `detail` is not a printf() format string. It will have the
+     * exact same value for each and every instance of the same reported
+     * problem.
+     */
+    get detail(): string {
+        return this.value.template.detail;
+    }
+
+    /**
+     * unique ID of this instance.
+     *
+     * if present, may be used to build a URI that is shared with the
+     * end-user.
+     */
+    get errorId(): string | null {
+        return this.value.errorId ?? null;
+    }
+
+    /**
+     * what kind of error is this?
+     *
+     * combine this with `packageName` to get a unique name for this error
+     */
+    get errorName(): N {
+        return this.value.template.errorName;
+    }
+
+    /**
+     * which package defined this error?
+     */
+    get packageName(): PackageName {
+        return this.value.template.packageName;
+    }
+
+    /**
+     * the HTTP status that best fits this kind of error
+     *
+     * NOTE that this is from the point-of-view of the code that throws
+     * the error.
+     *
+     * e.g. a library may report a `422` (validation failure),
+     * but it doesn't know where the rejected input comes from.
+     *
+     * the calling app DOES know, and it may decide to report a `500`
+     * (internal server error) back to the end-user instead
+     */
+    get status(): HttpStatusCode {
+        return this.value.template.status;
+    }
+
+    /**
+     * the StructuredProblemReportTemplate that was used to define
+     * this error
+     */
+    get template(): M {
+        return this.value.template;
     }
 
     /**

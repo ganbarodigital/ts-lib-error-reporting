@@ -133,4 +133,157 @@ describe("StructuredProblemReport", () => {
             expect(unit).to.be.instanceOf(StructuredProblemReport);
         });
     });
+
+    describe(".detail", () => {
+        it("returns the `detail` field from the underlying template", () => {
+            const inputValue: UnitErrorStructuredProblemReport = {
+                template: errorTable["unit-test-failure"],
+                extra: {
+                    publicExtra: {
+                        field1: "first field",
+                    },
+                    logsOnlyExtra: {
+                        field2: "second field",
+                    },
+                },
+            };
+            const expectedValue = inputValue.template.detail;
+
+            const unit = StructuredProblemReport.from(inputValue);
+            const actualValue = unit.detail;
+
+            expect(actualValue).to.equal(expectedValue);
+        });
+    });
+
+    describe(".errorId", () => {
+        it("returns the `errorId` field from the underlying problem report", () => {
+            const inputValue: UnitErrorStructuredProblemReport = {
+                template: errorTable["unit-test-failure"],
+                errorId: "12345",
+                extra: {
+                    publicExtra: {
+                        field1: "first field",
+                    },
+                    logsOnlyExtra: {
+                        field2: "second field",
+                    },
+                },
+            };
+            const expectedValue = inputValue.errorId;
+
+            const unit = StructuredProblemReport.from(inputValue);
+            const actualValue = unit.errorId;
+
+            expect(actualValue).to.equal(expectedValue);
+        });
+
+        it("returns null if there is the `errorId` field in the underlying problem report", () => {
+            const inputValue: UnitErrorStructuredProblemReport = {
+                template: errorTable["unit-test-failure"],
+                extra: {
+                    publicExtra: {
+                        field1: "first field",
+                    },
+                    logsOnlyExtra: {
+                        field2: "second field",
+                    },
+                },
+            };
+            const expectedValue = null;
+
+            const unit = StructuredProblemReport.from(inputValue);
+            const actualValue = unit.errorId;
+
+            expect(actualValue).to.equal(expectedValue);
+        });
+    });
+
+    describe(".errorName", () => {
+        it("returns the `errorName` field from the underlying template", () => {
+            const inputValue: UnitErrorStructuredProblemReport = {
+                template: errorTable["unit-test-failure"],
+                extra: {
+                    publicExtra: {
+                        field1: "first field",
+                    },
+                    logsOnlyExtra: {
+                        field2: "second field",
+                    },
+                },
+            };
+            const expectedValue = inputValue.template.errorName;
+
+            const unit = StructuredProblemReport.from(inputValue);
+            const actualValue = unit.errorName;
+
+            expect(actualValue).to.equal(expectedValue);
+        });
+    });
+
+    describe(".packageName", () => {
+        it("returns the `packageName` field from the underlying template", () => {
+            const inputValue: UnitErrorStructuredProblemReport = {
+                template: errorTable["unit-test-failure"],
+                extra: {
+                    publicExtra: {
+                        field1: "first field",
+                    },
+                    logsOnlyExtra: {
+                        field2: "second field",
+                    },
+                },
+            };
+            const expectedValue = inputValue.template.packageName;
+
+            const unit = StructuredProblemReport.from(inputValue);
+            const actualValue = unit.packageName;
+
+            expect(actualValue).to.equal(expectedValue);
+        });
+    });
+
+    describe(".status", () => {
+        it("returns the `status` field from the underlying template", () => {
+            const inputValue: UnitErrorStructuredProblemReport = {
+                template: errorTable["unit-test-failure"],
+                extra: {
+                    publicExtra: {
+                        field1: "first field",
+                    },
+                    logsOnlyExtra: {
+                        field2: "second field",
+                    },
+                },
+            };
+            const expectedValue = inputValue.template.status;
+
+            const unit = StructuredProblemReport.from(inputValue);
+            const actualValue = unit.status;
+
+            expect(actualValue).to.equal(expectedValue);
+        });
+    });
+
+    describe(".template", () => {
+        it("returns the underlying template", () => {
+            const inputValue: UnitErrorStructuredProblemReport = {
+                template: errorTable["unit-test-failure"],
+                extra: {
+                    publicExtra: {
+                        field1: "first field",
+                    },
+                    logsOnlyExtra: {
+                        field2: "second field",
+                    },
+                },
+            };
+            const expectedValue = inputValue.template;
+
+            const unit = StructuredProblemReport.from(inputValue);
+            const actualValue = unit.template;
+
+            expect(actualValue).to.equal(expectedValue);
+        });
+    });
 });
