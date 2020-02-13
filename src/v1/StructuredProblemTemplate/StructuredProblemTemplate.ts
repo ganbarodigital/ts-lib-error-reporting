@@ -81,4 +81,3 @@ export interface StructuredProblemTemplate<
      */
     detail: string;
 }
-
