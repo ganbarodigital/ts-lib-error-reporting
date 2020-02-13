@@ -33,7 +33,7 @@
 //
 import { ErrorTable } from "../ErrorTable";
 import { ExtraDataTemplate } from "../ExtraDataTemplate";
-import { StructuredProblemTemplateWithExtra } from "../StructuredProblemTemplate";
+import { StructuredProblemTemplateWithExtraData } from "../StructuredProblemTemplate";
 
 /**
  * the internal data captured when an error occurs
@@ -41,7 +41,7 @@ import { StructuredProblemTemplateWithExtra } from "../StructuredProblemTemplate
 interface StructuredProblemReportInstanceStruct<
     T extends ErrorTable,
     N extends keyof T,
-    M extends StructuredProblemTemplateWithExtra<T, N, E>,
+    M extends StructuredProblemTemplateWithExtraData<T, N, E>,
     E extends ExtraDataTemplate
 > {
     template: M;
@@ -58,6 +58,6 @@ interface StructuredProblemReportInstanceStruct<
 export type StructuredProblemReportStruct<
     T extends ErrorTable,
     N extends keyof T,
-    M extends StructuredProblemTemplateWithExtra<T, N, E>,
+    M extends StructuredProblemTemplateWithExtraData<T, N, E>,
     E extends ExtraDataTemplate
 > = StructuredProblemReportInstanceStruct<T, N, M, E> & E;

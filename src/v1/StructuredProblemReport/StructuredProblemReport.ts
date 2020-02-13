@@ -36,7 +36,7 @@ import { ValueObject } from "@ganbarodigital/ts-lib-value-objects/lib/v2";
 import { ErrorTable } from "../ErrorTable";
 import { ErrorType } from "../ErrorType";
 import { ExtraDataTemplate } from "../ExtraDataTemplate";
-import { StructuredProblemTemplateWithExtra } from "../StructuredProblemTemplate";
+import { StructuredProblemTemplateWithExtraData } from "../StructuredProblemTemplate";
 import { StructuredProblemReportStruct } from "./StructuredProblemReportStruct";
 
 /**
@@ -46,7 +46,7 @@ import { StructuredProblemReportStruct } from "./StructuredProblemReportStruct";
 export class StructuredProblemReport<
     T extends ErrorTable,
     N extends keyof T,
-    M extends StructuredProblemTemplateWithExtra<T, N, E>,
+    M extends StructuredProblemTemplateWithExtraData<T, N, E>,
     E extends ExtraDataTemplate
 >
     extends ValueObject<StructuredProblemReportStruct<T, N, M, E>> {
@@ -56,7 +56,7 @@ export class StructuredProblemReport<
     public static from<
         T extends ErrorTable,
         N extends keyof T,
-        M extends StructuredProblemTemplateWithExtra<T, N, E>,
+        M extends StructuredProblemTemplateWithExtraData<T, N, E>,
         E extends ExtraDataTemplate
     >(
         input: StructuredProblemReportStruct<T, N, M, E>,

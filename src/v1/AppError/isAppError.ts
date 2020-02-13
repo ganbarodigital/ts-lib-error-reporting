@@ -33,7 +33,7 @@
 //
 import { ErrorTable } from "../ErrorTable";
 import { ExtraDataTemplate } from "../ExtraDataTemplate";
-import { StructuredProblemTemplateWithExtra } from "../StructuredProblemTemplate";
+import { StructuredProblemTemplateWithExtraData } from "../StructuredProblemTemplate";
 import { AppError } from "./AppError";
 
 /**
@@ -43,7 +43,7 @@ import { AppError } from "./AppError";
 export function isAppError<
     T extends ErrorTable,
     N extends keyof T,
-    M extends StructuredProblemTemplateWithExtra<T, N, E>,
+    M extends StructuredProblemTemplateWithExtraData<T, N, E>,
     E extends ExtraDataTemplate,
 >(
     input: unknown,

@@ -81,29 +81,16 @@ export interface StructuredProblemTemplate<
      * put instance-specific details into the `extra` section
      */
     detail: string;
-
-    // /**
-    //  * use this to hold any data that helps to understand the error
-    //  * that has occurred
-    //  */
-    // extra: {
-    //     /**
-    //      * use this to hold any extra information that should be sent back
-    //      * to the end-user
-    //      *
-    //      * information in this object will also be written to the app's logs
-    //      */
-    //     publicExtra: P;
-
-    //     /**
-    //      * use this to hold any extra information that should be written to
-    //      * the app's logs, BUT NOT sent back to the end-user
-    //      */
-    //     logsOnlyExtra: L;
-    // };
 }
 
-export type StructuredProblemTemplateWithExtra<
+/**
+ * represents a StructuredProblemTemplate that also has an `extra` section
+ * defined
+ *
+ * this is used internally in the package to help the compiler enforce
+ * our types at compile-time. You don't need to use this yourself.
+ */
+export type StructuredProblemTemplateWithExtraData<
     T extends ErrorTable,
     N extends keyof T,
     E extends ExtraDataTemplate

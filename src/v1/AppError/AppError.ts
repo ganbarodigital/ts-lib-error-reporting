@@ -34,7 +34,7 @@
 import { ErrorTable } from "../ErrorTable";
 import { ExtraDataTemplate } from "../ExtraDataTemplate";
 import { StructuredProblemReport } from "../StructuredProblemReport";
-import { StructuredProblemTemplateWithExtra } from "../StructuredProblemTemplate";
+import { StructuredProblemTemplateWithExtraData } from "../StructuredProblemTemplate";
 
 /**
  * base class for throwable Javascript Errors.
@@ -45,7 +45,7 @@ import { StructuredProblemTemplateWithExtra } from "../StructuredProblemTemplate
 export class AppError<
     T extends ErrorTable,
     N extends keyof T,
-    M extends StructuredProblemTemplateWithExtra<T, N, E>,
+    M extends StructuredProblemTemplateWithExtraData<T, N, E>,
     E extends ExtraDataTemplate,
 > extends Error {
     /**
@@ -55,7 +55,7 @@ export class AppError<
     public static from<
         T extends ErrorTable,
         N extends keyof T,
-        M extends StructuredProblemTemplateWithExtra<T, N, E>,
+        M extends StructuredProblemTemplateWithExtraData<T, N, E>,
         E extends ExtraDataTemplate,
     >(
         input: StructuredProblemReport<T, N, M, E>,
