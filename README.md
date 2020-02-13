@@ -61,7 +61,7 @@ import { ValueObject } from "@ganbarodigital/ts-lib-value-objects/lib/v2";
  * - which package the error was declared in
  * - which error inside that package was reported
  *
- * this is used in application error handlers to complete an RFC-7809
+ * this is used in application error handlers to complete an RFC-7807
  * structured problem report
  */
 export class ErrorType extends ValueObject<ErrorTypeStruct> {
@@ -92,7 +92,7 @@ export class ErrorType extends ValueObject<ErrorTypeStruct> {
 
     /**
      * returns the fully-qualified name of this error type, suitable
-     * for putting into an RFC-7809 structured problem report
+     * for putting into an RFC-7807 structured problem report
      */
     public toString(): string {
         return this.value.context + "/" + this.value.name;
