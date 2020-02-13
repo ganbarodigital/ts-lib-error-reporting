@@ -35,7 +35,6 @@ import { HttpStatusCode } from "@ganbarodigital/ts-lib-http-types/lib/v1";
 import { PackageName } from "@ganbarodigital/ts-lib-packagename/lib/v1";
 
 import { ErrorTable } from "../ErrorTable";
-import { ExtraDataTemplate } from "../ExtraDataTemplate";
 
 /**
  * these go in your ErrorTable, and they define what your structured problem
@@ -83,15 +82,3 @@ export interface StructuredProblemTemplate<
     detail: string;
 }
 
-/**
- * represents a StructuredProblemTemplate that also has an `extra` section
- * defined
- *
- * this is used internally in the package to help the compiler enforce
- * our types at compile-time. You don't need to use this yourself.
- */
-export type StructuredProblemTemplateWithExtraData<
-    T extends ErrorTable,
-    N extends keyof T,
-    E extends ExtraDataTemplate
-> = StructuredProblemTemplate<T, N> & E;

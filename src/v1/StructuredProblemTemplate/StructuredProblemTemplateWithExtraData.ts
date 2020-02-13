@@ -31,6 +31,19 @@
 // ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
+import { ErrorTable } from "../ErrorTable";
+import { ExtraDataTemplate } from "../ExtraDataTemplate";
+import { StructuredProblemTemplate } from "./StructuredProblemTemplate";
 
-export * from "./StructuredProblemTemplate";
-export * from "./StructuredProblemTemplateWithExtraData";
+/**
+ * represents a StructuredProblemTemplate that also has an `extra` section
+ * defined
+ *
+ * this is used internally in the package to help the compiler enforce
+ * our types at compile-time. You don't need to use this yourself.
+ */
+export type StructuredProblemTemplateWithExtraData<
+    T extends ErrorTable,
+    N extends keyof T,
+    E extends ExtraDataTemplate
+> = StructuredProblemTemplate<T, N> & E;
