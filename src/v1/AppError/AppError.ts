@@ -57,7 +57,10 @@ export class AppError<
      * call `AppError.from()` to create a new instance of AppError
      */
     public constructor(details: StructuredProblemReport<T, N, M, E>) {
-        super(details.type.toString());
+        super(details.detail);
         this.details = details;
+
+        // we want the error name to be ours
+        this.name = this.details.packageName + "/" + this.details.errorName;
     }
 }

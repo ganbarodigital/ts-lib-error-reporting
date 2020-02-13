@@ -144,4 +144,51 @@ describe("AppError", () => {
             expect(actualValue).to.be.instanceOf(AppError);
         });
     });
+
+    describe(".message", () => {
+        it("contains the error's details (from the underlying template)", () => {
+            const inputValue: UnitErrorStructuredProblemReportStruct = {
+                template: errorTable["unit-test-failure"],
+                extra: {
+                    publicExtra: {
+                        field1: "first field",
+                    },
+                    logsOnlyExtra: {
+                        field2: "second field",
+                    },
+                },
+            };
+            const expectedValue = inputValue.template.detail;
+
+            const unit = new AppError(
+                StructuredProblemReport.from(inputValue),
+            );
+            const actualValue = unit.message;
+
+            expect(actualValue).to.equal(expectedValue);
+        });
+    });
+
+    describe(".name", () => {
+        it("contains the error's name", () => {
+            const inputValue = StructuredProblemReport.from({
+                template: errorTable["unit-test-failure"],
+                extra: {
+                    publicExtra: {
+                        field1: "first field",
+                    },
+                    logsOnlyExtra: {
+                        field2: "second field",
+                    },
+                },
+            } as UnitErrorStructuredProblemReportStruct);
+            const expectedValue = inputValue.type.toString();
+
+            const unit = new AppError(inputValue);
+            const actualValue = unit.name;
+
+            expect(actualValue).to.equal(expectedValue);
+        });
+    });
+
 });
