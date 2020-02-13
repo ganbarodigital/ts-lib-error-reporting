@@ -37,13 +37,17 @@ import { StructuredProblemTemplateWithExtraData } from "../StructuredProblemTemp
 
 /**
  * the internal data captured when an error occurs
+ *
+ * this defines the structure that you pass into
+ * `StructuredProblemReport.from()` when you create problem reports at
+ * runtime
  */
-interface StructuredProblemReportInstanceStruct<
+export type StructuredProblemReportStruct<
     T extends ErrorTable,
     N extends keyof T,
     M extends StructuredProblemTemplateWithExtraData<T, N, E>,
     E extends ExtraDataTemplate = NoExtraDataTemplate
-> {
+> = {
     template: M;
 
     /**
@@ -53,11 +57,4 @@ interface StructuredProblemReportInstanceStruct<
      * end-user.
      */
     errorId?: string;
-}
-
-export type StructuredProblemReportStruct<
-    T extends ErrorTable,
-    N extends keyof T,
-    M extends StructuredProblemTemplateWithExtraData<T, N, E>,
-    E extends ExtraDataTemplate = NoExtraDataTemplate
-> = StructuredProblemReportInstanceStruct<T, N, M, E> & E;
+} & E;
