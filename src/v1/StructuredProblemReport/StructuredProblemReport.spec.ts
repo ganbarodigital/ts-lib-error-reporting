@@ -42,6 +42,18 @@ import { StructuredProblemReport } from "../StructuredProblemReport";
 import { StructuredProblemTemplate } from "../StructuredProblemTemplate";
 import { StructuredProblemReportStruct } from "./StructuredProblemReportStruct";
 
+type UnitErrorNoExtraStructuredProblemTemplate = StructuredProblemTemplate<
+    UnitErrorTable,
+    "unit-error"
+>;
+
+type UnitErrorNoExtraStructuredProblemReport = StructuredProblemReportStruct<
+    UnitErrorTable,
+    "unit-error",
+    UnitErrorNoExtraStructuredProblemTemplate,
+    {}
+>;
+
 interface UnitErrorExtraDataTemplate extends ExtraDataTemplate {
     extra: {
         publicExtra: {
@@ -80,6 +92,13 @@ class UnitErrorTable extends ErrorTable {
             },
         },
     };
+
+    public "unit-error": UnitErrorNoExtraStructuredProblemTemplate = {
+        packageName: PACKAGE_NAME,
+        errorName: "unit-error",
+        status: httpStatusCodeFrom(500),
+        detail: "no units were harmed in the making of this error",
+    };
 }
 
 const errorTable = new UnitErrorTable();
@@ -97,6 +116,16 @@ describe("StructuredProblemReport", () => {
                         field2: "second field",
                     },
                 },
+            };
+
+            const unit = StructuredProblemReport.from(inputValue);
+
+            expect(unit).to.be.instanceOf(StructuredProblemReport);
+        });
+
+        it("accepts a template that has no `extra` data", () => {
+            const inputValue: UnitErrorNoExtraStructuredProblemReport = {
+                template: errorTable["unit-error"],
             };
 
             const unit = StructuredProblemReport.from(inputValue);
