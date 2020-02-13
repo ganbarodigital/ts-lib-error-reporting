@@ -32,12 +32,21 @@
 // POSSIBILITY OF SUCH DAMAGE.
 //
 import { ErrorTable } from "../ErrorTable";
-import { ErrorType } from "./ErrorType";
+import { ExtraDataTemplate } from "../ExtraDataTemplate";
+import { StructuredProblemTemplateWithExtra } from "../StructuredProblemTemplate";
+import { AppError } from "./AppError";
 
 /**
- * type guard. confirms if a proposed name for an ErrorType fits
- * our legal scheme or not.
+ * type guard. confirms if the given input is actually one of our
+ * AppErrors or not.
  */
-export function isErrorType<T extends ErrorTable, N extends keyof T>(input: unknown): input is ErrorType<T, N> {
-    return (input instanceof ErrorType);
+export function isAppError<
+    T extends ErrorTable,
+    N extends keyof T,
+    M extends StructuredProblemTemplateWithExtra<T, N, E>,
+    E extends ExtraDataTemplate,
+>(
+    input: unknown,
+): input is AppError<T, N, M, E> {
+    return (input instanceof AppError);
 }

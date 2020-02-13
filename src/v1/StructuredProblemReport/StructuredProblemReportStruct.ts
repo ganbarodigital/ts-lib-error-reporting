@@ -32,12 +32,32 @@
 // POSSIBILITY OF SUCH DAMAGE.
 //
 import { ErrorTable } from "../ErrorTable";
-import { ErrorType } from "./ErrorType";
+import { ExtraDataTemplate } from "../ExtraDataTemplate";
+import { StructuredProblemTemplateWithExtra } from "../StructuredProblemTemplate";
 
 /**
- * type guard. confirms if a proposed name for an ErrorType fits
- * our legal scheme or not.
+ * the internal data captured when an error occurs
  */
-export function isErrorType<T extends ErrorTable, N extends keyof T>(input: unknown): input is ErrorType<T, N> {
-    return (input instanceof ErrorType);
+interface StructuredProblemReportInstanceStruct<
+    T extends ErrorTable,
+    N extends keyof T,
+    M extends StructuredProblemTemplateWithExtra<T, N, E>,
+    E extends ExtraDataTemplate
+> {
+    template: M;
+
+    /**
+     * unique ID of this instance.
+     *
+     * if present, may be used to build a URI that is shared with the
+     * end-user.
+     */
+    errorId?: string;
 }
+
+export type StructuredProblemReportStruct<
+    T extends ErrorTable,
+    N extends keyof T,
+    M extends StructuredProblemTemplateWithExtra<T, N, E>,
+    E extends ExtraDataTemplate
+> = StructuredProblemReportInstanceStruct<T, N, M, E> & E;

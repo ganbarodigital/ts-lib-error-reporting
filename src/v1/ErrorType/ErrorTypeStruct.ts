@@ -33,11 +33,13 @@
 //
 import { PackageName } from "@ganbarodigital/ts-lib-packagename/lib/v1";
 
+import { ErrorTable } from "../ErrorTable";
+
 /**
  * the unique ID of each type of error, as an anonymous object structure
  * for convenience
  */
-export interface ErrorTypeStruct {
+export interface ErrorTypeStruct<T extends ErrorTable, N extends keyof T> {
     context: PackageName;
-    name: string;
+    name: N;
 }

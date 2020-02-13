@@ -31,13 +31,5 @@
 // ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-import { ErrorTable } from "../ErrorTable";
-import { ErrorType } from "./ErrorType";
 
-/**
- * type guard. confirms if a proposed name for an ErrorType fits
- * our legal scheme or not.
- */
-export function isErrorType<T extends ErrorTable, N extends keyof T>(input: unknown): input is ErrorType<T, N> {
-    return (input instanceof ErrorType);
-}
+export * from "./ExtraDataTemplate";

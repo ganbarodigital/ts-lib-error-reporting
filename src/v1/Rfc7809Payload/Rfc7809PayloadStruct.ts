@@ -31,13 +31,63 @@
 // ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-import { ErrorTable } from "../ErrorTable";
-import { ErrorType } from "./ErrorType";
+import { HttpStatusCode } from "@ganbarodigital/ts-lib-http-types/lib/v1";
 
 /**
- * type guard. confirms if a proposed name for an ErrorType fits
- * our legal scheme or not.
+ * the error information to return to the end-user
+ *
+ * this is normally built from a StructuredProblemReport
  */
-export function isErrorType<T extends ErrorTable, N extends keyof T>(input: unknown): input is ErrorType<T, N> {
-    return (input instanceof ErrorType);
+export interface Rfc7807PayloadStruct {
+    /**
+     * URI to a description of this type of error
+     *
+     * this may be an absolute URI; it may also be a relative URI.
+     */
+    type: string;
+
+    /**
+     * unique name of this error
+     *
+     * this is normally the final fragment of the URI above
+     */
+    title: string;
+
+    /**
+     * the HTTP status that best fits this kind of error
+     *
+     * NOTE that this is from the point-of-view of the code that throws
+     * the error.
+     *
+     * e.g. a library may report a `422` (validation failure),
+     * but it doesn't know where the rejected input comes from.
+     *
+     * the calling app DOES know, and it may decide to report a `500`
+     * (internal server error) back to the end-user instead
+     */
+    status: HttpStatusCode;
+
+    /**
+     * a human-readable summary of the problem
+     *
+     * this should be the same string for each instance of this error
+     * (i.e., don't make it a `printf()` format string!)
+     *
+     * put instance-specific details into the `extra` section
+     */
+    detail: string;
+
+    /**
+     * a URI, that contains information about the specific instance of
+     * the problem
+     */
+    instance?: string;
+
+    /**
+     * use this to hold any extra information that should be sent back
+     * to the end-user
+     *
+     * information in this object will also be written to the app's logs
+     */
+    extra?: object;
 }

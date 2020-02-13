@@ -31,13 +31,28 @@
 // ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-import { ErrorTable } from "../ErrorTable";
-import { ErrorType } from "./ErrorType";
 
 /**
- * type guard. confirms if a proposed name for an ErrorType fits
- * our legal scheme or not.
+ * the internal data captured when an error occurs
  */
-export function isErrorType<T extends ErrorTable, N extends keyof T>(input: unknown): input is ErrorType<T, N> {
-    return (input instanceof ErrorType);
+export interface ExtraDataTemplate {
+    /**
+     * use this to hold any data that helps to understand the error
+     * that has occurred
+     */
+    extra?: {
+        /**
+         * use this to hold any extra information that should be sent back
+         * to the end-user
+         *
+         * information in this object will also be written to the app's logs
+         */
+        publicExtra?: any;
+
+        /**
+         * use this to hold any extra information that should be written to
+         * the app's logs, BUT NOT sent back to the end-user
+         */
+        logsOnlyExtra?: any;
+    };
 }

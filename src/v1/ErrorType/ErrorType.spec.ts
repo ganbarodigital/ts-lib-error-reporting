@@ -31,23 +31,60 @@
 // ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-import { packageNameFrom } from "@ganbarodigital/ts-lib-packagename/lib/v1";
-import { OnError } from "@ganbarodigital/ts-on-error/lib/V1";
+import { httpStatusCodeFrom } from "@ganbarodigital/ts-lib-http-types/lib/v1";
 import { expect } from "chai";
 import { describe } from "mocha";
 
+import { PACKAGE_NAME } from "..";
+import { ErrorTable } from "../ErrorTable";
+import { ExtraDataTemplate } from "../ExtraDataTemplate";
+import { StructuredProblemTemplate } from "../StructuredProblemTemplate";
 import { ErrorType } from "./ErrorType";
+import { ErrorTypeStruct } from "./ErrorTypeStruct";
+
+interface UnitErrorExtraDataTemplate extends ExtraDataTemplate {
+    extra: {
+        publicExtra: {
+            field1: string;
+        };
+        logsOnlyExtra: {
+            field2: string;
+        };
+    };
+}
+
+type UnitErrorStructuredProblemTemplate = StructuredProblemTemplate<
+    UnitErrorTable,
+    "unit-test-failure"
+> & UnitErrorExtraDataTemplate;
+
+class UnitErrorTable extends ErrorTable {
+    public "unit-test-failure": UnitErrorStructuredProblemTemplate = {
+        packageName: PACKAGE_NAME,
+        errorName: "unit-test-failure",
+        status: httpStatusCodeFrom(500),
+        detail: "this code should never execute",
+        extra: {
+            publicExtra: {
+                field1: "you can put anything you want here",
+            },
+            logsOnlyExtra: {
+                field2: "you can put anything you want here too",
+            },
+        },
+    };
+}
+
+type UnitTestFailure = ErrorTypeStruct<UnitErrorTable, "unit-test-failure">;
+const unitTestFailure: UnitTestFailure = {
+    context: PACKAGE_NAME,
+    name: "unit-test-failure",
+};
 
 describe("ErrorType", () => {
     describe(".from()", () => {
         it("creates a new ErrorType", () => {
-            const onError: OnError = (reason: symbol, desc: string, extra: object): never => {
-                throw Error("ON ERROR CALLED!!");
-            };
-            const inputValue = {
-                context: packageNameFrom("@ganbarodigital/ts-lib-apperror/v1", onError),
-                name: "unit-test-failure",
-            };
+            const inputValue = unitTestFailure;
 
             const actualValue = ErrorType.from(inputValue);
 
@@ -57,16 +94,9 @@ describe("ErrorType", () => {
 
     describe(".valueOf()", () => {
         it("returns the wrapped value", () => {
-            const onError: OnError = (reason: symbol, desc: string, extra: object): never => {
-                throw Error("ON ERROR CALLED!!");
-            };
-            const inputValue = {
-                context: packageNameFrom("@ganbarodigital/ts-lib-apperror/v1", onError),
-                name: "unit-test-failure",
-            };
-            const expectedValue = inputValue;
+            const expectedValue = unitTestFailure;
 
-            const unit = ErrorType.from(inputValue);
+            const unit = ErrorType.from(unitTestFailure);
             const actualValue = unit.valueOf();
 
             expect(actualValue).to.equal(expectedValue);
@@ -75,16 +105,10 @@ describe("ErrorType", () => {
 
     describe(".context", () => {
         it("is the `context` field from the wrapped value", () => {
-            const onError: OnError = (reason: symbol, desc: string, extra: object): never => {
-                throw Error("ON ERROR CALLED!!");
-            };
-            const inputValue = {
-                context: packageNameFrom("@ganbarodigital/ts-lib-apperror/v1", onError),
-                name: "unit-test-failure",
-            };
+            const inputValue = unitTestFailure;
             const expectedValue = inputValue.context;
 
-            const unit = ErrorType.from(inputValue);
+            const unit = ErrorType.from(unitTestFailure);
             const actualValue = unit.context;
 
             expect(actualValue).to.equal(expectedValue);
@@ -93,16 +117,10 @@ describe("ErrorType", () => {
 
     describe(".name", () => {
         it("is the `name` field from the wrapped value", () => {
-            const onError: OnError = (reason: symbol, desc: string, extra: object): never => {
-                throw Error("ON ERROR CALLED!!");
-            };
-            const inputValue = {
-                context: packageNameFrom("@ganbarodigital/ts-lib-apperror/v1", onError),
-                name: "unit-test-failure",
-            };
+            const inputValue = unitTestFailure;
             const expectedValue = inputValue.name;
 
-            const unit = ErrorType.from(inputValue);
+            const unit = ErrorType.from(unitTestFailure);
             const actualValue = unit.name;
 
             expect(actualValue).to.equal(expectedValue);
@@ -111,16 +129,9 @@ describe("ErrorType", () => {
 
     describe(".toString()", () => {
         it("returns the fully-qualified name of this error type", () => {
-            const onError: OnError = (reason: symbol, desc: string, extra: object): never => {
-                throw Error("ON ERROR CALLED!!");
-            };
-            const inputValue = {
-                context: packageNameFrom("@ganbarodigital/ts-lib-apperror/v1", onError),
-                name: "unit-test-failure",
-            };
-            const expectedValue = "@ganbarodigital/ts-lib-apperror/v1/unit-test-failure";
+            const expectedValue = "@ganbarodigital/ts-lib-apperror/lib/v1/unit-test-failure";
 
-            const unit = ErrorType.from(inputValue);
+            const unit = ErrorType.from(unitTestFailure);
             const actualValue = unit.toString();
 
             expect(actualValue).to.equal(expectedValue);

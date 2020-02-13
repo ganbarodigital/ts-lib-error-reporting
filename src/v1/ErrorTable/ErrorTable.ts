@@ -31,13 +31,54 @@
 // ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-import { ErrorTable } from "../ErrorTable";
-import { ErrorType } from "./ErrorType";
+import { httpStatusCodeFrom } from "@ganbarodigital/ts-lib-http-types/lib/v1";
+
+import { PACKAGE_NAME } from "..";
+import { ExtraDataTemplate } from "../ExtraDataTemplate";
+import { StructuredProblemTemplate } from "../StructuredProblemTemplate";
+
+interface UnreachableCodeExtraDataTemplate extends ExtraDataTemplate {
+    extra: {
+        publicExtra?: null,
+        logsOnlyExtra: {
+            function: string;
+        },
+    };
+}
+
+type UnreachableCodeStructuredProblemTemplate = StructuredProblemTemplate<
+    ErrorTable,
+    "unreachable-code"
+> & UnreachableCodeExtraDataTemplate;
 
 /**
- * type guard. confirms if a proposed name for an ErrorType fits
- * our legal scheme or not.
+ * a list of all of the structured problems that your app or package
+ * can generate
+ *
+ * extend this class in your own app or package, and add in all of the
+ * errors that your app or package can throw
+ *
+ * then export it as the constant ERROR_TABLE, in case anyone else ever
+ * needs to query it
  */
-export function isErrorType<T extends ErrorTable, N extends keyof T>(input: unknown): input is ErrorType<T, N> {
-    return (input instanceof ErrorType);
+export class ErrorTable {
+    // everything in this class has to follow the same structure
+    [key: string]: StructuredProblemTemplate<any, string> & ExtraDataTemplate;
+
+    /**
+     * use this error in if/else & the default clause of switch statements
+     * to spot things that should never happen
+     */
+    // tslint:disable-next-line: max-line-length
+    public "unreachable-code": UnreachableCodeStructuredProblemTemplate = {
+        packageName: PACKAGE_NAME,
+        errorName: "unreachable-code",
+        status: httpStatusCodeFrom(500),
+        detail: "this code should never execute",
+        extra: {
+            logsOnlyExtra: {
+                function: "the function that threw this error",
+            },
+        },
+    };
 }

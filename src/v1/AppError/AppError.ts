@@ -32,12 +32,47 @@
 // POSSIBILITY OF SUCH DAMAGE.
 //
 import { ErrorTable } from "../ErrorTable";
-import { ErrorType } from "./ErrorType";
+import { ExtraDataTemplate } from "../ExtraDataTemplate";
+import { StructuredProblemReport } from "../StructuredProblemReport";
+import { StructuredProblemTemplateWithExtra } from "../StructuredProblemTemplate";
 
 /**
- * type guard. confirms if a proposed name for an ErrorType fits
- * our legal scheme or not.
+ * base class for throwable Javascript Errors.
+ *
+ * It includes structured information about the error that is being
+ * reported.
  */
-export function isErrorType<T extends ErrorTable, N extends keyof T>(input: unknown): input is ErrorType<T, N> {
-    return (input instanceof ErrorType);
+export class AppError<
+    T extends ErrorTable,
+    N extends keyof T,
+    M extends StructuredProblemTemplateWithExtra<T, N, E>,
+    E extends ExtraDataTemplate,
+> extends Error {
+    /**
+     * smart constructor. Turns a StructuredProblemReport into a
+     * throwable Javascript Error
+     */
+    public static from<
+        T extends ErrorTable,
+        N extends keyof T,
+        M extends StructuredProblemTemplateWithExtra<T, N, E>,
+        E extends ExtraDataTemplate,
+    >(
+        input: StructuredProblemReport<T, N, M, E>,
+    ): AppError<T, N, M, E> {
+        return new AppError(input);
+    }
+
+    /**
+     * information about what went wrong, in a type-safe structure
+     */
+    public readonly details: StructuredProblemReport<T, N, M, E>;
+
+    /**
+     * call `AppError.from()` to create a new instance of AppError
+     */
+    protected constructor(details: StructuredProblemReport<T, N, M, E>) {
+        super(details.type.toString());
+        this.details = details;
+    }
 }

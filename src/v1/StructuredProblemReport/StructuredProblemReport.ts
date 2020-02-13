@@ -31,13 +31,48 @@
 // ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
+import { ValueObject } from "@ganbarodigital/ts-lib-value-objects/lib/v2";
+
 import { ErrorTable } from "../ErrorTable";
-import { ErrorType } from "./ErrorType";
+import { ErrorType } from "../ErrorType";
+import { ExtraDataTemplate } from "../ExtraDataTemplate";
+import { StructuredProblemTemplateWithExtra } from "../StructuredProblemTemplate";
+import { StructuredProblemReportStruct } from "./StructuredProblemReportStruct";
 
 /**
- * type guard. confirms if a proposed name for an ErrorType fits
- * our legal scheme or not.
+ * value object. represents a problem (a logic or robustness error) that
+ * has been reported in the code.
  */
-export function isErrorType<T extends ErrorTable, N extends keyof T>(input: unknown): input is ErrorType<T, N> {
-    return (input instanceof ErrorType);
+export class StructuredProblemReport<
+    T extends ErrorTable,
+    N extends keyof T,
+    M extends StructuredProblemTemplateWithExtra<T, N, E>,
+    E extends ExtraDataTemplate
+>
+    extends ValueObject<StructuredProblemReportStruct<T, N, M, E>> {
+    /**
+     * smart constructor
+     */
+    public static from<
+        T extends ErrorTable,
+        N extends keyof T,
+        M extends StructuredProblemTemplateWithExtra<T, N, E>,
+        E extends ExtraDataTemplate
+    >(
+        input: StructuredProblemReportStruct<T, N, M, E>,
+    ): StructuredProblemReport<T, N, M, E> {
+        return new StructuredProblemReport(input);
+    }
+
+    /**
+     * what type of error is this?
+     *
+     * use this to write code that handles different kinds of errors
+     */
+    get type(): ErrorType<T, N> {
+        return ErrorType.from({
+            context: this.value.template.packageName,
+            name: this.value.template.errorName,
+        });
+    }
 }

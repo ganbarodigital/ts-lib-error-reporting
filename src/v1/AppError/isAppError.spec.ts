@@ -32,22 +32,16 @@
 // POSSIBILITY OF SUCH DAMAGE.
 //
 import { httpStatusCodeFrom } from "@ganbarodigital/ts-lib-http-types/lib/v1";
-import { packageNameFrom } from "@ganbarodigital/ts-lib-packagename/lib/v1";
-import { OnError } from "@ganbarodigital/ts-on-error/lib/V1";
 import { expect } from "chai";
 import { describe } from "mocha";
 
-import { ErrorTypeStruct } from ".";
 import { PACKAGE_NAME } from "..";
 import { ErrorTable } from "../ErrorTable";
 import { ExtraDataTemplate } from "../ExtraDataTemplate";
+import { StructuredProblemReport, StructuredProblemReportStruct } from "../StructuredProblemReport";
 import { StructuredProblemTemplate } from "../StructuredProblemTemplate";
-import { ErrorType } from "./ErrorType";
-import { isErrorType } from "./isErrorType";
-
-const onError: OnError = (reason: symbol, desc: string, extra: object): never => {
-    throw Error("ON ERROR CALLED!!");
-};
+import { AppError } from "./AppError";
+import { isAppError } from "./isAppError";
 
 interface UnitErrorExtraDataTemplate extends ExtraDataTemplate {
     extra: {
@@ -63,6 +57,13 @@ interface UnitErrorExtraDataTemplate extends ExtraDataTemplate {
 type UnitErrorStructuredProblemTemplate = StructuredProblemTemplate<
     UnitErrorTable,
     "unit-test-failure"
+> & UnitErrorExtraDataTemplate;
+
+type UnitErrorStructuredProblemReportStruct = StructuredProblemReportStruct<
+    UnitErrorTable,
+    "unit-test-failure",
+    UnitErrorStructuredProblemTemplate,
+    UnitErrorExtraDataTemplate
 > & UnitErrorExtraDataTemplate;
 
 class UnitErrorTable extends ErrorTable {
@@ -82,31 +83,36 @@ class UnitErrorTable extends ErrorTable {
     };
 }
 
-type UnitTestFailure = ErrorTypeStruct<UnitErrorTable, "unit-test-failure">;
-const unitTestFailure: UnitTestFailure = {
-    context: PACKAGE_NAME,
-    name: "unit-test-failure",
-};
+const errorTable = new UnitErrorTable();
 
-describe("isErrorType()", () => {
-    it("is a type-guard for ErrorType objects", () => {
-        const unit = ErrorType.from(unitTestFailure);
+describe("isAppError()", () => {
+    it("is a type-guard for AppError objects", () => {
+        const problemData: UnitErrorStructuredProblemReportStruct = {
+            template: errorTable["unit-test-failure"],
+            extra: {
+                publicExtra: {
+                    field1: "first field",
+                },
+                logsOnlyExtra: {
+                    field2: "second field",
+                },
+            },
+        };
+        const inputValue = StructuredProblemReport.from(problemData);
+        const unit = AppError.from(inputValue);
 
-        if (isErrorType(unit)) {
+        if (isAppError(unit)) {
             expect(true).to.equal(true);
         } else {
-            expect(false).to.equal(true, "isErrorType() type-guard failed");
+            expect(false).to.equal(true, "isAppError() type-guard failed");
         }
     });
 
     it("rejects other objects", () => {
-        const inputValue = {
-            context: packageNameFrom("@ganbarodigital/ts-lib-apperror/v1", onError),
-            name: "unit-test-failure",
-        };
+        const unit = {};
 
-        if (isErrorType(inputValue)) {
-            expect(false).to.equal(true, "isErrorType() type-guard failed");
+        if (isAppError(unit)) {
+            expect(false).to.equal(true, "isAppError() type-guard failed");
         } else {
             expect(true).to.equal(true);
         }
