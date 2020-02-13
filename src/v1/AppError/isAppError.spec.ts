@@ -99,7 +99,7 @@ describe("isAppError()", () => {
             },
         };
         const inputValue = StructuredProblemReport.from(problemData);
-        const unit = AppError.from(inputValue);
+        const unit = new AppError(inputValue);
 
         if (isAppError(unit)) {
             expect(true).to.equal(true);

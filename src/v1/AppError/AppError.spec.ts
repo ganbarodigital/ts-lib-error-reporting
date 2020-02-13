@@ -97,7 +97,7 @@ describe("AppError", () => {
                 },
             },
         };
-        const unit = AppError.from(
+        const unit = new AppError(
             StructuredProblemReport.from(inputValue),
         );
 
@@ -117,14 +117,14 @@ describe("AppError", () => {
                 },
             };
             const inputValue = StructuredProblemReport.from(problemData);
-            const unit = AppError.from(inputValue);
+            const unit = new AppError(inputValue);
 
             const actualValue = unit.details;
 
             expect(actualValue).to.equal(inputValue);
         });
     }),
-    describe(".from()", () => {
+    describe(" constructor()", () => {
         it("creates a new AppError", () => {
             const inputValue: UnitErrorStructuredProblemReportStruct = {
                 template: errorTable["unit-test-failure"],
@@ -137,7 +137,7 @@ describe("AppError", () => {
                     },
                 },
             };
-            const actualValue = AppError.from(
+            const actualValue = new AppError(
                 StructuredProblemReport.from(inputValue),
             );
 

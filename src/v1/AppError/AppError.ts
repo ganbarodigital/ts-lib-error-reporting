@@ -49,21 +49,6 @@ export class AppError<
     E extends ExtraDataTemplate = NoExtraDataTemplate,
 > extends Error {
     /**
-     * smart constructor. Turns a StructuredProblemReport into a
-     * throwable Javascript Error
-     */
-    public static from<
-        T extends ErrorTable,
-        N extends keyof T,
-        M extends StructuredProblemTemplateWithExtraData<T, N, E>,
-        E extends ExtraDataTemplate,
-    >(
-        input: StructuredProblemReport<T, N, M, E>,
-    ): AppError<T, N, M, E> {
-        return new AppError(input);
-    }
-
-    /**
      * information about what went wrong, in a type-safe structure
      */
     public readonly details: StructuredProblemReport<T, N, M, E>;
@@ -71,7 +56,7 @@ export class AppError<
     /**
      * call `AppError.from()` to create a new instance of AppError
      */
-    protected constructor(details: StructuredProblemReport<T, N, M, E>) {
+    public constructor(details: StructuredProblemReport<T, N, M, E>) {
         super(details.type.toString());
         this.details = details;
     }

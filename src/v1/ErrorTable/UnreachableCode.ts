@@ -31,6 +31,7 @@
 // ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
+import { AppError } from "../AppError";
 import { ExtraDataTemplate } from "../ExtraDataTemplate";
 import { StructuredProblemTemplate } from "../StructuredProblemTemplate";
 import { ErrorTable } from "./ErrorTable";
@@ -48,3 +49,13 @@ export type UnreachableCodeStructuredProblemTemplate = StructuredProblemTemplate
     ErrorTable,
     "unreachable-code"
 > & UnreachableCodeExtraDataTemplate;
+
+/**
+ * Javascript Error
+ */
+export class UnreachableCodeError extends AppError<
+    ErrorTable,
+    "unreachable-code",
+    UnreachableCodeStructuredProblemTemplate,
+    UnreachableCodeExtraDataTemplate
+> {}
