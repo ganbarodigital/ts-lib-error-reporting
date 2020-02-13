@@ -32,7 +32,7 @@
 // POSSIBILITY OF SUCH DAMAGE.
 //
 import { ErrorTable } from "../ErrorTable";
-import { ExtraDataTemplate } from "../ExtraDataTemplate";
+import { ExtraDataTemplate, NoExtraDataTemplate } from "../ExtraDataTemplate";
 import { StructuredProblemReport } from "../StructuredProblemReport";
 import { StructuredProblemTemplateWithExtraData } from "../StructuredProblemTemplate";
 
@@ -46,7 +46,7 @@ export class AppError<
     T extends ErrorTable,
     N extends keyof T,
     M extends StructuredProblemTemplateWithExtraData<T, N, E>,
-    E extends ExtraDataTemplate,
+    E extends ExtraDataTemplate = NoExtraDataTemplate,
 > extends Error {
     /**
      * smart constructor. Turns a StructuredProblemReport into a

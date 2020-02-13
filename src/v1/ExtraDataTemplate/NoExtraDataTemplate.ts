@@ -31,48 +31,11 @@
 // ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-import { ValueObject } from "@ganbarodigital/ts-lib-value-objects/lib/v2";
-
-import { ErrorTable } from "../ErrorTable";
-import { ErrorType } from "../ErrorType";
-import { ExtraDataTemplate, NoExtraDataTemplate } from "../ExtraDataTemplate";
-import { StructuredProblemTemplateWithExtraData } from "../StructuredProblemTemplate";
-import { StructuredProblemReportStruct } from "./StructuredProblemReportStruct";
 
 /**
- * value object. represents a problem (a logic or robustness error) that
- * has been reported in the code.
+ * represents an ExtraDataTemplate that has no `extra` section at all
+ *
+ * we've added this simply to improve the readability of the code
  */
-export class StructuredProblemReport<
-    T extends ErrorTable,
-    N extends keyof T,
-    M extends StructuredProblemTemplateWithExtraData<T, N, E>,
-    E extends ExtraDataTemplate = NoExtraDataTemplate
->
-    extends ValueObject<StructuredProblemReportStruct<T, N, M, E>> {
-    /**
-     * smart constructor
-     */
-    public static from<
-        T extends ErrorTable,
-        N extends keyof T,
-        M extends StructuredProblemTemplateWithExtraData<T, N, E>,
-        E extends ExtraDataTemplate = NoExtraDataTemplate
-    >(
-        input: StructuredProblemReportStruct<T, N, M, E>,
-    ): StructuredProblemReport<T, N, M, E> {
-        return new StructuredProblemReport(input);
-    }
-
-    /**
-     * what type of error is this?
-     *
-     * use this to write code that handles different kinds of errors
-     */
-    get type(): ErrorType<T, N> {
-        return ErrorType.from({
-            context: this.value.template.packageName,
-            name: this.value.template.errorName,
-        });
-    }
-}
+// tslint:disable-next-line: no-empty-interface
+export interface NoExtraDataTemplate {}

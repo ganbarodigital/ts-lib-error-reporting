@@ -32,7 +32,7 @@
 // POSSIBILITY OF SUCH DAMAGE.
 //
 import { ErrorTable } from "../ErrorTable";
-import { ExtraDataTemplate } from "../ExtraDataTemplate";
+import { ExtraDataTemplate, NoExtraDataTemplate } from "../ExtraDataTemplate";
 import { StructuredProblemTemplateWithExtraData } from "../StructuredProblemTemplate";
 import { AppError } from "./AppError";
 
@@ -44,7 +44,7 @@ export function isAppError<
     T extends ErrorTable,
     N extends keyof T,
     M extends StructuredProblemTemplateWithExtraData<T, N, E>,
-    E extends ExtraDataTemplate,
+    E extends ExtraDataTemplate = NoExtraDataTemplate,
 >(
     input: unknown,
 ): input is AppError<T, N, M, E> {
