@@ -38,7 +38,7 @@ import { HttpStatusCode } from "@ganbarodigital/ts-lib-http-types/lib/v1";
  *
  * this is normally built from a StructuredProblemReport
  */
-export interface Rfc7807PayloadStruct {
+export interface Rfc7807PayloadData {
     /**
      * URI to a description of this type of error
      *
