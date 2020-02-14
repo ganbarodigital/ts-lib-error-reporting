@@ -31,65 +31,17 @@
 // ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-import { httpStatusCodeFrom } from "@ganbarodigital/ts-lib-http-types/lib/v1";
 import { expect } from "chai";
 import { describe } from "mocha";
 
-import { PACKAGE_NAME } from "..";
-import { ErrorTable } from "../ErrorTable";
-import { ExtraDataTemplate } from "../ExtraData";
-import { ExtraDataContents } from "../ExtraData/ExtraDataContents";
-import { StructuredProblemReport, StructuredProblemReportStructWithExtraData } from "../StructuredProblemReport";
-import { StructuredProblemTemplate } from "../StructuredProblemTemplate";
+import { errorTable, UnitTestFailureStructuredProblemReportStruct } from "../Fixtures";
+import { StructuredProblemReport } from "../StructuredProblemReport";
 import { AppError } from "./AppError";
 import { isAppError } from "./isAppError";
 
-interface UnitErrorExtraDataContents extends ExtraDataContents {
-    publicExtra: {
-        field1: string;
-    };
-    logsOnlyExtra: {
-        field2: string;
-    };
-}
-
-interface UnitErrorExtraDataTemplate extends ExtraDataTemplate<UnitErrorExtraDataContents> { }
-
-type UnitErrorStructuredProblemTemplate = StructuredProblemTemplate<
-    UnitErrorTable,
-    "unit-test-failure"
-> & UnitErrorExtraDataTemplate;
-
-type UnitErrorStructuredProblemReportStruct = StructuredProblemReportStructWithExtraData<
-    UnitErrorTable,
-    "unit-test-failure",
-    UnitErrorStructuredProblemTemplate,
-    UnitErrorExtraDataTemplate,
-    UnitErrorExtraDataContents
->;
-
-class UnitErrorTable extends ErrorTable {
-    public "unit-test-failure": UnitErrorStructuredProblemTemplate = {
-        packageName: PACKAGE_NAME,
-        errorName: "unit-test-failure",
-        status: httpStatusCodeFrom(500),
-        detail: "this code should never execute",
-        extra: {
-            publicExtra: {
-                field1: "you can put anything you want here",
-            },
-            logsOnlyExtra: {
-                field2: "you can put anything you want here too",
-            },
-        },
-    };
-}
-
-const errorTable = new UnitErrorTable();
-
 describe("isAppError()", () => {
     it("is a type-guard for AppError objects", () => {
-        const problemData: UnitErrorStructuredProblemReportStruct = {
+        const problemData: UnitTestFailureStructuredProblemReportStruct = {
             template: errorTable["unit-test-failure"],
             extra: {
                 publicExtra: {

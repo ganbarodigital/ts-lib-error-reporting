@@ -31,62 +31,14 @@
 // ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-import { httpStatusCodeFrom } from "@ganbarodigital/ts-lib-http-types/lib/v1";
 import { expect } from "chai";
 import { describe } from "mocha";
 
-import { StructuredProblemReportStructWithExtraData } from ".";
-import { PACKAGE_NAME } from "..";
-import { ErrorTable } from "../ErrorTable";
-import { ExtraDataContents, ExtraDataTemplate } from "../ExtraData";
-import { StructuredProblemTemplate } from "../StructuredProblemTemplate";
-
-interface UnitErrorExtraDataContents extends ExtraDataContents {
-    publicExtra: {
-        field1: string;
-    };
-    logsOnlyExtra: {
-        field2: string;
-    };
-}
-
-interface UnitErrorExtraDataTemplate extends ExtraDataTemplate<UnitErrorExtraDataContents> { }
-
-type UnitErrorStructuredProblemTemplate = StructuredProblemTemplate<
-    UnitErrorTable,
-    "unit-test-failure"
-> & UnitErrorExtraDataTemplate;
-
-type UnitErrorStructuredProblemReportStruct = StructuredProblemReportStructWithExtraData<
-    UnitErrorTable,
-    "unit-test-failure",
-    UnitErrorStructuredProblemTemplate,
-    UnitErrorExtraDataTemplate,
-    UnitErrorExtraDataContents
->;
-
-class UnitErrorTable extends ErrorTable {
-    public "unit-test-failure": UnitErrorStructuredProblemTemplate = {
-        packageName: PACKAGE_NAME,
-        errorName: "unit-test-failure",
-        status: httpStatusCodeFrom(500),
-        detail: "this code should never execute",
-        extra: {
-            publicExtra: {
-                field1: "you can put anything you want here",
-            },
-            logsOnlyExtra: {
-                field2: "you can put anything you want here too",
-            },
-        },
-    };
-}
-
-const errorTable = new UnitErrorTable();
+import { errorTable, UnitTestFailureStructuredProblemReportStruct } from "../Fixtures";
 
 describe("StructuredProblemReportStruct", () => {
     it("instance can be created inline", () => {
-        let unit: UnitErrorStructuredProblemReportStruct;
+        let unit: UnitTestFailureStructuredProblemReportStruct;
 
         unit = {
             template: errorTable["unit-test-failure"],

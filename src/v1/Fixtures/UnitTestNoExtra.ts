@@ -31,41 +31,20 @@
 // ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-import { packageNameFrom } from "@ganbarodigital/ts-lib-packagename/lib/v1";
-import { OnError } from "@ganbarodigital/ts-on-error/lib/V1";
-import { expect } from "chai";
-import { describe } from "mocha";
+import { NoExtraDataContents, NoExtraDataTemplate } from "../ExtraData";
+import { StructuredProblemReportStruct } from "../StructuredProblemReport";
+import { StructuredProblemTemplate } from "../StructuredProblemTemplate";
+import { UnitTestErrorTable } from "./UnitTestErrorTable";
 
-import { unitTestFailure } from "../Fixtures";
-import { ErrorType } from "./ErrorType";
-import { isErrorType } from "./isErrorType";
+export type UnitTestNoExtraStructuredProblemTemplate = StructuredProblemTemplate<
+    UnitTestErrorTable,
+    "unit-test-no-extra"
+> & NoExtraDataTemplate;
 
-const onError: OnError = (reason: symbol, desc: string, extra: object): never => {
-    throw Error("ON ERROR CALLED!!");
-};
-
-
-describe("isErrorType()", () => {
-    it("is a type-guard for ErrorType objects", () => {
-        const unit = ErrorType.from(unitTestFailure);
-
-        if (isErrorType(unit)) {
-            expect(true).to.equal(true);
-        } else {
-            expect(false).to.equal(true, "isErrorType() type-guard failed");
-        }
-    });
-
-    it("rejects other objects", () => {
-        const inputValue = {
-            context: packageNameFrom("@ganbarodigital/ts-lib-apperror/v1", onError),
-            name: "unit-test-failure",
-        };
-
-        if (isErrorType(inputValue)) {
-            expect(false).to.equal(true, "isErrorType() type-guard failed");
-        } else {
-            expect(true).to.equal(true);
-        }
-    });
-});
+export type UnitTestNoExtraStructuredProblemReportStruct = StructuredProblemReportStruct<
+    UnitTestErrorTable,
+    "unit-test-no-extra",
+    UnitTestNoExtraStructuredProblemTemplate,
+    NoExtraDataTemplate,
+    NoExtraDataContents
+>;
