@@ -32,18 +32,27 @@
 // POSSIBILITY OF SUCH DAMAGE.
 //
 import { ErrorTable } from "../ErrorTable";
+import { ErrorTableTemplate } from "../ErrorTableTemplate";
 import { ExtraDataTemplate } from "../ExtraData";
-import { StructuredProblemTemplate } from "./StructuredProblemTemplate";
+import { StructuredProblemReportData } from "./StructuredProblemReportData";
 
 /**
- * these go in your ErrorTable, and they define what your structured problem
- * reports will look like
+ * the internal data captured when an error occurs
+ *
+ * this defines the structure that you pass into
+ * `StructuredProblemReport.from()` when you create problem reports at
+ * runtime
+ *
+ * use this as your base interface when defining errors that have mandatory
+ * `extra` bits of data
  */
-export interface StructuredProblemTemplateWithExtraData<
+export interface StructuredProblemReportDataWithExtraData<
     T extends ErrorTable,
     N extends keyof T,
+    M extends ErrorTableTemplate<T, N, E>,
     E extends ExtraDataTemplate
-> extends StructuredProblemTemplate<T, N, E>{
+> extends StructuredProblemReportData<T, N, M, E> {
+
     /**
      * the internal data captured when an error occurs
      *

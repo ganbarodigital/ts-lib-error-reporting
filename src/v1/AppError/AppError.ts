@@ -32,9 +32,9 @@
 // POSSIBILITY OF SUCH DAMAGE.
 //
 import { ErrorTable } from "../ErrorTable";
+import { ErrorTableTemplate } from "../ErrorTableTemplate";
 import { ExtraDataTemplate, NoExtraDataTemplate } from "../ExtraData";
-import { StructuredProblemReport, StructuredProblemReportStruct } from "../StructuredProblemReport";
-import { StructuredProblemTemplate } from "../StructuredProblemTemplate";
+import { StructuredProblemReport, StructuredProblemReportData } from "../StructuredProblemReport";
 
 /**
  * base class for throwable Javascript Errors.
@@ -45,15 +45,15 @@ import { StructuredProblemTemplate } from "../StructuredProblemTemplate";
 export class AppError<
     T extends ErrorTable,
     N extends keyof T,
-    M extends StructuredProblemTemplate<T, N, E>,
-    R extends StructuredProblemReportStruct<T, N, M, E>,
+    M extends ErrorTableTemplate<T, N, E>,
+    R extends StructuredProblemReportData<T, N, M, E>,
     E extends ExtraDataTemplate | NoExtraDataTemplate
 > extends Error {
     public static from<
         T extends ErrorTable,
         N extends keyof T,
-        M extends StructuredProblemTemplate<T, N, E>,
-        R extends StructuredProblemReportStruct<T, N, M, E>,
+        M extends ErrorTableTemplate<T, N, E>,
+        R extends StructuredProblemReportData<T, N, M, E>,
         E extends ExtraDataTemplate | NoExtraDataTemplate,
     >(details: StructuredProblemReport<T, N, M, R, E>) {
         return new AppError(details);

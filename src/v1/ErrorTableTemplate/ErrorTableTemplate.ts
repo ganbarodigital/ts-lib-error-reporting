@@ -31,32 +31,57 @@
 // ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
+import { HttpStatusCode } from "@ganbarodigital/ts-lib-http-types/lib/v1";
+import { PackageName } from "@ganbarodigital/ts-lib-packagename/lib/v1";
+
 import { ErrorTable } from "../ErrorTable";
 import { ExtraDataTemplate, NoExtraDataTemplate } from "../ExtraData";
-import { StructuredProblemTemplate } from "../StructuredProblemTemplate";
 
 /**
- * the internal data captured when an error occurs
- *
- * this defines the structure that you pass into
- * `StructuredProblemReport.from()` when you create problem reports at
- * runtime
+ * these go in your ErrorTable, and they define what your structured problem
+ * reports will look like
  */
-export interface StructuredProblemReportStruct<
+export interface ErrorTableTemplate<
     T extends ErrorTable,
     N extends keyof T,
-    M extends StructuredProblemTemplate<T, N, E>,
     E extends ExtraDataTemplate | NoExtraDataTemplate
 > {
-    template: M;
+    /**
+     * which package has defined this template?
+     */
+    packageName: PackageName;
 
     /**
-     * unique ID of this instance.
+     * what kind of error is this?
      *
-     * if present, may be used to build a URI that is shared with the
-     * end-user.
+     * - `T` is your ErrorTable (a list of all the errors you've declared)
+     * - `N` is the name of your error (must be a property of your ErrorTable)
      */
-    errorId?: string;
+    errorName: N;
+
+    /**
+     * the HTTP status that best fits this kind of error
+     *
+     * NOTE that this is from the point-of-view of the code that throws
+     * the error.
+     *
+     * e.g. a library may report a `422` (validation failure),
+     * but it doesn't know where the rejected input comes from.
+     *
+     * the calling app DOES know, and it may decide to report a `500`
+     * (internal server error) back to the end-user instead
+     */
+    status: HttpStatusCode;
+
+    /**
+     * a human-readable summary of the problem
+     *
+     * this should be the same string for each instance of this error
+     * (i.e., don't make it a `printf()` format string!)
+     *
+     * put instance-specific details into the `extra` section
+     */
+    detail: string;
 
     /**
      * the internal data captured when an error occurs
@@ -70,4 +95,4 @@ export interface StructuredProblemReportStruct<
      *   (i.e. it must not be shared with the caller)
      */
     extra?: E;
-};
+}

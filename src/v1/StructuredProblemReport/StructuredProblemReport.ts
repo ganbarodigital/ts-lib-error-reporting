@@ -35,11 +35,11 @@ import { HttpStatusCode } from "@ganbarodigital/ts-lib-http-types/lib/v1";
 import { PackageName } from "@ganbarodigital/ts-lib-packagename/lib/v1";
 import { ValueObject } from "@ganbarodigital/ts-lib-value-objects/lib/v2";
 
-import { StructuredProblemReportStruct } from ".";
+import { StructuredProblemReportData } from ".";
 import { ErrorTable } from "../ErrorTable";
+import { ErrorTableTemplate } from "../ErrorTableTemplate";
 import { ErrorType } from "../ErrorType";
 import { ExtraDataTemplate, NoExtraDataTemplate } from "../ExtraData";
-import { StructuredProblemTemplate } from "../StructuredProblemTemplate";
 
 /**
  * value object. represents a problem (a logic or robustness error) that
@@ -48,8 +48,8 @@ import { StructuredProblemTemplate } from "../StructuredProblemTemplate";
 export class StructuredProblemReport<
     T extends ErrorTable,
     N extends keyof T,
-    M extends StructuredProblemTemplate<T, N, E>,
-    R extends StructuredProblemReportStruct<T, N, M, E>,
+    M extends ErrorTableTemplate<T, N, E>,
+    R extends StructuredProblemReportData<T, N, M, E>,
     E extends ExtraDataTemplate | NoExtraDataTemplate
 >
     extends ValueObject<R> {
@@ -59,8 +59,8 @@ export class StructuredProblemReport<
     public static from<
         T extends ErrorTable,
         N extends keyof T,
-        M extends StructuredProblemTemplate<T, N, E>,
-        R extends StructuredProblemReportStruct<T, N, M, E>,
+        M extends ErrorTableTemplate<T, N, E>,
+        R extends StructuredProblemReportData<T, N, M, E>,
         E extends ExtraDataTemplate | null
     >(
         input: R,

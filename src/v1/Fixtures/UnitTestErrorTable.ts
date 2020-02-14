@@ -35,11 +35,11 @@ import { httpStatusCodeFrom } from "@ganbarodigital/ts-lib-http-types/lib/v1";
 
 import { PACKAGE_NAME } from "..";
 import { ErrorTable } from "../ErrorTable";
-import { UnitTestFailureStructuredProblemTemplate } from "./UnitTestFailure";
-import { UnitTestNoExtraStructuredProblemTemplate } from "./UnitTestNoExtra";
+import { UnitTestFailureTemplate } from "./UnitTestFailure";
+import { UnitTestNoExtraTemplate } from "./UnitTestNoExtra";
 
 export class UnitTestErrorTable extends ErrorTable {
-    public "unit-test-failure": UnitTestFailureStructuredProblemTemplate = {
+    public "unit-test-failure": UnitTestFailureTemplate = {
         packageName: PACKAGE_NAME,
         errorName: "unit-test-failure",
         status: httpStatusCodeFrom(500),
@@ -54,7 +54,7 @@ export class UnitTestErrorTable extends ErrorTable {
         },
     };
 
-    public "unit-test-no-extra": UnitTestNoExtraStructuredProblemTemplate = {
+    public "unit-test-no-extra": UnitTestNoExtraTemplate = {
         packageName: PACKAGE_NAME,
         errorName: "unit-test-no-extra",
         status: httpStatusCodeFrom(500),

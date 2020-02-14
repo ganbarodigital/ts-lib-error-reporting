@@ -34,13 +34,13 @@
 import { expect } from "chai";
 import { describe } from "mocha";
 
-import { errorTable, UnitTestFailureStructuredProblemReportStruct } from "../Fixtures";
+import { errorTable, UnitTestFailureData } from "../Fixtures";
 import { StructuredProblemReport } from "../StructuredProblemReport";
 import { AppError } from "./AppError";
 
 describe("AppError", () => {
     it("is throwable", () => {
-        const inputValue: UnitTestFailureStructuredProblemReportStruct = {
+        const inputValue: UnitTestFailureData = {
             template: errorTable["unit-test-failure"],
             extra: {
                 publicExtra: {
@@ -59,7 +59,7 @@ describe("AppError", () => {
     }),
     describe(".details", () => {
         it("contains the structured problem report", () => {
-            const problemData: UnitTestFailureStructuredProblemReportStruct = {
+            const problemData: UnitTestFailureData = {
                 template: errorTable["unit-test-failure"],
                 extra: {
                     publicExtra: {
@@ -80,7 +80,7 @@ describe("AppError", () => {
     }),
     describe(" constructor()", () => {
         it("creates a new AppError", () => {
-            const inputValue: UnitTestFailureStructuredProblemReportStruct = {
+            const inputValue: UnitTestFailureData = {
                 template: errorTable["unit-test-failure"],
                 extra: {
                     publicExtra: {
@@ -101,7 +101,7 @@ describe("AppError", () => {
 
     describe(".message", () => {
         it("contains the error's details (from the underlying template)", () => {
-            const inputValue: UnitTestFailureStructuredProblemReportStruct = {
+            const inputValue: UnitTestFailureData = {
                 template: errorTable["unit-test-failure"],
                 extra: {
                     publicExtra: {
@@ -135,7 +135,7 @@ describe("AppError", () => {
                         field2: "second field",
                     },
                 },
-            } as UnitTestFailureStructuredProblemReportStruct);
+            } as UnitTestFailureData);
             const expectedValue = inputValue.type.toString();
 
             const unit = AppError.from(inputValue);

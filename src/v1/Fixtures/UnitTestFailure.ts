@@ -32,11 +32,11 @@
 // POSSIBILITY OF SUCH DAMAGE.
 //
 import { ErrorTypeStruct, PACKAGE_NAME } from "..";
-import { StructuredProblemReportStructWithExtraData } from "../StructuredProblemReport";
-import { StructuredProblemTemplateWithExtraData } from "../StructuredProblemTemplate";
+import { ErrorTableTemplateWithExtraData } from "../ErrorTableTemplate";
+import { StructuredProblemReportDataWithExtraData } from "../StructuredProblemReport";
 import { UnitTestErrorTable } from "./UnitTestErrorTable";
 
-export interface UnitTestFailureExtraDataTemplate {
+export interface UnitTestFailureExtraData {
     publicExtra: {
         field1: string;
     };
@@ -45,17 +45,17 @@ export interface UnitTestFailureExtraDataTemplate {
     };
 }
 
-export type UnitTestFailureStructuredProblemTemplate = StructuredProblemTemplateWithExtraData<
+export type UnitTestFailureTemplate = ErrorTableTemplateWithExtraData<
     UnitTestErrorTable,
     "unit-test-failure",
-    UnitTestFailureExtraDataTemplate
+    UnitTestFailureExtraData
 >;
 
-export type UnitTestFailureStructuredProblemReportStruct = StructuredProblemReportStructWithExtraData<
+export type UnitTestFailureData = StructuredProblemReportDataWithExtraData<
     UnitTestErrorTable,
     "unit-test-failure",
-    UnitTestFailureStructuredProblemTemplate,
-    UnitTestFailureExtraDataTemplate
+    UnitTestFailureTemplate,
+    UnitTestFailureExtraData
 >;
 
 type UnitTestFailure = ErrorTypeStruct<UnitTestErrorTable, "unit-test-failure">;

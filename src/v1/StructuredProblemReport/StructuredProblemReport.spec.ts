@@ -34,17 +34,13 @@
 import { expect } from "chai";
 import { describe } from "mocha";
 
-import {
-    errorTable,
-    UnitTestFailureStructuredProblemReportStruct,
-    UnitTestNoExtraStructuredProblemReportStruct,
-} from "../Fixtures";
+import { errorTable, UnitTestFailureData, UnitTestNoExtraData } from "../Fixtures";
 import { StructuredProblemReport } from "../StructuredProblemReport";
 
 describe("StructuredProblemReport", () => {
     describe(".from()", () => {
         it("creates a new StructuredProblemReport", () => {
-            const inputValue: UnitTestFailureStructuredProblemReportStruct = {
+            const inputValue: UnitTestFailureData = {
                 template: errorTable["unit-test-failure"],
                 extra: {
                     publicExtra: {
@@ -62,7 +58,7 @@ describe("StructuredProblemReport", () => {
         });
 
         it("accepts a template that has no `extra` data", () => {
-            const inputValue: UnitTestNoExtraStructuredProblemReportStruct = {
+            const inputValue: UnitTestNoExtraData = {
                 template: errorTable["unit-test-no-extra"],
             };
 
@@ -74,7 +70,7 @@ describe("StructuredProblemReport", () => {
 
     describe(".detail", () => {
         it("returns the `detail` field from the underlying template", () => {
-            const inputValue: UnitTestFailureStructuredProblemReportStruct = {
+            const inputValue: UnitTestFailureData = {
                 template: errorTable["unit-test-failure"],
                 extra: {
                     publicExtra: {
@@ -96,7 +92,7 @@ describe("StructuredProblemReport", () => {
 
     describe(".errorId", () => {
         it("returns the `errorId` field from the underlying problem report", () => {
-            const inputValue: UnitTestFailureStructuredProblemReportStruct = {
+            const inputValue: UnitTestFailureData = {
                 template: errorTable["unit-test-failure"],
                 errorId: "12345",
                 extra: {
@@ -117,7 +113,7 @@ describe("StructuredProblemReport", () => {
         });
 
         it("returns null if there is the `errorId` field in the underlying problem report", () => {
-            const inputValue: UnitTestFailureStructuredProblemReportStruct = {
+            const inputValue: UnitTestFailureData = {
                 template: errorTable["unit-test-failure"],
                 extra: {
                     publicExtra: {
@@ -139,7 +135,7 @@ describe("StructuredProblemReport", () => {
 
     describe(".errorName", () => {
         it("returns the `errorName` field from the underlying template", () => {
-            const inputValue: UnitTestFailureStructuredProblemReportStruct = {
+            const inputValue: UnitTestFailureData = {
                 template: errorTable["unit-test-failure"],
                 extra: {
                     publicExtra: {
@@ -161,7 +157,7 @@ describe("StructuredProblemReport", () => {
 
     describe(".packageName", () => {
         it("returns the `packageName` field from the underlying template", () => {
-            const inputValue: UnitTestFailureStructuredProblemReportStruct = {
+            const inputValue: UnitTestFailureData = {
                 template: errorTable["unit-test-failure"],
                 extra: {
                     publicExtra: {
@@ -183,7 +179,7 @@ describe("StructuredProblemReport", () => {
 
     describe(".status", () => {
         it("returns the `status` field from the underlying template", () => {
-            const inputValue: UnitTestFailureStructuredProblemReportStruct = {
+            const inputValue: UnitTestFailureData = {
                 template: errorTable["unit-test-failure"],
                 extra: {
                     publicExtra: {
@@ -205,7 +201,7 @@ describe("StructuredProblemReport", () => {
 
     describe(".template", () => {
         it("returns the underlying template", () => {
-            const inputValue: UnitTestFailureStructuredProblemReportStruct = {
+            const inputValue: UnitTestFailureData = {
                 template: errorTable["unit-test-failure"],
                 extra: {
                     publicExtra: {

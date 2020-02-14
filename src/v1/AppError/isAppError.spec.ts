@@ -34,14 +34,14 @@
 import { expect } from "chai";
 import { describe } from "mocha";
 
-import { errorTable, UnitTestFailureStructuredProblemReportStruct } from "../Fixtures";
+import { errorTable, UnitTestFailureData } from "../Fixtures";
 import { StructuredProblemReport } from "../StructuredProblemReport";
 import { AppError } from "./AppError";
 import { isAppError } from "./isAppError";
 
 describe("isAppError()", () => {
     it("is a type-guard for AppError objects", () => {
-        const problemData: UnitTestFailureStructuredProblemReportStruct = {
+        const problemData: UnitTestFailureData = {
             template: errorTable["unit-test-failure"],
             extra: {
                 publicExtra: {

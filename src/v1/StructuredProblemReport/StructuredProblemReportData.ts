@@ -31,57 +31,35 @@
 // ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-import { HttpStatusCode } from "@ganbarodigital/ts-lib-http-types/lib/v1";
-import { PackageName } from "@ganbarodigital/ts-lib-packagename/lib/v1";
-
 import { ErrorTable } from "../ErrorTable";
+import { ErrorTableTemplate } from "../ErrorTableTemplate";
 import { ExtraDataTemplate, NoExtraDataTemplate } from "../ExtraData";
 
 /**
- * these go in your ErrorTable, and they define what your structured problem
- * reports will look like
+ * the internal data captured when an error occurs
+ *
+ * this defines the structure that you pass into
+ * `StructuredProblemReport.from()` when you create problem reports at
+ * runtime
+ *
+ *  use this as your base interface when defining errors that have NO
+ * `extra` bits of data
  */
-export interface StructuredProblemTemplate<
+export interface StructuredProblemReportData<
     T extends ErrorTable,
     N extends keyof T,
+    M extends ErrorTableTemplate<T, N, E>,
     E extends ExtraDataTemplate | NoExtraDataTemplate
 > {
-    /**
-     * which package has defined this template?
-     */
-    packageName: PackageName;
+    template: M;
 
     /**
-     * what kind of error is this?
+     * unique ID of this instance.
      *
-     * - `T` is your ErrorTable (a list of all the errors you've declared)
-     * - `N` is the name of your error (must be a property of your ErrorTable)
+     * if present, may be used to build a URI that is shared with the
+     * end-user.
      */
-    errorName: N;
-
-    /**
-     * the HTTP status that best fits this kind of error
-     *
-     * NOTE that this is from the point-of-view of the code that throws
-     * the error.
-     *
-     * e.g. a library may report a `422` (validation failure),
-     * but it doesn't know where the rejected input comes from.
-     *
-     * the calling app DOES know, and it may decide to report a `500`
-     * (internal server error) back to the end-user instead
-     */
-    status: HttpStatusCode;
-
-    /**
-     * a human-readable summary of the problem
-     *
-     * this should be the same string for each instance of this error
-     * (i.e., don't make it a `printf()` format string!)
-     *
-     * put instance-specific details into the `extra` section
-     */
-    detail: string;
+    errorId?: string;
 
     /**
      * the internal data captured when an error occurs

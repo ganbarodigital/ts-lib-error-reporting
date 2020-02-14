@@ -31,35 +31,6 @@
 // ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-import { ErrorTable } from "../ErrorTable";
-import { ExtraDataTemplate } from "../ExtraData";
-import { StructuredProblemTemplate } from "../StructuredProblemTemplate";
-import { StructuredProblemReportStruct } from "./StructuredProblemReportStruct";
 
-/**
- * the internal data captured when an error occurs
- *
- * this defines the structure that you pass into
- * `StructuredProblemReport.from()` when you create problem reports at
- * runtime
- */
-export interface StructuredProblemReportStructWithExtraData<
-    T extends ErrorTable,
-    N extends keyof T,
-    M extends StructuredProblemTemplate<T, N, E>,
-    E extends ExtraDataTemplate
-> extends StructuredProblemReportStruct<T, N, M, E> {
-
-    /**
-     * the internal data captured when an error occurs
-     *
-     * this is split up into (up to) two properties:
-     *
-     * - `publicExtra`: data that can be shared with the caller
-     *   (e.g. included in an API response payload)
-     *   this data will also be written to the logs
-     * - `logsOnlyExtra`: data that can only be written to the logs
-     *   (i.e. it must not be shared with the caller)
-     */
-    extra: E;
-}
+export * from "./ErrorTableTemplate";
+export * from "./ErrorTableTemplateWithExtraData";
