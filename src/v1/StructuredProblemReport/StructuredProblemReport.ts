@@ -38,7 +38,6 @@ import { ValueObject } from "@ganbarodigital/ts-lib-value-objects/lib/v2";
 import { StructuredProblemReportData } from ".";
 import { ErrorTable } from "../ErrorTable";
 import { ErrorTableTemplate } from "../ErrorTableTemplate";
-import { ErrorType } from "../ErrorType";
 import { ExtraDataTemplate, NoExtraDataTemplate } from "../ExtraData";
 
 /**
@@ -92,6 +91,8 @@ export class StructuredProblemReport<
     /**
      * what kind of error is this?
      *
+     * error names are only unique to a single package
+     *
      * combine this with `packageName` to get a unique name for this error
      */
     get errorName(): N {
@@ -105,6 +106,13 @@ export class StructuredProblemReport<
      */
     get extra(): E | undefined {
         return this.value.extra;
+    }
+
+    /**
+     * an error name that's guaranteed to be unique across all packages
+     */
+    get fqErrorName(): string {
+        return this.packageName + "/" + this.errorName;
     }
 
     /**
@@ -136,17 +144,5 @@ export class StructuredProblemReport<
      */
     get template(): M {
         return this.value.template;
-    }
-
-    /**
-     * what type of error is this?
-     *
-     * use this to write code that handles different kinds of errors
-     */
-    get type(): ErrorType<T, N> {
-        return ErrorType.from({
-            context: this.value.template.packageName,
-            name: this.value.template.errorName,
-        });
     }
 }

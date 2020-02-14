@@ -124,7 +124,7 @@ describe("AppError", () => {
     });
 
     describe(".name", () => {
-        it("contains the error's name", () => {
+        it("contains the error's globally-unique name", () => {
             const inputValue = StructuredProblemReport.from({
                 template: errorTable["unit-test-failure"],
                 extra: {
@@ -136,7 +136,7 @@ describe("AppError", () => {
                     },
                 },
             } as UnitTestFailureData);
-            const expectedValue = inputValue.type.toString();
+            const expectedValue = inputValue.fqErrorName;
 
             const unit = AppError.from(inputValue);
             const actualValue = unit.name;

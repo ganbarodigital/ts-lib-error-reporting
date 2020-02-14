@@ -31,7 +31,6 @@
 // ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-import { ErrorTypeStruct, PACKAGE_NAME } from "..";
 import { ErrorTableTemplateWithExtraData } from "../ErrorTableTemplate";
 import { StructuredProblemReportDataWithExtraData } from "../StructuredProblemReport";
 import { UnitTestErrorTable } from "./UnitTestErrorTable";
@@ -57,9 +56,3 @@ export type UnitTestFailureData = StructuredProblemReportDataWithExtraData<
     UnitTestFailureTemplate,
     UnitTestFailureExtraData
 >;
-
-type UnitTestFailure = ErrorTypeStruct<UnitTestErrorTable, "unit-test-failure">;
-export const unitTestFailure: UnitTestFailure = {
-    context: PACKAGE_NAME,
-    name: "unit-test-failure",
-};

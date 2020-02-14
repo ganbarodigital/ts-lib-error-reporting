@@ -36,8 +36,6 @@ import { OnError } from "@ganbarodigital/ts-on-error/lib/V1";
 
 import { ErrorTable } from "./ErrorTable";
 
-export * from "./ErrorType";
-
 const onError: OnError = (reason: symbol, desc: string, extra: object) => {
     throw new Error("invalid package name");
 };
