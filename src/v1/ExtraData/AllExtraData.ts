@@ -1,3 +1,6 @@
+import { ExtraLogsOnlyData } from "./ExtraLogsOnlyData";
+import { ExtraPublicData } from "./ExtraPublicData";
+
 //
 // Copyright (c) 2020-present Ganbaro Digital Ltd
 // All rights reserved.
@@ -31,47 +34,8 @@
 // ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-import { ErrorTable } from "../ErrorTable";
-import { ExtraDataTemplate, NoExtraDataTemplate } from "../ExtraData";
-import { StructuredProblemReport, StructuredProblemReportStruct } from "../StructuredProblemReport";
-import { StructuredProblemTemplate } from "../StructuredProblemTemplate";
 
 /**
- * base class for throwable Javascript Errors.
- *
- * It includes structured information about the error that is being
- * reported.
+ * the internal data captured when an error occurs
  */
-export class AppError<
-    T extends ErrorTable,
-    N extends keyof T,
-    M extends StructuredProblemTemplate<T, N, E>,
-    R extends StructuredProblemReportStruct<T, N, M, E>,
-    E extends ExtraDataTemplate | NoExtraDataTemplate
-> extends Error {
-    public static from<
-        T extends ErrorTable,
-        N extends keyof T,
-        M extends StructuredProblemTemplate<T, N, E>,
-        R extends StructuredProblemReportStruct<T, N, M, E>,
-        E extends ExtraDataTemplate | NoExtraDataTemplate,
-    >(details: StructuredProblemReport<T, N, M, R, E>) {
-        return new AppError(details);
-    }
-
-    /**
-     * information about what went wrong, in a type-safe structure
-     */
-    public readonly details: StructuredProblemReport<T, N, M, R, E>;
-
-    /**
-     * call `AppError.from()` to create a new instance of AppError
-     */
-    protected constructor(details: StructuredProblemReport<T, N, M, R, E>) {
-        super(details.detail);
-        this.details = details;
-
-        // we want the error name to be ours
-        this.name = this.details.packageName + "/" + this.details.errorName;
-    }
-}
+export type AllExtraData = ExtraPublicData & ExtraLogsOnlyData;

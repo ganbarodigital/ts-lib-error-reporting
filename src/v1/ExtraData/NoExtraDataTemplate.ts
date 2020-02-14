@@ -37,5 +37,4 @@
  *
  * we've added this simply to improve the readability of the code
  */
-// tslint:disable-next-line: no-empty-interface
-export interface NoExtraDataTemplate {}
+export type NoExtraDataTemplate = null;

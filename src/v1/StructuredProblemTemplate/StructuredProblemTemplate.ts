@@ -35,6 +35,7 @@ import { HttpStatusCode } from "@ganbarodigital/ts-lib-http-types/lib/v1";
 import { PackageName } from "@ganbarodigital/ts-lib-packagename/lib/v1";
 
 import { ErrorTable } from "../ErrorTable";
+import { ExtraDataTemplate, NoExtraDataTemplate } from "../ExtraData";
 
 /**
  * these go in your ErrorTable, and they define what your structured problem
@@ -42,7 +43,8 @@ import { ErrorTable } from "../ErrorTable";
  */
 export interface StructuredProblemTemplate<
     T extends ErrorTable,
-    N extends keyof T
+    N extends keyof T,
+    E extends ExtraDataTemplate | NoExtraDataTemplate
 > {
     /**
      * which package has defined this template?
@@ -80,4 +82,17 @@ export interface StructuredProblemTemplate<
      * put instance-specific details into the `extra` section
      */
     detail: string;
+
+    /**
+     * the internal data captured when an error occurs
+     *
+     * this is split up into (up to) two properties:
+     *
+     * - `publicExtra`: data that can be shared with the caller
+     *   (e.g. included in an API response payload)
+     *   this data will also be written to the logs
+     * - `logsOnlyExtra`: data that can only be written to the logs
+     *   (i.e. it must not be shared with the caller)
+     */
+    extra?: E;
 }

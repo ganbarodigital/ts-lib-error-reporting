@@ -33,19 +33,27 @@
 //
 import { ErrorTable } from "../ErrorTable";
 import { ExtraDataTemplate } from "../ExtraData";
-import { ExtraDataContents } from "../ExtraData/ExtraDataContents";
 import { StructuredProblemTemplate } from "./StructuredProblemTemplate";
 
 /**
- * represents a StructuredProblemTemplate that also has an `extra` section
- * defined
- *
- * this is used internally in the package to help the compiler enforce
- * our types at compile-time. You don't need to use this yourself.
+ * these go in your ErrorTable, and they define what your structured problem
+ * reports will look like
  */
-export type StructuredProblemTemplateWithExtraData<
+export interface StructuredProblemTemplateWithExtraData<
     T extends ErrorTable,
     N extends keyof T,
-    E extends ExtraDataTemplate<C>,
-    C extends ExtraDataContents
-> = StructuredProblemTemplate<T, N> & E;
+    E extends ExtraDataTemplate
+> extends StructuredProblemTemplate<T, N, E>{
+    /**
+     * the internal data captured when an error occurs
+     *
+     * this is split up into (up to) two properties:
+     *
+     * - `publicExtra`: data that can be shared with the caller
+     *   (e.g. included in an API response payload)
+     *   this data will also be written to the logs
+     * - `logsOnlyExtra`: data that can only be written to the logs
+     *   (i.e. it must not be shared with the caller)
+     */
+    extra: E;
+}

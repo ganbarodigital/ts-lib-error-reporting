@@ -31,20 +31,20 @@
 // ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-import { NoExtraDataContents, NoExtraDataTemplate } from "../ExtraData";
+import { NoExtraDataTemplate } from "../ExtraData";
 import { StructuredProblemReportStruct } from "../StructuredProblemReport";
 import { StructuredProblemTemplate } from "../StructuredProblemTemplate";
 import { UnitTestErrorTable } from "./UnitTestErrorTable";
 
 export type UnitTestNoExtraStructuredProblemTemplate = StructuredProblemTemplate<
     UnitTestErrorTable,
-    "unit-test-no-extra"
-> & NoExtraDataTemplate;
+    "unit-test-no-extra",
+    NoExtraDataTemplate
+>;
 
 export type UnitTestNoExtraStructuredProblemReportStruct = StructuredProblemReportStruct<
     UnitTestErrorTable,
     "unit-test-no-extra",
     UnitTestNoExtraStructuredProblemTemplate,
-    NoExtraDataTemplate,
-    NoExtraDataContents
+    NoExtraDataTemplate
 >;

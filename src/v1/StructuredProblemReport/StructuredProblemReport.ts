@@ -35,12 +35,11 @@ import { HttpStatusCode } from "@ganbarodigital/ts-lib-http-types/lib/v1";
 import { PackageName } from "@ganbarodigital/ts-lib-packagename/lib/v1";
 import { ValueObject } from "@ganbarodigital/ts-lib-value-objects/lib/v2";
 
+import { StructuredProblemReportStruct } from ".";
 import { ErrorTable } from "../ErrorTable";
 import { ErrorType } from "../ErrorType";
-import { ExtraDataTemplate } from "../ExtraData";
-import { ExtraDataContents } from "../ExtraData/ExtraDataContents";
-import { StructuredProblemTemplateWithExtraData } from "../StructuredProblemTemplate";
-import { StructuredProblemReportStructWithExtraData } from "./StructuredProblemReportStructWithExtraData";
+import { ExtraDataTemplate, NoExtraDataTemplate } from "../ExtraData";
+import { StructuredProblemTemplate } from "../StructuredProblemTemplate";
 
 /**
  * value object. represents a problem (a logic or robustness error) that
@@ -49,10 +48,9 @@ import { StructuredProblemReportStructWithExtraData } from "./StructuredProblemR
 export class StructuredProblemReport<
     T extends ErrorTable,
     N extends keyof T,
-    M extends StructuredProblemTemplateWithExtraData<T, N, E, C>,
-    R extends StructuredProblemReportStructWithExtraData<T, N, M, E, C>,
-    E extends ExtraDataTemplate<C>,
-    C extends ExtraDataContents
+    M extends StructuredProblemTemplate<T, N, E>,
+    R extends StructuredProblemReportStruct<T, N, M, E>,
+    E extends ExtraDataTemplate | NoExtraDataTemplate
 >
     extends ValueObject<R> {
     /**
@@ -61,13 +59,12 @@ export class StructuredProblemReport<
     public static from<
         T extends ErrorTable,
         N extends keyof T,
-        M extends StructuredProblemTemplateWithExtraData<T, N, E, C>,
-        R extends StructuredProblemReportStructWithExtraData<T, N, M, E, C>,
-        E extends ExtraDataTemplate<C>,
-        C extends ExtraDataContents
+        M extends StructuredProblemTemplate<T, N, E>,
+        R extends StructuredProblemReportStruct<T, N, M, E>,
+        E extends ExtraDataTemplate | null
     >(
         input: R,
-    ): StructuredProblemReport<T, N, M, R, E, C> {
+    ): StructuredProblemReport<T, N, M, R, E> {
         return new StructuredProblemReport(input);
     }
 
@@ -103,11 +100,11 @@ export class StructuredProblemReport<
 
     /**
      * what extra information do we have about this instance of the error?
+     *
+     * NOTE: some errors will not have any extra information available.
      */
-    get extra(): C | undefined {
-        // the TS compiler can't work out that `extra` is of type `E`
-        // without our help :(
-        return this.value.extra as C;
+    get extra(): E | undefined {
+        return this.value.extra;
     }
 
     /**

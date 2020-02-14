@@ -31,15 +31,32 @@
 // ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-import { ExtraDataContents } from "./ExtraDataContents";
+// import { AllExtraData } from "./AllExtraData";
+// import { ExtraLogsOnlyData } from "./ExtraLogsOnlyData";
+// import { ExtraPublicData } from "./ExtraPublicData";
+// import { NoExtraData } from "./NoExtraData";
 
 /**
  * the internal data captured when an error occurs
  */
-export interface ExtraDataTemplate<C extends ExtraDataContents> {
+// export type ExtraDataTemplate =
+//     ExtraPublicData | ExtraLogsOnlyData | AllExtraData | NoExtraData;
+
+/**
+ * the internal data captured when an error occurs
+ */
+export interface ExtraDataTemplate {
     /**
-     * use this to hold any data that helps to understand the error
-     * that has occurred
+     * use this to hold any extra information that should be sent back
+     * to the end-user
+     *
+     * information in this object will also be written to the app's logs
      */
-    extra?: C;
+    publicExtra?: object;
+
+    /**
+     * use this to hold any extra information that should be written to
+     * the app's logs, BUT NOT sent back to the end-user
+     */
+    logsOnlyExtra?: object;
 }

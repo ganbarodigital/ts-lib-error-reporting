@@ -33,8 +33,7 @@
 //
 import { ErrorTable } from "../ErrorTable";
 import { ExtraDataTemplate } from "../ExtraData";
-import { ExtraDataContents } from "../ExtraData/ExtraDataContents";
-import { StructuredProblemTemplateWithExtraData } from "../StructuredProblemTemplate";
+import { StructuredProblemTemplate } from "../StructuredProblemTemplate";
 import { StructuredProblemReportStruct } from "./StructuredProblemReportStruct";
 
 /**
@@ -44,10 +43,23 @@ import { StructuredProblemReportStruct } from "./StructuredProblemReportStruct";
  * `StructuredProblemReport.from()` when you create problem reports at
  * runtime
  */
-export type StructuredProblemReportStructWithExtraData<
+export interface StructuredProblemReportStructWithExtraData<
     T extends ErrorTable,
     N extends keyof T,
-    M extends StructuredProblemTemplateWithExtraData<T, N, E, C>,
-    E extends ExtraDataTemplate<C>,
-    C extends ExtraDataContents
-> = StructuredProblemReportStruct<T, N, M, E, C> & E;
+    M extends StructuredProblemTemplate<T, N, E>,
+    E extends ExtraDataTemplate
+> extends StructuredProblemReportStruct<T, N, M, E> {
+
+    /**
+     * the internal data captured when an error occurs
+     *
+     * this is split up into (up to) two properties:
+     *
+     * - `publicExtra`: data that can be shared with the caller
+     *   (e.g. included in an API response payload)
+     *   this data will also be written to the logs
+     * - `logsOnlyExtra`: data that can only be written to the logs
+     *   (i.e. it must not be shared with the caller)
+     */
+    extra: E;
+}

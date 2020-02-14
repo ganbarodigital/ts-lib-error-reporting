@@ -32,9 +32,9 @@
 // POSSIBILITY OF SUCH DAMAGE.
 //
 import { ErrorTable } from "../ErrorTable";
-import { ExtraDataContents, ExtraDataTemplate } from "../ExtraData";
-import { StructuredProblemReportStructWithExtraData } from "../StructuredProblemReport";
-import { StructuredProblemTemplateWithExtraData } from "../StructuredProblemTemplate";
+import { ExtraDataTemplate } from "../ExtraData";
+import { StructuredProblemReportStruct } from "../StructuredProblemReport";
+import { StructuredProblemTemplate } from "../StructuredProblemTemplate";
 import { AppError } from "./AppError";
 
 /**
@@ -44,12 +44,11 @@ import { AppError } from "./AppError";
 export function isAppError<
     T extends ErrorTable,
     N extends keyof T,
-    M extends StructuredProblemTemplateWithExtraData<T, N, E, C>,
-    R extends StructuredProblemReportStructWithExtraData<T, N, M, E, C>,
-    E extends ExtraDataTemplate<C>,
-    C extends ExtraDataContents
+    M extends StructuredProblemTemplate<T, N, E>,
+    R extends StructuredProblemReportStruct<T, N, M, E>,
+    E extends ExtraDataTemplate
 >(
     input: unknown,
-): input is AppError<T, N, M, R, E, C> {
+): input is AppError<T, N, M, R, E> {
     return (input instanceof AppError);
 }
