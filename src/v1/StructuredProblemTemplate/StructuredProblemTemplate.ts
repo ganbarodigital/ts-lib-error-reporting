@@ -42,7 +42,7 @@ import { ErrorTable } from "../ErrorTable";
  */
 export interface StructuredProblemTemplate<
     T extends ErrorTable,
-    N extends keyof T,
+    N extends keyof T
 > {
     /**
      * which package has defined this template?

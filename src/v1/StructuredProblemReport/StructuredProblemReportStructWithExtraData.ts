@@ -31,7 +31,21 @@
 // ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
+import { ErrorTable } from "../ErrorTable";
+import { ExtraDataTemplate } from "../ExtraDataTemplate";
+import { StructuredProblemTemplateWithExtraData } from "../StructuredProblemTemplate";
+import { StructuredProblemReportStruct } from "./StructuredProblemReportStruct";
 
-export * from "./StructuredProblemReport";
-export * from "./StructuredProblemReportStruct";
-export * from "./StructuredProblemReportStructWithExtraData";
+/**
+ * the internal data captured when an error occurs
+ *
+ * this defines the structure that you pass into
+ * `StructuredProblemReport.from()` when you create problem reports at
+ * runtime
+ */
+export type StructuredProblemReportStructWithExtraData<
+    T extends ErrorTable,
+    N extends keyof T,
+    M extends StructuredProblemTemplateWithExtraData<T, N, E>,
+    E extends ExtraDataTemplate
+> = StructuredProblemReportStruct<T, N, M, E> & E;

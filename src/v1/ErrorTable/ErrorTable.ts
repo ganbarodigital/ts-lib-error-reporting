@@ -35,7 +35,7 @@ import { httpStatusCodeFrom } from "@ganbarodigital/ts-lib-http-types/lib/v1";
 
 import { PACKAGE_NAME } from "..";
 import { ExtraDataTemplate } from "../ExtraDataTemplate";
-import { StructuredProblemTemplate } from "../StructuredProblemTemplate";
+import { StructuredProblemTemplateWithExtraData } from "../StructuredProblemTemplate";
 import { UnreachableCodeStructuredProblemTemplate } from "./UnreachableCode";
 
 /**
@@ -50,7 +50,7 @@ import { UnreachableCodeStructuredProblemTemplate } from "./UnreachableCode";
  */
 export class ErrorTable {
     // everything in this class has to follow the same structure
-    [key: string]: StructuredProblemTemplate<any, string> & ExtraDataTemplate;
+    [key: string]: StructuredProblemTemplateWithExtraData<any, string, ExtraDataTemplate>;
 
     /**
      * use this error in if/else & the default clause of switch statements

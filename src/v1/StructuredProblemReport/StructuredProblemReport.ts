@@ -37,9 +37,9 @@ import { ValueObject } from "@ganbarodigital/ts-lib-value-objects/lib/v2";
 
 import { ErrorTable } from "../ErrorTable";
 import { ErrorType } from "../ErrorType";
-import { ExtraDataTemplate, NoExtraDataTemplate } from "../ExtraDataTemplate";
+import { ExtraDataTemplate } from "../ExtraDataTemplate";
 import { StructuredProblemTemplateWithExtraData } from "../StructuredProblemTemplate";
-import { StructuredProblemReportStruct } from "./StructuredProblemReportStruct";
+import { StructuredProblemReportStructWithExtraData } from "./StructuredProblemReportStructWithExtraData";
 
 /**
  * value object. represents a problem (a logic or robustness error) that
@@ -49,9 +49,10 @@ export class StructuredProblemReport<
     T extends ErrorTable,
     N extends keyof T,
     M extends StructuredProblemTemplateWithExtraData<T, N, E>,
-    E extends ExtraDataTemplate = NoExtraDataTemplate
+    R extends StructuredProblemReportStructWithExtraData<T, N, M, E>,
+    E extends ExtraDataTemplate
 >
-    extends ValueObject<StructuredProblemReportStruct<T, N, M, E>> {
+    extends ValueObject<R> {
     /**
      * smart constructor
      */
@@ -59,10 +60,11 @@ export class StructuredProblemReport<
         T extends ErrorTable,
         N extends keyof T,
         M extends StructuredProblemTemplateWithExtraData<T, N, E>,
-        E extends ExtraDataTemplate = NoExtraDataTemplate
+        R extends StructuredProblemReportStructWithExtraData<T, N, M, E>,
+        E extends ExtraDataTemplate
     >(
-        input: StructuredProblemReportStruct<T, N, M, E>,
-    ): StructuredProblemReport<T, N, M, E> {
+        input: R,
+    ): StructuredProblemReport<T, N, M, R, E> {
         return new StructuredProblemReport(input);
     }
 
@@ -94,6 +96,15 @@ export class StructuredProblemReport<
      */
     get errorName(): N {
         return this.value.template.errorName;
+    }
+
+    /**
+     * what extra information do we have about this instance of the error?
+     */
+    get extra(): E | undefined {
+        // the TS compiler can't work out that `extra` is of type `E`
+        // without our help :(
+        return this.value.extra as E;
     }
 
     /**

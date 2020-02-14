@@ -38,7 +38,7 @@ import { describe } from "mocha";
 import { PACKAGE_NAME } from "..";
 import { ErrorTable } from "../ErrorTable";
 import { ExtraDataTemplate } from "../ExtraDataTemplate";
-import { StructuredProblemReport, StructuredProblemReportStruct } from "../StructuredProblemReport";
+import { StructuredProblemReport, StructuredProblemReportStructWithExtraData } from "../StructuredProblemReport";
 import { StructuredProblemTemplate } from "../StructuredProblemTemplate";
 import { AppError } from "./AppError";
 
@@ -58,12 +58,12 @@ type UnitErrorStructuredProblemTemplate = StructuredProblemTemplate<
     "unit-test-failure"
 > & UnitErrorExtraDataTemplate;
 
-type UnitErrorStructuredProblemReportStruct = StructuredProblemReportStruct<
+type UnitErrorStructuredProblemReportStruct = StructuredProblemReportStructWithExtraData<
     UnitErrorTable,
     "unit-test-failure",
     UnitErrorStructuredProblemTemplate,
     UnitErrorExtraDataTemplate
-> & UnitErrorExtraDataTemplate;
+>;
 
 class UnitErrorTable extends ErrorTable {
     public "unit-test-failure": UnitErrorStructuredProblemTemplate = {
@@ -97,7 +97,7 @@ describe("AppError", () => {
                 },
             },
         };
-        const unit = new AppError(
+        const unit = AppError.from(
             StructuredProblemReport.from(inputValue),
         );
 
@@ -117,7 +117,7 @@ describe("AppError", () => {
                 },
             };
             const inputValue = StructuredProblemReport.from(problemData);
-            const unit = new AppError(inputValue);
+            const unit = AppError.from(inputValue);
 
             const actualValue = unit.details;
 
@@ -137,7 +137,7 @@ describe("AppError", () => {
                     },
                 },
             };
-            const actualValue = new AppError(
+            const actualValue = AppError.from(
                 StructuredProblemReport.from(inputValue),
             );
 
@@ -160,7 +160,7 @@ describe("AppError", () => {
             };
             const expectedValue = inputValue.template.detail;
 
-            const unit = new AppError(
+            const unit = AppError.from(
                 StructuredProblemReport.from(inputValue),
             );
             const actualValue = unit.message;
@@ -184,7 +184,7 @@ describe("AppError", () => {
             } as UnitErrorStructuredProblemReportStruct);
             const expectedValue = inputValue.type.toString();
 
-            const unit = new AppError(inputValue);
+            const unit = AppError.from(inputValue);
             const actualValue = unit.name;
 
             expect(actualValue).to.equal(expectedValue);
