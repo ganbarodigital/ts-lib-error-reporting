@@ -40,7 +40,7 @@ import { describe } from "mocha";
 import { ErrorTypeStruct } from ".";
 import { PACKAGE_NAME } from "..";
 import { ErrorTable } from "../ErrorTable";
-import { ExtraDataTemplate } from "../ExtraDataTemplate";
+import { ExtraDataContents, ExtraDataTemplate } from "../ExtraData";
 import { StructuredProblemTemplate } from "../StructuredProblemTemplate";
 import { ErrorType } from "./ErrorType";
 import { isErrorType } from "./isErrorType";
@@ -49,16 +49,16 @@ const onError: OnError = (reason: symbol, desc: string, extra: object): never =>
     throw Error("ON ERROR CALLED!!");
 };
 
-interface UnitErrorExtraDataTemplate extends ExtraDataTemplate {
-    extra: {
-        publicExtra: {
-            field1: string;
-        };
-        logsOnlyExtra: {
-            field2: string;
-        };
+interface UnitErrorExtraDataContents extends ExtraDataContents {
+    publicExtra: {
+        field1: string;
+    };
+    logsOnlyExtra: {
+        field2: string;
     };
 }
+
+interface UnitErrorExtraDataTemplate extends ExtraDataTemplate<UnitErrorExtraDataContents> { }
 
 type UnitErrorStructuredProblemTemplate = StructuredProblemTemplate<
     UnitErrorTable,

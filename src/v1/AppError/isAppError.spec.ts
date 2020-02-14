@@ -37,34 +37,36 @@ import { describe } from "mocha";
 
 import { PACKAGE_NAME } from "..";
 import { ErrorTable } from "../ErrorTable";
-import { ExtraDataTemplate } from "../ExtraDataTemplate";
-import { StructuredProblemReport, StructuredProblemReportStruct } from "../StructuredProblemReport";
+import { ExtraDataTemplate } from "../ExtraData";
+import { ExtraDataContents } from "../ExtraData/ExtraDataContents";
+import { StructuredProblemReport, StructuredProblemReportStructWithExtraData } from "../StructuredProblemReport";
 import { StructuredProblemTemplate } from "../StructuredProblemTemplate";
 import { AppError } from "./AppError";
 import { isAppError } from "./isAppError";
 
-interface UnitErrorExtraDataTemplate extends ExtraDataTemplate {
-    extra: {
-        publicExtra: {
-            field1: string;
-        };
-        logsOnlyExtra: {
-            field2: string;
-        };
+interface UnitErrorExtraDataContents extends ExtraDataContents {
+    publicExtra: {
+        field1: string;
+    };
+    logsOnlyExtra: {
+        field2: string;
     };
 }
+
+interface UnitErrorExtraDataTemplate extends ExtraDataTemplate<UnitErrorExtraDataContents> { }
 
 type UnitErrorStructuredProblemTemplate = StructuredProblemTemplate<
     UnitErrorTable,
     "unit-test-failure"
 > & UnitErrorExtraDataTemplate;
 
-type UnitErrorStructuredProblemReportStruct = StructuredProblemReportStruct<
+type UnitErrorStructuredProblemReportStruct = StructuredProblemReportStructWithExtraData<
     UnitErrorTable,
     "unit-test-failure",
     UnitErrorStructuredProblemTemplate,
-    UnitErrorExtraDataTemplate
-> & UnitErrorExtraDataTemplate;
+    UnitErrorExtraDataTemplate,
+    UnitErrorExtraDataContents
+>;
 
 class UnitErrorTable extends ErrorTable {
     public "unit-test-failure": UnitErrorStructuredProblemTemplate = {

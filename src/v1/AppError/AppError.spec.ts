@@ -37,21 +37,22 @@ import { describe } from "mocha";
 
 import { PACKAGE_NAME } from "..";
 import { ErrorTable } from "../ErrorTable";
-import { ExtraDataTemplate } from "../ExtraDataTemplate";
+import { ExtraDataTemplate } from "../ExtraData";
+import { ExtraDataContents } from "../ExtraData/ExtraDataContents";
 import { StructuredProblemReport, StructuredProblemReportStructWithExtraData } from "../StructuredProblemReport";
 import { StructuredProblemTemplate } from "../StructuredProblemTemplate";
 import { AppError } from "./AppError";
 
-interface UnitErrorExtraDataTemplate extends ExtraDataTemplate {
-    extra: {
-        publicExtra: {
-            field1: string;
-        };
-        logsOnlyExtra: {
-            field2: string;
-        };
+interface UnitErrorExtraDataContents extends ExtraDataContents {
+    publicExtra: {
+        field1: string;
+    };
+    logsOnlyExtra: {
+        field2: string;
     };
 }
+
+interface UnitErrorExtraDataTemplate extends ExtraDataTemplate<UnitErrorExtraDataContents> { }
 
 type UnitErrorStructuredProblemTemplate = StructuredProblemTemplate<
     UnitErrorTable,
@@ -62,7 +63,8 @@ type UnitErrorStructuredProblemReportStruct = StructuredProblemReportStructWithE
     UnitErrorTable,
     "unit-test-failure",
     UnitErrorStructuredProblemTemplate,
-    UnitErrorExtraDataTemplate
+    UnitErrorExtraDataTemplate,
+    UnitErrorExtraDataContents
 >;
 
 class UnitErrorTable extends ErrorTable {

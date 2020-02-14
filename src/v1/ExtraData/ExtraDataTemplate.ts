@@ -31,41 +31,15 @@
 // ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-import { httpStatusCodeFrom } from "@ganbarodigital/ts-lib-http-types/lib/v1";
-
-import { PACKAGE_NAME } from "..";
-import { ExtraDataTemplate } from "../ExtraData";
-import { ExtraDataContents } from "../ExtraData/ExtraDataContents";
-import { StructuredProblemTemplateWithExtraData } from "../StructuredProblemTemplate";
-import { UnreachableCodeStructuredProblemTemplate } from "./UnreachableCode";
+import { ExtraDataContents } from "./ExtraDataContents";
 
 /**
- * a list of all of the structured problems that your app or package
- * can generate
- *
- * extend this class in your own app or package, and add in all of the
- * errors that your app or package can throw
- *
- * then export it as the constant ERROR_TABLE, in case anyone else ever
- * needs to query it
+ * the internal data captured when an error occurs
  */
-export class ErrorTable {
-    // everything in this class has to follow the same structure
-    [key: string]: StructuredProblemTemplateWithExtraData<any, string, ExtraDataTemplate<any>, ExtraDataContents>;
-
+export interface ExtraDataTemplate<C extends ExtraDataContents> {
     /**
-     * use this error in if/else & the default clause of switch statements
-     * to spot things that should never happen
+     * use this to hold any data that helps to understand the error
+     * that has occurred
      */
-    public "unreachable-code": UnreachableCodeStructuredProblemTemplate = {
-        packageName: PACKAGE_NAME,
-        errorName: "unreachable-code",
-        status: httpStatusCodeFrom(500),
-        detail: "this code should never execute",
-        extra: {
-            logsOnlyExtra: {
-                function: "the function that threw this error",
-            },
-        },
-    };
+    extra?: C;
 }

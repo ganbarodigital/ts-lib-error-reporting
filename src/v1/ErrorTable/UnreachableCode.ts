@@ -33,20 +33,20 @@
 //
 import { ERROR_TABLE } from "../";
 import { AppError } from "../AppError";
-import { ExtraDataTemplate } from "../ExtraDataTemplate";
+import { ExtraDataTemplate } from "../ExtraData";
+import { ExtraDataContents } from "../ExtraData/ExtraDataContents";
 import { StructuredProblemReport, StructuredProblemReportStructWithExtraData } from "../StructuredProblemReport";
 import { StructuredProblemTemplate } from "../StructuredProblemTemplate";
 import { ErrorTable } from "./ErrorTable";
 
-export interface UnreachableCodeLogsOnlyData {
-    function: string;
-}
-
-export interface UnreachableCodeExtraDataTemplate extends ExtraDataTemplate {
-    extra: {
-        logsOnlyExtra: UnreachableCodeLogsOnlyData;
+export interface UnreachableCodeExtraDataContents extends ExtraDataContents {
+    logsOnlyExtra: {
+        function: string;
     };
 }
+
+export interface UnreachableCodeExtraDataTemplate
+    extends ExtraDataTemplate<UnreachableCodeExtraDataContents> { }
 
 export type UnreachableCodeStructuredProblemTemplate = StructuredProblemTemplate<
     ErrorTable,
@@ -57,7 +57,8 @@ export type UnreachableCodeStructuredProblemReportStruct = StructuredProblemRepo
     ErrorTable,
     "unreachable-code",
     UnreachableCodeStructuredProblemTemplate,
-    UnreachableCodeExtraDataTemplate
+    UnreachableCodeExtraDataTemplate,
+    UnreachableCodeExtraDataContents
 >;
 
 export type UnreachableCodeStructuredProblemReport = StructuredProblemReport<
@@ -65,8 +66,11 @@ export type UnreachableCodeStructuredProblemReport = StructuredProblemReport<
     "unreachable-code",
     UnreachableCodeStructuredProblemTemplate,
     UnreachableCodeStructuredProblemReportStruct,
-    UnreachableCodeExtraDataTemplate
+    UnreachableCodeExtraDataTemplate,
+    UnreachableCodeExtraDataContents
 >;
+
+type InstanceData = UnreachableCodeExtraDataContents & { errorId?: string };
 
 /**
  * Javascript Error
@@ -76,19 +80,16 @@ export class UnreachableCodeError extends AppError<
     "unreachable-code",
     UnreachableCodeStructuredProblemTemplate,
     UnreachableCodeStructuredProblemReportStruct,
-    UnreachableCodeExtraDataTemplate
+    UnreachableCodeExtraDataTemplate,
+    UnreachableCodeExtraDataContents
 > {
-    public constructor({ logsOnly, errorId }:
-    {
-        logsOnly: UnreachableCodeLogsOnlyData;
-        errorId?: string;
-    }) {
+    public constructor(instanceData: InstanceData) {
         const errorDetails: UnreachableCodeStructuredProblemReportStruct = {
             template: ERROR_TABLE["unreachable-code"],
             // tslint:disable-next-line: object-literal-shorthand
-            errorId: errorId,
+            errorId: instanceData.errorId,
             extra: {
-                logsOnlyExtra: logsOnly,
+                logsOnlyExtra: instanceData.logsOnlyExtra,
             },
         };
 
@@ -100,5 +101,5 @@ export class UnreachableCodeError extends AppError<
 }
 
 export const myError = new UnreachableCodeError(
-    { logsOnly: { function: "something went wrong" } },
+    { logsOnlyExtra: { function: "something went wrong" } },
 );

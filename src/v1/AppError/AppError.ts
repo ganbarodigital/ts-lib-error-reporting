@@ -32,7 +32,8 @@
 // POSSIBILITY OF SUCH DAMAGE.
 //
 import { ErrorTable } from "../ErrorTable";
-import { ExtraDataTemplate, NoExtraDataTemplate } from "../ExtraDataTemplate";
+import { ExtraDataTemplate } from "../ExtraData";
+import { ExtraDataContents } from "../ExtraData/ExtraDataContents";
 import { StructuredProblemReport, StructuredProblemReportStructWithExtraData } from "../StructuredProblemReport";
 import { StructuredProblemTemplateWithExtraData } from "../StructuredProblemTemplate";
 
@@ -45,29 +46,31 @@ import { StructuredProblemTemplateWithExtraData } from "../StructuredProblemTemp
 export class AppError<
     T extends ErrorTable,
     N extends keyof T,
-    M extends StructuredProblemTemplateWithExtraData<T, N, E>,
-    R extends StructuredProblemReportStructWithExtraData<T, N, M, E>,
-    E extends ExtraDataTemplate = NoExtraDataTemplate,
+    M extends StructuredProblemTemplateWithExtraData<T, N, E, C>,
+    R extends StructuredProblemReportStructWithExtraData<T, N, M, E, C>,
+    E extends ExtraDataTemplate<C>,
+    C extends ExtraDataContents
 > extends Error {
     public static from<
         T extends ErrorTable,
         N extends keyof T,
-        M extends StructuredProblemTemplateWithExtraData<T, N, E>,
-        R extends StructuredProblemReportStructWithExtraData<T, N, M, E>,
-        E extends ExtraDataTemplate = NoExtraDataTemplate,
-    >(details: StructuredProblemReport<T, N, M, R, E>) {
+        M extends StructuredProblemTemplateWithExtraData<T, N, E, C>,
+        R extends StructuredProblemReportStructWithExtraData<T, N, M, E, C>,
+        E extends ExtraDataTemplate<C>,
+        C extends ExtraDataContents
+    >(details: StructuredProblemReport<T, N, M, R, E, C>) {
         return new AppError(details);
     }
 
     /**
      * information about what went wrong, in a type-safe structure
      */
-    public readonly details: StructuredProblemReport<T, N, M, R, E>;
+    public readonly details: StructuredProblemReport<T, N, M, R, E, C>;
 
     /**
      * call `AppError.from()` to create a new instance of AppError
      */
-    protected constructor(details: StructuredProblemReport<T, N, M, R, E>) {
+    protected constructor(details: StructuredProblemReport<T, N, M, R, E, C>) {
         super(details.detail);
         this.details = details;
 

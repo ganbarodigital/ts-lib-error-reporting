@@ -32,5 +32,21 @@
 // POSSIBILITY OF SUCH DAMAGE.
 //
 
-export * from "./ExtraDataTemplate";
-export * from "./NoExtraDataTemplate";
+/**
+ * the internal data captured when an error occurs
+ */
+export interface ExtraDataContents {
+    /**
+     * use this to hold any extra information that should be sent back
+     * to the end-user
+     *
+     * information in this object will also be written to the app's logs
+     */
+    publicExtra?: object;
+
+    /**
+     * use this to hold any extra information that should be written to
+     * the app's logs, BUT NOT sent back to the end-user
+     */
+    logsOnlyExtra?: object;
+}

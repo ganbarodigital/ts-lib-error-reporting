@@ -37,26 +37,30 @@ import { describe } from "mocha";
 
 import { PACKAGE_NAME } from "..";
 import { ErrorTable } from "../ErrorTable";
-import { ExtraDataTemplate } from "../ExtraDataTemplate";
+import { ExtraDataContents, ExtraDataTemplate } from "../ExtraData";
 import { StructuredProblemTemplate } from "../StructuredProblemTemplate";
 import { ErrorType } from "./ErrorType";
-import { ErrorTypeStruct } from "./ErrorTypeStruct";
 
-interface UnitErrorExtraDataTemplate extends ExtraDataTemplate {
-    extra: {
-        publicExtra: {
-            field1: string;
-        };
-        logsOnlyExtra: {
-            field2: string;
-        };
+interface UnitErrorExtraDataContents extends ExtraDataContents {
+    publicExtra: {
+        field1: string;
+    };
+    logsOnlyExtra: {
+        field2: string;
     };
 }
+
+interface UnitErrorExtraDataTemplate extends ExtraDataTemplate<UnitErrorExtraDataContents> { }
 
 type UnitErrorStructuredProblemTemplate = StructuredProblemTemplate<
     UnitErrorTable,
     "unit-test-failure"
 > & UnitErrorExtraDataTemplate;
+
+const unitTestFailure = {
+    context: PACKAGE_NAME,
+    name: "unit-test-failure",
+}
 
 class UnitErrorTable extends ErrorTable {
     public "unit-test-failure": UnitErrorStructuredProblemTemplate = {
@@ -74,12 +78,6 @@ class UnitErrorTable extends ErrorTable {
         },
     };
 }
-
-type UnitTestFailure = ErrorTypeStruct<UnitErrorTable, "unit-test-failure">;
-const unitTestFailure: UnitTestFailure = {
-    context: PACKAGE_NAME,
-    name: "unit-test-failure",
-};
 
 describe("ErrorType", () => {
     describe(".from()", () => {

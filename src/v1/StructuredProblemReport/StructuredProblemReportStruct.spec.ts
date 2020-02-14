@@ -35,34 +35,35 @@ import { httpStatusCodeFrom } from "@ganbarodigital/ts-lib-http-types/lib/v1";
 import { expect } from "chai";
 import { describe } from "mocha";
 
+import { StructuredProblemReportStructWithExtraData } from ".";
 import { PACKAGE_NAME } from "..";
 import { ErrorTable } from "../ErrorTable";
-import { ExtraDataTemplate } from "../ExtraDataTemplate";
+import { ExtraDataContents, ExtraDataTemplate } from "../ExtraData";
 import { StructuredProblemTemplate } from "../StructuredProblemTemplate";
-import { StructuredProblemReportStruct } from "./StructuredProblemReportStruct";
 
-interface UnitErrorExtraDataTemplate extends ExtraDataTemplate {
-    extra: {
-        publicExtra: {
-            field1: string;
-        };
-        logsOnlyExtra: {
-            field2: string;
-        };
+interface UnitErrorExtraDataContents extends ExtraDataContents {
+    publicExtra: {
+        field1: string;
+    };
+    logsOnlyExtra: {
+        field2: string;
     };
 }
+
+interface UnitErrorExtraDataTemplate extends ExtraDataTemplate<UnitErrorExtraDataContents> { }
 
 type UnitErrorStructuredProblemTemplate = StructuredProblemTemplate<
     UnitErrorTable,
     "unit-test-failure"
 > & UnitErrorExtraDataTemplate;
 
-type UnitErrorStructuredProblemReport = StructuredProblemReportStruct<
+type UnitErrorStructuredProblemReportStruct = StructuredProblemReportStructWithExtraData<
     UnitErrorTable,
     "unit-test-failure",
     UnitErrorStructuredProblemTemplate,
-    UnitErrorExtraDataTemplate
-> & UnitErrorExtraDataTemplate;
+    UnitErrorExtraDataTemplate,
+    UnitErrorExtraDataContents
+>;
 
 class UnitErrorTable extends ErrorTable {
     public "unit-test-failure": UnitErrorStructuredProblemTemplate = {
@@ -85,7 +86,7 @@ const errorTable = new UnitErrorTable();
 
 describe("StructuredProblemReportStruct", () => {
     it("instance can be created inline", () => {
-        let unit: UnitErrorStructuredProblemReport;
+        let unit: UnitErrorStructuredProblemReportStruct;
 
         unit = {
             template: errorTable["unit-test-failure"],

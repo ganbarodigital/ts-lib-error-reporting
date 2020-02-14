@@ -37,7 +37,8 @@ import { ValueObject } from "@ganbarodigital/ts-lib-value-objects/lib/v2";
 
 import { ErrorTable } from "../ErrorTable";
 import { ErrorType } from "../ErrorType";
-import { ExtraDataTemplate } from "../ExtraDataTemplate";
+import { ExtraDataTemplate } from "../ExtraData";
+import { ExtraDataContents } from "../ExtraData/ExtraDataContents";
 import { StructuredProblemTemplateWithExtraData } from "../StructuredProblemTemplate";
 import { StructuredProblemReportStructWithExtraData } from "./StructuredProblemReportStructWithExtraData";
 
@@ -48,9 +49,10 @@ import { StructuredProblemReportStructWithExtraData } from "./StructuredProblemR
 export class StructuredProblemReport<
     T extends ErrorTable,
     N extends keyof T,
-    M extends StructuredProblemTemplateWithExtraData<T, N, E>,
-    R extends StructuredProblemReportStructWithExtraData<T, N, M, E>,
-    E extends ExtraDataTemplate
+    M extends StructuredProblemTemplateWithExtraData<T, N, E, C>,
+    R extends StructuredProblemReportStructWithExtraData<T, N, M, E, C>,
+    E extends ExtraDataTemplate<C>,
+    C extends ExtraDataContents
 >
     extends ValueObject<R> {
     /**
@@ -59,12 +61,13 @@ export class StructuredProblemReport<
     public static from<
         T extends ErrorTable,
         N extends keyof T,
-        M extends StructuredProblemTemplateWithExtraData<T, N, E>,
-        R extends StructuredProblemReportStructWithExtraData<T, N, M, E>,
-        E extends ExtraDataTemplate
+        M extends StructuredProblemTemplateWithExtraData<T, N, E, C>,
+        R extends StructuredProblemReportStructWithExtraData<T, N, M, E, C>,
+        E extends ExtraDataTemplate<C>,
+        C extends ExtraDataContents
     >(
         input: R,
-    ): StructuredProblemReport<T, N, M, R, E> {
+    ): StructuredProblemReport<T, N, M, R, E, C> {
         return new StructuredProblemReport(input);
     }
 
@@ -101,10 +104,10 @@ export class StructuredProblemReport<
     /**
      * what extra information do we have about this instance of the error?
      */
-    get extra(): E | undefined {
+    get extra(): C | undefined {
         // the TS compiler can't work out that `extra` is of type `E`
         // without our help :(
-        return this.value.extra as E;
+        return this.value.extra as C;
     }
 
     /**
