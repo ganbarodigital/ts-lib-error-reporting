@@ -20,12 +20,12 @@ This library offers a structured `AppError` type, based on [RFC 7807][RFC 7807].
 
 ```
 # run this from your Terminal
-npm install @ganbarodigital/ts-lib-apperror
+npm install @ganbarodigital/ts-lib-error-reporting
 ```
 
 ```typescript
 // add this import to your Typescript code
-import { AppError } from "@ganbarodigital/ts-lib-apperror/lib/v1"
+import { AppError } from "@ganbarodigital/ts-lib-error-reporting/lib/v1"
 ```
 
 __VS Code users:__ once you've added a single import anywhere in your project, you'll then be able to auto-import anything else that this library exports.

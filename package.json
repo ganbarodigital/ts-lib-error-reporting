@@ -1,8 +1,8 @@
 {
-  "name": "@ganbarodigital/ts-lib-apperror",
+  "name": "@ganbarodigital/ts-lib-error-reporting",
   "version": "0.0.1",
   "description": "Structured errors for easier reporting and handling",
-  "repository": "github:ganbarodigital/ts-lib-apperror",
+  "repository": "github:ganbarodigital/ts-lib-error-reporting",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "scripts": {
@@ -18,6 +18,7 @@
     "Stuart Herbert <stuherbert@ganbarodigital.com> (https://ganbarodigital.com)"
   ],
   "keywords": [
+    "problem",
     "errors",
     "logging"
   ],
