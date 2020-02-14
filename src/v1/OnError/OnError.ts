@@ -31,6 +31,25 @@
 // ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
+import { AnyAppError } from "../AppError";
 
-export * from "./AppError";
-export * from "./AnyAppError";
+/**
+ * signature for an error-handling function
+ *
+ * error-handling functions are there to delegate error handling back to
+ * the caller:
+ *
+ * * a library function accepts an error-handler as a parameter
+ * * the library function is responsible for determining if an error has
+ *   occurred
+ * * the library function calls the error-handler, and the error-handler
+ *   decides what action to take
+ *
+ * By default, OnError() expects any sub-class of AppError, and it
+ * never returns back to the caller. You can override either of these to
+ * suit your code.
+ *
+ * @param err
+ *        what error has occurred?
+ */
+export type OnError<E extends AnyAppError = AnyAppError, R = never> = (err: E) => R;

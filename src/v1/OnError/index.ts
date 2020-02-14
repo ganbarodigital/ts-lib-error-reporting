@@ -32,5 +32,4 @@
 // POSSIBILITY OF SUCH DAMAGE.
 //
 
-export * from "./AppError";
-export * from "./AnyAppError";
+export * from "./OnError";

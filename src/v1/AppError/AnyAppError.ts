@@ -31,6 +31,6 @@
 // ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
+import { AppError } from "./AppError";
 
-export * from "./AppError";
-export * from "./AnyAppError";
+export type AnyAppError = AppError<any, string, any, any, any>;
