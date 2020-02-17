@@ -32,5 +32,9 @@
 // POSSIBILITY OF SUCH DAMAGE.
 //
 
+export * from "./AllExtraData";
 export * from "./ExtraDataTemplate";
+export * from "./ExtraLogsOnlyData";
+export * from "./ExtraPublicData";
+export * from "./NoExtraData";
 export * from "./NoExtraDataTemplate";
