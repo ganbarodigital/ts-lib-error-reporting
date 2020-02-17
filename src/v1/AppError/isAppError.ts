@@ -45,10 +45,10 @@ export function isAppError<
     T extends ErrorTable,
     N extends keyof T,
     M extends ErrorTableTemplateWithExtraData<T, N, E>,
-    R extends StructuredProblemReportData<T, N, M, E>,
-    E extends ExtraDataTemplate
+    E extends ExtraDataTemplate,
+    R extends StructuredProblemReportData<T, N, M, E>
 >(
     input: unknown,
-): input is AppError<T, N, M, R, E> {
+): input is AppError<T, N, M, E, R> {
     return (input instanceof AppError);
 }

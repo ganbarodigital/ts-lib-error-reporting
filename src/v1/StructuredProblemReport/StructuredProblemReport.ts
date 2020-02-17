@@ -48,8 +48,8 @@ export class StructuredProblemReport<
     T extends ErrorTable,
     N extends keyof T,
     M extends ErrorTableTemplate<T, N, E>,
-    R extends StructuredProblemReportData<T, N, M, E>,
-    E extends ExtraDataTemplate | NoExtraDataTemplate
+    E extends ExtraDataTemplate | NoExtraDataTemplate,
+    R extends StructuredProblemReportData<T, N, M, E>
 >
     extends ValueObject<R> {
     /**
@@ -59,11 +59,11 @@ export class StructuredProblemReport<
         T extends ErrorTable,
         N extends keyof T,
         M extends ErrorTableTemplate<T, N, E>,
-        R extends StructuredProblemReportData<T, N, M, E>,
-        E extends ExtraDataTemplate | null
+        E extends ExtraDataTemplate | null,
+        R extends StructuredProblemReportData<T, N, M, E>
     >(
         input: R,
-    ): StructuredProblemReport<T, N, M, R, E> {
+    ): StructuredProblemReport<T, N, M, E, R> {
         return new StructuredProblemReport(input);
     }
 

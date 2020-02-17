@@ -61,8 +61,8 @@ export type UnreachableCodeSRP = StructuredProblemReport<
     ErrorTable,
     "unreachable-code",
     UnreachableCodeTemplate,
-    UnreachableCodeData,
-    UnreachableCodeExtraData
+    UnreachableCodeExtraData,
+    UnreachableCodeData
 >;
 
 type InstanceData = UnreachableCodeExtraData & { errorId?: string };
@@ -74,8 +74,8 @@ export class UnreachableCodeError extends AppError<
     ErrorTable,
     "unreachable-code",
     UnreachableCodeTemplate,
-    UnreachableCodeData,
-    UnreachableCodeExtraData
+    UnreachableCodeExtraData,
+    UnreachableCodeData
 > {
     public constructor(instanceData: InstanceData) {
         const errorDetails: UnreachableCodeData = {
