@@ -34,5 +34,3 @@
 
 export * from "./ExtraDataTemplate";
 export * from "./NoExtraDataTemplate";
-export * from "./ExtraDataContents";
-export * from "./NoExtraDataContents";
