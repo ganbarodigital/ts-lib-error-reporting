@@ -44,10 +44,10 @@ describe("isAppError()", () => {
         const problemData: UnitTestFailureData = {
             template: errorTable["unit-test-failure"],
             extra: {
-                publicExtra: {
+                public: {
                     field1: "first field",
                 },
-                logsOnlyExtra: {
+                logsOnly: {
                     field2: "second field",
                 },
             },

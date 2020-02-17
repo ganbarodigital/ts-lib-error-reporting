@@ -34,11 +34,12 @@
 import { ERROR_TABLE } from "../";
 import { AppError } from "../AppError";
 import { ErrorTableTemplate } from "../ErrorTableTemplate";
+import { ExtraLogsOnlyData } from "../ExtraData/ExtraLogsOnlyData";
 import { StructuredProblemReport, StructuredProblemReportData } from "../StructuredProblemReport";
 import { ErrorTable } from "./ErrorTable";
 
-export interface UnreachableCodeExtraData {
-    logsOnlyExtra: {
+export interface UnreachableCodeExtraData extends ExtraLogsOnlyData {
+    logsOnly: {
         function: string;
     };
 }
@@ -82,7 +83,7 @@ export class UnreachableCodeError extends AppError<
             // tslint:disable-next-line: object-literal-shorthand
             errorId: instanceData.errorId,
             extra: {
-                logsOnlyExtra: instanceData.logsOnlyExtra,
+                logsOnly: instanceData.logsOnly,
             },
         };
 
@@ -95,7 +96,7 @@ export class UnreachableCodeError extends AppError<
 
 export const myError = new UnreachableCodeError(
     {
-        logsOnlyExtra: {
+        logsOnly: {
             function: "something went wrong",
         },
         errorId: "100",

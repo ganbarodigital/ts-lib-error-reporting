@@ -40,5 +40,5 @@ export interface ExtraLogsOnlyData {
      * use this to hold any extra information that should be written to
      * the app's logs, BUT NOT sent back to the end-user
      */
-    logsOnlyExtra: object;
+    logsOnly: object;
 }

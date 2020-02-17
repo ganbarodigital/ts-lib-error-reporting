@@ -38,4 +38,4 @@ import { ExtraPublicData } from "./ExtraPublicData";
 /**
  * the internal data captured when an error occurs
  */
-export type AllExtraData = ExtraPublicData & ExtraLogsOnlyData;
+export interface AllExtraData extends ExtraPublicData, ExtraLogsOnlyData { }

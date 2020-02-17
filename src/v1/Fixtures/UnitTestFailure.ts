@@ -32,14 +32,15 @@
 // POSSIBILITY OF SUCH DAMAGE.
 //
 import { ErrorTableTemplateWithExtraData } from "../ErrorTableTemplate";
+import { AllExtraData } from "../ExtraData/AllExtraData";
 import { StructuredProblemReportDataWithExtraData } from "../StructuredProblemReport";
 import { UnitTestErrorTable } from "./UnitTestErrorTable";
 
-export interface UnitTestFailureExtraData {
-    publicExtra: {
+export interface UnitTestFailureExtraData extends AllExtraData {
+    public: {
         field1: string;
     };
-    logsOnlyExtra: {
+    logsOnly: {
         field2: string;
     };
 }

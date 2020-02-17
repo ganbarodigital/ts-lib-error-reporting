@@ -43,10 +43,10 @@ describe("StructuredProblemReport", () => {
             const inputValue: UnitTestFailureData = {
                 template: errorTable["unit-test-failure"],
                 extra: {
-                    publicExtra: {
+                    public: {
                         field1: "first field",
                     },
-                    logsOnlyExtra: {
+                    logsOnly: {
                         field2: "second field",
                     },
                 },
@@ -73,10 +73,10 @@ describe("StructuredProblemReport", () => {
             const inputValue: UnitTestFailureData = {
                 template: errorTable["unit-test-failure"],
                 extra: {
-                    publicExtra: {
+                    public: {
                         field1: "first field",
                     },
-                    logsOnlyExtra: {
+                    logsOnly: {
                         field2: "second field",
                     },
                 },
@@ -96,10 +96,10 @@ describe("StructuredProblemReport", () => {
                 template: errorTable["unit-test-failure"],
                 errorId: "12345",
                 extra: {
-                    publicExtra: {
+                    public: {
                         field1: "first field",
                     },
-                    logsOnlyExtra: {
+                    logsOnly: {
                         field2: "second field",
                     },
                 },
@@ -116,10 +116,10 @@ describe("StructuredProblemReport", () => {
             const inputValue: UnitTestFailureData = {
                 template: errorTable["unit-test-failure"],
                 extra: {
-                    publicExtra: {
+                    public: {
                         field1: "first field",
                     },
-                    logsOnlyExtra: {
+                    logsOnly: {
                         field2: "second field",
                     },
                 },
@@ -138,10 +138,10 @@ describe("StructuredProblemReport", () => {
             const inputValue: UnitTestFailureData = {
                 template: errorTable["unit-test-failure"],
                 extra: {
-                    publicExtra: {
+                    public: {
                         field1: "first field",
                     },
-                    logsOnlyExtra: {
+                    logsOnly: {
                         field2: "second field",
                     },
                 },
@@ -160,10 +160,10 @@ describe("StructuredProblemReport", () => {
             const inputValue: UnitTestFailureData = {
                 template: errorTable["unit-test-failure"],
                 extra: {
-                    publicExtra: {
+                    public: {
                         field1: "first field",
                     },
-                    logsOnlyExtra: {
+                    logsOnly: {
                         field2: "second field",
                     },
                 },
@@ -182,10 +182,10 @@ describe("StructuredProblemReport", () => {
             const inputValue: UnitTestFailureData = {
                 template: errorTable["unit-test-failure"],
                 extra: {
-                    publicExtra: {
+                    public: {
                         field1: "first field",
                     },
-                    logsOnlyExtra: {
+                    logsOnly: {
                         field2: "second field",
                     },
                 },
@@ -204,10 +204,10 @@ describe("StructuredProblemReport", () => {
             const inputValue: UnitTestFailureData = {
                 template: errorTable["unit-test-failure"],
                 extra: {
-                    publicExtra: {
+                    public: {
                         field1: "first field",
                     },
-                    logsOnlyExtra: {
+                    logsOnly: {
                         field2: "second field",
                     },
                 },

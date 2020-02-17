@@ -42,5 +42,5 @@ export interface ExtraPublicData {
      *
      * information in this object will also be written to the app's logs
      */
-    publicExtra: object;
+    public: object;
 }

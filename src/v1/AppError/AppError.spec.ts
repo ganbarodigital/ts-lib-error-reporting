@@ -43,10 +43,10 @@ describe("AppError", () => {
         const inputValue: UnitTestFailureData = {
             template: errorTable["unit-test-failure"],
             extra: {
-                publicExtra: {
+                public: {
                     field1: "first field",
                 },
-                logsOnlyExtra: {
+                logsOnly: {
                     field2: "second field",
                 },
             },
@@ -62,10 +62,10 @@ describe("AppError", () => {
             const problemData: UnitTestFailureData = {
                 template: errorTable["unit-test-failure"],
                 extra: {
-                    publicExtra: {
+                    public: {
                         field1: "first field",
                     },
-                    logsOnlyExtra: {
+                    logsOnly: {
                         field2: "second field",
                     },
                 },
@@ -83,10 +83,10 @@ describe("AppError", () => {
             const inputValue: UnitTestFailureData = {
                 template: errorTable["unit-test-failure"],
                 extra: {
-                    publicExtra: {
+                    public: {
                         field1: "first field",
                     },
-                    logsOnlyExtra: {
+                    logsOnly: {
                         field2: "second field",
                     },
                 },
@@ -104,10 +104,10 @@ describe("AppError", () => {
             const inputValue: UnitTestFailureData = {
                 template: errorTable["unit-test-failure"],
                 extra: {
-                    publicExtra: {
+                    public: {
                         field1: "first field",
                     },
-                    logsOnlyExtra: {
+                    logsOnly: {
                         field2: "second field",
                     },
                 },
@@ -128,10 +128,10 @@ describe("AppError", () => {
             const inputValue = StructuredProblemReport.from({
                 template: errorTable["unit-test-failure"],
                 extra: {
-                    publicExtra: {
+                    public: {
                         field1: "first field",
                     },
-                    logsOnlyExtra: {
+                    logsOnly: {
                         field2: "second field",
                     },
                 },

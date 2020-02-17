@@ -43,10 +43,10 @@ describe("StructuredProblemReportData", () => {
         unit = {
             template: errorTable["unit-test-failure"],
             extra: {
-                publicExtra: {
+                public: {
                     field1: "a unit test",
                 },
-                logsOnlyExtra: {
+                logsOnly: {
                     field2: "that went wrong",
                 },
             },

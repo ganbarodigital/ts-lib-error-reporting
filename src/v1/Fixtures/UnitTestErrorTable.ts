@@ -45,10 +45,10 @@ export class UnitTestErrorTable extends ErrorTable {
         status: httpStatusCodeFrom(500),
         detail: "this code should never execute",
         extra: {
-            publicExtra: {
+            public: {
                 field1: "you can put anything you want here",
             },
-            logsOnlyExtra: {
+            logsOnly: {
                 field2: "you can put anything you want here too",
             },
         },

@@ -52,11 +52,11 @@ export interface ExtraDataTemplate {
      *
      * information in this object will also be written to the app's logs
      */
-    publicExtra?: object;
+    public?: object;
 
     /**
      * use this to hold any extra information that should be written to
      * the app's logs, BUT NOT sent back to the end-user
      */
-    logsOnlyExtra?: object;
+    logsOnly?: object;
 }

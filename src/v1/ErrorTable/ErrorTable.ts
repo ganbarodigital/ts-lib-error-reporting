@@ -62,7 +62,7 @@ export class ErrorTable {
         status: httpStatusCodeFrom(500),
         detail: "this code should never execute",
         extra: {
-            logsOnlyExtra: {
+            logsOnly: {
                 function: "the function that threw this error",
             },
         },
