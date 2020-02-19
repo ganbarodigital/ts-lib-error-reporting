@@ -32,5 +32,5 @@
 // POSSIBILITY OF SUCH DAMAGE.
 //
 
-export * from "./ErrorTableTemplate";
+export * from "./ErrorTableTemplateWithNoExtraData";
 export * from "./ErrorTableTemplateWithExtraData";

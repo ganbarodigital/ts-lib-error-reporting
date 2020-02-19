@@ -32,7 +32,7 @@
 // POSSIBILITY OF SUCH DAMAGE.
 //
 import { ErrorTable } from "../ErrorTable";
-import { ErrorTableTemplate } from "../ErrorTableTemplate";
+import { ErrorTableTemplateWithNoExtraData } from "../ErrorTableTemplate";
 import { ExtraDataTemplate, NoExtraDataTemplate } from "../ExtraData";
 
 /**
@@ -48,7 +48,7 @@ import { ExtraDataTemplate, NoExtraDataTemplate } from "../ExtraData";
 export interface StructuredProblemReportData<
     T extends ErrorTable,
     N extends keyof T,
-    M extends ErrorTableTemplate<T, N, E>,
+    M extends ErrorTableTemplateWithNoExtraData<T, N, E>,
     E extends ExtraDataTemplate | NoExtraDataTemplate
 > {
     template: M;

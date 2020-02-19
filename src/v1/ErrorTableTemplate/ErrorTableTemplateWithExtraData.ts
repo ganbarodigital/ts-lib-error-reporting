@@ -33,7 +33,7 @@
 //
 import { ErrorTable } from "../ErrorTable";
 import { ExtraDataTemplate } from "../ExtraData";
-import { ErrorTableTemplate } from "./ErrorTableTemplate";
+import { ErrorTableTemplateWithNoExtraData } from "./ErrorTableTemplateWithNoExtraData";
 
 /**
  * these go in your ErrorTable, and they define what your structured problem
@@ -43,7 +43,7 @@ export interface ErrorTableTemplateWithExtraData<
     T extends ErrorTable,
     N extends keyof T,
     E extends ExtraDataTemplate
-> extends ErrorTableTemplate<T, N, E> {
+> extends ErrorTableTemplateWithNoExtraData<T, N, E> {
     /**
      * the internal data captured when an error occurs
      *

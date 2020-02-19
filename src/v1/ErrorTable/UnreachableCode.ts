@@ -33,7 +33,7 @@
 //
 import { ERROR_TABLE } from "../";
 import { AppError, AppErrorParams } from "../AppError";
-import { ErrorTableTemplate } from "../ErrorTableTemplate";
+import { ErrorTableTemplateWithExtraData } from "../ErrorTableTemplate";
 import { ExtraLogsOnlyData } from "../ExtraData/ExtraLogsOnlyData";
 import { StructuredProblemReport, StructuredProblemReportData } from "../StructuredProblemReport";
 import { ErrorTable } from "./ErrorTable";
@@ -44,7 +44,12 @@ export interface UnreachableCodeExtraData extends ExtraLogsOnlyData {
     };
 }
 
-export type UnreachableCodeTemplate = ErrorTableTemplate<
+/**
+ * defines the structure of the data that goes into our ErrorTable
+ *
+ * @see ErrorReportingErrorTable
+ */
+export type UnreachableCodeTemplate = ErrorTableTemplateWithExtraData<
     ErrorTable,
     "unreachable-code",
     UnreachableCodeExtraData

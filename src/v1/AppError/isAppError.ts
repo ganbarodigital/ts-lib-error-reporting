@@ -32,7 +32,7 @@
 // POSSIBILITY OF SUCH DAMAGE.
 //
 import { ErrorTable } from "../ErrorTable";
-import { ErrorTableTemplateWithExtraData } from "../ErrorTableTemplate";
+import { ErrorTableTemplateWithNoExtraData } from "../ErrorTableTemplate";
 import { ExtraDataTemplate } from "../ExtraData";
 import { StructuredProblemReport, StructuredProblemReportData } from "../StructuredProblemReport";
 import { AppError } from "./AppError";
@@ -40,11 +40,13 @@ import { AppError } from "./AppError";
 /**
  * type guard. confirms if the given input is actually one of our
  * AppErrors or not.
+ *
+ * use this instead of the `instanceof` operator for future-proofing.
  */
 export function isAppError<
     T extends ErrorTable,
     N extends keyof T,
-    M extends ErrorTableTemplateWithExtraData<T, N, E>,
+    M extends ErrorTableTemplateWithNoExtraData<T, N, E>,
     E extends ExtraDataTemplate,
     R extends StructuredProblemReportData<T, N, M, E>,
     S extends StructuredProblemReport<T, N, M, E, R>

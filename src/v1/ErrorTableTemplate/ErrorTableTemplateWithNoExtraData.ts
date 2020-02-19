@@ -41,7 +41,7 @@ import { ExtraDataTemplate, NoExtraDataTemplate } from "../ExtraData";
  * these go in your ErrorTable, and they define what your structured problem
  * reports will look like
  */
-export interface ErrorTableTemplate<
+export interface ErrorTableTemplateWithNoExtraData<
     T extends ErrorTable,
     N extends keyof T,
     E extends ExtraDataTemplate | NoExtraDataTemplate
@@ -88,10 +88,10 @@ export interface ErrorTableTemplate<
      *
      * this is split up into (up to) two properties:
      *
-     * - `publicExtra`: data that can be shared with the caller
+     * - `public`: data that can be shared with the caller
      *   (e.g. included in an API response payload)
      *   this data will also be written to the logs
-     * - `logsOnlyExtra`: data that can only be written to the logs
+     * - `logsOnly`: data that can only be written to the logs
      *   (i.e. it must not be shared with the caller)
      */
     extra?: E;

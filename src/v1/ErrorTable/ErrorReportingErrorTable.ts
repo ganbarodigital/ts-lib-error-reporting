@@ -34,7 +34,7 @@
 import { httpStatusCodeFrom } from "@ganbarodigital/ts-lib-http-types/lib/v1";
 
 import { PACKAGE_NAME } from "..";
-import { ErrorTableTemplate } from "../ErrorTableTemplate";
+import { ErrorTableTemplateWithNoExtraData } from "../ErrorTableTemplate";
 import { ExtraDataTemplate, NoExtraDataTemplate } from "../ExtraData";
 import { ErrorTable } from "./ErrorTable";
 import { UnreachableCodeTemplate } from "./UnreachableCode";
@@ -47,7 +47,7 @@ import { UnreachableCodeTemplate } from "./UnreachableCode";
  */
 export class ErrorReportingErrorTable implements ErrorTable {
     // everything in this class has to follow the same structure
-    [key: string]: ErrorTableTemplate<any, string, ExtraDataTemplate | NoExtraDataTemplate>;
+    [key: string]: ErrorTableTemplateWithNoExtraData<any, string, ExtraDataTemplate | NoExtraDataTemplate>;
 
     /**
      * use this error in if/else & the default clause of switch statements

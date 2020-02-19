@@ -211,10 +211,24 @@ You're now ready to build an `ErrorTableTemplate` for your new error type.
 
 The _ErrorTableTemplate_ defines the structure that goes into your app/package's `ErrorTable`. Each error has its own `ErrorTableTemplate`, so that each error can have its own structure.
 
-```typescript
-import { ErrorTableTemplate } from "@ganbarodigital/ts-lib-error-reporting/lib/v1";
+If your error has _extra data_, create a type alias using `ErrorTableTemplateWithExtraData`:
 
-export type UnreachableCodeTemplate = ErrorTableTemplate<
+```typescript
+import { ErrorTableTemplateWithExtraData } from "@ganbarodigital/ts-lib-error-reporting/lib/v1";
+
+export type UnreachableCodeTemplate = ErrorTableTemplateWithExtraData<
+    MyPackageErrorTable,
+    "unreachable-code",
+    UnreachableCodeExtraData
+>;
+```
+
+If your error does **not** have any _extra data_, create a type alias using `ErrorTableTemplateWithNoExtraData`:
+
+```typescript
+import { ErrorTableTemplateWithNoExtraData } from "@ganbarodigital/ts-lib-error-reporting/lib/v1";
+
+export type UnreachableCodeTemplate = ErrorTableTemplateWithNoExtraData<
     MyPackageErrorTable,
     "unreachable-code",
     UnreachableCodeExtraData
@@ -227,7 +241,7 @@ What's going on here?
 * Every error gets added to your `ErrorTable` class as a property. The second generic parameter is the name of that property. It _has_ to be a static string. It cannot be a variable or constant that you've defined.
 * The third generic property is your error's `ExtraData` interface.
 
-This ties each `ErrorTemplate` to a property on your `ErrorTable` class.
+This ties each `ErrorTableTemplate` to a property on your `ErrorTable` class.
 
 #### Step 3: Adding Your New Error To Your ErrorTable
 
@@ -236,17 +250,17 @@ Add an entry for your error to your `ErrorTable` class:
 ```typescript
 import { httpStatusCodeFrom } from "@ganbarodigital/ts-lib-http-types/lib/v1";
 import { packageNameFrom } from "@ganbarodigital/ts-lib-packagename/lib/v1";
-import { ErrorTable } from "@ganbarodigital/ts-lib-error-reporting/lib/v1";
+import { ErrorTable, ErrorTableTemplateWithNoExtraData } from "@ganbarodigital/ts-lib-error-reporting/lib/v1";
 
 export class MyPackageErrorTable implements ErrorTable {
     // everything in this class has to follow the same structure
-    [key: string]: ErrorTableTemplate<any, string, ExtraDataTemplate | NoExtraDataTemplate>;
+    [key: string]: ErrorTableTemplateWithNoExtraData<any, string, ExtraDataTemplate | NoExtraDataTemplate>;
 
     // this is your new error
     //
     // the property name:
     // - MUST be a static string
-    // - MUST match the name used when you defined your ErrorTemplate
+    // - MUST match the name used when you defined your ErrorTableTemplate
     public "unreachable-code": UnreachableCodeTemplate = {
         // this helps devs find out which package defined the error
         packageName: PACKAGE_NAME,
