@@ -34,7 +34,7 @@
 import { packageNameFrom } from "@ganbarodigital/ts-lib-packagename/lib/v1";
 import { OnError } from "@ganbarodigital/ts-on-error/lib/V1";
 
-import { ErrorTable } from "./ErrorTable";
+import { ErrorReportingErrorTable } from "./ErrorTable";
 
 const onError: OnError = (reason: symbol, desc: string, extra: object) => {
     throw new Error("invalid package name");
@@ -50,4 +50,4 @@ export const PACKAGE_NAME = packageNameFrom("@ganbarodigital/ts-lib-apperror/lib
 /**
  * a list of all of the errors that this package can throw
  */
-export const ERROR_TABLE = new ErrorTable();
+export const ERROR_TABLE = new ErrorReportingErrorTable();

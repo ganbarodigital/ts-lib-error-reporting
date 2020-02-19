@@ -31,6 +31,37 @@
 // ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
+import { httpStatusCodeFrom } from "@ganbarodigital/ts-lib-http-types/lib/v1";
 
-export * from "./ErrorTable";
-export * from "./ErrorReportingErrorTable";
+import { PACKAGE_NAME } from "..";
+import { ErrorTableTemplate } from "../ErrorTableTemplate";
+import { ExtraDataTemplate, NoExtraDataTemplate } from "../ExtraData";
+import { ErrorTable } from "./ErrorTable";
+import { UnreachableCodeTemplate } from "./UnreachableCode";
+
+/**
+ * the ErrorTable for the package `@ganbarodigital/ts-lib-error-reporting`
+ *
+ * You can extend this in your own package, if you want to reuse the errors
+ * that we provide.
+ */
+export class ErrorReportingErrorTable implements ErrorTable {
+    // everything in this class has to follow the same structure
+    [key: string]: ErrorTableTemplate<any, string, ExtraDataTemplate | NoExtraDataTemplate>;
+
+    /**
+     * use this error in if/else & the default clause of switch statements
+     * to spot things that should never happen
+     */
+    public "unreachable-code": UnreachableCodeTemplate = {
+        packageName: PACKAGE_NAME,
+        errorName: "unreachable-code",
+        status: httpStatusCodeFrom(500),
+        detail: "this code should never execute",
+        extra: {
+            logsOnly: {
+                function: "the function that threw this error",
+            },
+        },
+    };
+}
