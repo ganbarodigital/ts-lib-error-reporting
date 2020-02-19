@@ -65,15 +65,15 @@ When you add the Error Reporting library to your app or package, you need to do 
 
 #### Step 1: You Need A PACKAGE_NAME Constant
 
-When you populate your `ErrorTable` in [Step 8]
+When you [populate your `ErrorTable`](#step-3-adding-your-new-error-to-your-errortable) later on, you'll be using the name of your app or package in every error that you define.
+
+Define this as a constant now, to save you effort later on.
 
 ```typescript
 import { packageNameFrom } from "@ganbarodigital/ts-lib-packagename/lib/v1";
 
 export const PACKAGE_NAME = packageNameFrom("<your-package-name>");
 ```
-
-**This step only needs to be done once per-package**
 
 #### Step 2: You Need An ErrorTable
 
@@ -82,7 +82,11 @@ You must define all of your errors in a central place, called the `ErrorTable`.
 Create your `ErrorTable` by implementing the `ErrorTable` interface:
 
 ```typescript
-import { ErrorTable } from "@ganbarodigital/ts-lib-error-reporting/lib/v1";
+import {
+  ErrorTable,
+  ExtraDataTemplate,
+  NoExtraDataTemplate,
+} from "@ganbarodigital/ts-lib-error-reporting/lib/v1";
 
 export class MyPackageErrorTable implements ErrorTable {
     // everything in this class has to follow the same structure
@@ -91,28 +95,33 @@ export class MyPackageErrorTable implements ErrorTable {
 
 /**
  * a list of errors defined by MyPackage
+ *
+ * export this, so that any code that uses your package can inspect
+ * the list
  */
 export const ERROR_TABLE = new MyPackageErrorTable();
 ```
 
-**This step only needs to be done once per-package**
+Now that you've got your `ErrorTable`, you're ready to define the errors that your app / package can throw.
 
 ### Defining A New Throwable Error
 
 Here's how to define a new throwable error in your app or package:
 
-1. Define a `ExtraData` interface for your new error.
+1. Define an `ExtraDataTemplate` interface for your new error.
 2. Define an `ErrorTableTemplate` for your new error.
 3. Add an entry for your new error to your `ErrorTable` class.
 4. Define a `StructuredProblemReportData` type for your new error.
 5. Define a `StructuredProblemReport` type for your new error.
 6. Define a `class` that `extends AppError` (this will be the class that you create and `throw` at runtime)
 
-I'm sorry that it's a lot of steps. Most of these steps are very small. We need them:
+I'm sorry that it's a lot of steps. We need them:
 
 * to support auto-completion of different error structures when you're writing code
 * to enforce type-integrity at compile-time
 * to get the code to compile at all
+
+Most of these steps are very small. Because they define types, they don't increase the amount of unit tests you have to write.
 
 #### Step 1: Defining The ExtraData For Your New Error Type
 
