@@ -33,7 +33,7 @@
 //
 import { HttpStatusCode } from "@ganbarodigital/ts-lib-http-types/lib/v1";
 import { PackageName } from "@ganbarodigital/ts-lib-packagename/lib/v1";
-import { ValueObject } from "@ganbarodigital/ts-lib-value-objects/lib/v2";
+import { Value } from "@ganbarodigital/ts-lib-value-objects/lib/V1";
 
 import { StructuredProblemReportDataWithNoExtraData } from ".";
 import { ErrorTable } from "../ErrorTable";
@@ -51,7 +51,7 @@ export class StructuredProblemReport<
     E extends ExtraDataTemplate | NoExtraDataTemplate,
     R extends StructuredProblemReportDataWithNoExtraData<T, N, M, E>
 >
-    extends ValueObject<R> {
+    extends Value<R> {
     /**
      * smart constructor
      */

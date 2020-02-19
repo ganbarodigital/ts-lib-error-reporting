@@ -30,9 +30,9 @@
   ],
   "license": "BSD-3-Clause",
   "dependencies": {
-    "@ganbarodigital/ts-lib-http-types": "file:../ts-lib-http-types",
     "@ganbarodigital/ts-lib-packagename": "^0.1.0",
-    "@ganbarodigital/ts-lib-value-objects": "file:../ts-lib-value-objects",
+    "@ganbarodigital/ts-lib-http-types": "^0.0.2",
+    "@ganbarodigital/ts-lib-value-objects": "^1.0.0",
     "@types/node": "^13.7.2",
     "tslint": "^5.20.1",
     "typescript": "^3.7.4"
