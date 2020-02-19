@@ -40,7 +40,7 @@ import { ErrorTable } from "./ErrorTable";
 
 export interface UnreachableCodeExtraData extends ExtraLogsOnlyData {
     logsOnly: {
-        function: string;
+        reason: string;
     };
 }
 
@@ -93,7 +93,7 @@ export class UnreachableCodeError extends AppError<
 export const myError = new UnreachableCodeError(
     {
         logsOnly: {
-            function: "something went wrong",
+            reason: "something went wrong",
         },
         errorId: "100",
     },

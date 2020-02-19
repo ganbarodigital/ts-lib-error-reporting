@@ -60,7 +60,7 @@ export class ErrorReportingErrorTable implements ErrorTable {
         detail: "this code should never execute",
         extra: {
             logsOnly: {
-                function: "the function that threw this error",
+                reason: "explain why this code should be unreachable",
             },
         },
     };
