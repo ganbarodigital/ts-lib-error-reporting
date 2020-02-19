@@ -21,6 +21,18 @@ For each release, changes are grouped under these headings:
 
 The following changes have been completed, and will be included in the next tagged release.
 
+## v0.0.2
+
+Released Wednesday, 19th February 2020.
+
+### Dependencies
+
+* Do not depend on unreleased versions of packages.
+
+## v0.0.1
+
+Released Wednesday, 19th February 2020.
+
 ### New
 
 * Added `AppError` base class
