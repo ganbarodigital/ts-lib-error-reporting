@@ -51,6 +51,22 @@ describe("AppError", () => {
 
         expect(unit).to.be.instanceOf(Error);
     }),
+
+    describe("constructor", () => {
+        it("creates a new AppError", () => {
+            const unit = new UnitTestFailure({
+                public: {
+                    field1: "first field",
+                },
+                logsOnly: {
+                    field2: "second field",
+                },
+            });
+
+            expect(unit).to.be.instanceOf(AppError);
+        });
+    });
+
     describe(".details", () => {
         it("contains the structured problem report", () => {
             const unit = new UnitTestFailure({
@@ -67,20 +83,6 @@ describe("AppError", () => {
             expect(actualValue).to.be.instanceOf(StructuredProblemReport);
         });
     }),
-    describe(" constructor()", () => {
-        it("creates a new AppError", () => {
-            const unit = new UnitTestFailure({
-                public: {
-                    field1: "first field",
-                },
-                logsOnly: {
-                    field2: "second field",
-                },
-            });
-
-            expect(unit).to.be.instanceOf(AppError);
-        });
-    });
 
     describe(".message", () => {
         it("contains the error's details (from the underlying template)", () => {
