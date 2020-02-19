@@ -65,8 +65,6 @@ export type UnreachableCodeSRP = StructuredProblemReport<
     UnreachableCodeData
 >;
 
-type InstanceData = UnreachableCodeExtraData & AppErrorParams;
-
 /**
  * Javascript Error
  */
@@ -78,13 +76,13 @@ export class UnreachableCodeError extends AppError<
     UnreachableCodeData,
     UnreachableCodeSRP
 > {
-    public constructor(instanceData: InstanceData) {
+    public constructor(params: UnreachableCodeExtraData & AppErrorParams) {
         const errorDetails: UnreachableCodeData = {
             template: ERROR_TABLE["unreachable-code"],
             // tslint:disable-next-line: object-literal-shorthand
-            errorId: instanceData.errorId,
+            errorId: params.errorId,
             extra: {
-                logsOnly: instanceData.logsOnly,
+                logsOnly: params.logsOnly,
             },
         };
 
