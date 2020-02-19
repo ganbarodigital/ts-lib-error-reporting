@@ -89,12 +89,3 @@ export class UnreachableCodeError extends AppError<
         super(StructuredProblemReport.from(errorDetails));
     }
 }
-
-export const myError = new UnreachableCodeError(
-    {
-        logsOnly: {
-            reason: "something went wrong",
-        },
-        errorId: "100",
-    },
-);
