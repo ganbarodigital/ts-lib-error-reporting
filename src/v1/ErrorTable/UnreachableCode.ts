@@ -55,7 +55,10 @@ export type UnreachableCodeTemplate = ErrorTableTemplateWithExtraData<
     UnreachableCodeExtraData
 >;
 
-export type UnreachableCodeData = StructuredProblemReportData<
+/**
+ * defines the data that goes into our StructuredProblemReport
+ */
+export type UnreachableCodeData = StructuredProblemReportDataWithExtraData<
     ErrorTable,
     "unreachable-code",
     UnreachableCodeTemplate,

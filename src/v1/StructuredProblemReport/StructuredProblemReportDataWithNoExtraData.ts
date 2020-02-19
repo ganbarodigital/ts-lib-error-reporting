@@ -45,7 +45,7 @@ import { ExtraDataTemplate, NoExtraDataTemplate } from "../ExtraData";
  *  use this as your base interface when defining errors that have NO
  * `extra` bits of data
  */
-export interface StructuredProblemReportData<
+export interface StructuredProblemReportDataWithNoExtraData<
     T extends ErrorTable,
     N extends keyof T,
     M extends ErrorTableTemplateWithNoExtraData<T, N, E>,

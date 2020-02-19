@@ -33,5 +33,5 @@
 //
 
 export * from "./StructuredProblemReport";
-export * from "./StructuredProblemReportData";
+export * from "./StructuredProblemReportDataWithNoExtraData";
 export * from "./StructuredProblemReportDataWithExtraData";

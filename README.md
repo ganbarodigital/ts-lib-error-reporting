@@ -288,12 +288,27 @@ We've finished defining our error. Next, you need to make it possible to create 
 
 Throwable errors are classes that `extend AppError`. `AppError` itself is a JavaScript `Error` class that holds extra information in what we call a `StructuredProblemReport`.
 
-Before you can `extend AppError`, you need to define the structure of the data that goes into the `StructuredProblemReport`:
+Before you can `extend AppError`, you need to define the structure of the data that goes into the `StructuredProblemReport`.
+
+If your error contains _extra data_, create a type alias for `StructuredProblemReportDataWithExtraData`:
 
 ```typescript
-import { StructuredProblemReportData } from "@ganbarodigital/ts-lib-error-reporting/lib/v1";
+import { StructuredProblemReportDataWithExtraData } from "@ganbarodigital/ts-lib-error-reporting/lib/v1";
 
-export type UnreachableCodeData = StructuredProblemReportData<
+export type UnreachableCodeData = StructuredProblemReportDataWithExtraData<
+    MyPackageErrorTable,
+    "unreachable-code",
+    UnreachableCodeTemplate,
+    UnreachableCodeExtraData
+>;
+```
+
+If your error does **not** contain _extra data_, create a type alias using `StructuredProblemReportDataWithNoExtraData`:
+
+```typescript
+import { StructuredProblemReportDataWithNoExtraData } from "@ganbarodigital/ts-lib-error-reporting/lib/v1";
+
+export type UnreachableCodeData = StructuredProblemReportDataWithNoExtraData<
     MyPackageErrorTable,
     "unreachable-code",
     UnreachableCodeTemplate,

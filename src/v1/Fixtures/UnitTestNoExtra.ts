@@ -33,7 +33,7 @@
 //
 import { ErrorTableTemplateWithNoExtraData } from "../ErrorTableTemplate";
 import { NoExtraDataTemplate } from "../ExtraData";
-import { StructuredProblemReportData } from "../StructuredProblemReport";
+import { StructuredProblemReportDataWithNoExtraData } from "../StructuredProblemReport";
 import { UnitTestErrorTable } from "./UnitTestErrorTable";
 
 export type UnitTestNoExtraTemplate = ErrorTableTemplateWithNoExtraData<
@@ -42,7 +42,7 @@ export type UnitTestNoExtraTemplate = ErrorTableTemplateWithNoExtraData<
     NoExtraDataTemplate
 >;
 
-export type UnitTestNoExtraData = StructuredProblemReportData<
+export type UnitTestNoExtraData = StructuredProblemReportDataWithNoExtraData<
     UnitTestErrorTable,
     "unit-test-no-extra",
     UnitTestNoExtraTemplate,

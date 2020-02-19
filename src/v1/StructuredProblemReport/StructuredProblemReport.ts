@@ -35,7 +35,7 @@ import { HttpStatusCode } from "@ganbarodigital/ts-lib-http-types/lib/v1";
 import { PackageName } from "@ganbarodigital/ts-lib-packagename/lib/v1";
 import { ValueObject } from "@ganbarodigital/ts-lib-value-objects/lib/v2";
 
-import { StructuredProblemReportData } from ".";
+import { StructuredProblemReportDataWithNoExtraData } from ".";
 import { ErrorTable } from "../ErrorTable";
 import { ErrorTableTemplateWithNoExtraData } from "../ErrorTableTemplate";
 import { ExtraDataTemplate, NoExtraDataTemplate } from "../ExtraData";
@@ -49,7 +49,7 @@ export class StructuredProblemReport<
     N extends keyof T,
     M extends ErrorTableTemplateWithNoExtraData<T, N, E>,
     E extends ExtraDataTemplate | NoExtraDataTemplate,
-    R extends StructuredProblemReportData<T, N, M, E>
+    R extends StructuredProblemReportDataWithNoExtraData<T, N, M, E>
 >
     extends ValueObject<R> {
     /**
@@ -60,7 +60,7 @@ export class StructuredProblemReport<
         N extends keyof T,
         M extends ErrorTableTemplateWithNoExtraData<T, N, E>,
         E extends ExtraDataTemplate | null,
-        R extends StructuredProblemReportData<T, N, M, E>
+        R extends StructuredProblemReportDataWithNoExtraData<T, N, M, E>
     >(
         input: R,
     ): StructuredProblemReport<T, N, M, E, R> {
