@@ -35,9 +35,14 @@ import { ERROR_TABLE } from "../";
 import { AppError, AppErrorParams } from "../AppError";
 import { ErrorTableTemplateWithExtraData } from "../ErrorTableTemplate";
 import { ExtraLogsOnlyData } from "../ExtraData/ExtraLogsOnlyData";
-import { StructuredProblemReport, StructuredProblemReportData } from "../StructuredProblemReport";
+import { StructuredProblemReport, StructuredProblemReportDataWithExtraData } from "../StructuredProblemReport";
 import { ErrorTable } from "./ErrorTable";
 
+/**
+ * the ExtraData that must be provided for each UnreachableCodeError
+ *
+ * @see UnreachableCodeError
+ */
 export interface UnreachableCodeExtraData extends ExtraLogsOnlyData {
     logsOnly: {
         reason: string;
@@ -65,6 +70,9 @@ export type UnreachableCodeData = StructuredProblemReportDataWithExtraData<
     UnreachableCodeExtraData
 >;
 
+/**
+ * a type alias for our StructuredProblemReport
+ */
 export type UnreachableCodeSRP = StructuredProblemReport<
     ErrorTable,
     "unreachable-code",
@@ -74,7 +82,12 @@ export type UnreachableCodeSRP = StructuredProblemReport<
 >;
 
 /**
- * Javascript Error
+ * throwable Javascript Error, for when code that should never execute
+ * has, in fact, executed
+ *
+ * commonly used in the `default:` clause of a `switch` statement, to
+ * catch problems when the `switch` statement is handling a wider range
+ * of input than it was originally written to support
  */
 export class UnreachableCodeError extends AppError<
     ErrorTable,
@@ -87,7 +100,6 @@ export class UnreachableCodeError extends AppError<
     public constructor(params: UnreachableCodeExtraData & AppErrorParams) {
         const errorDetails: UnreachableCodeData = {
             template: ERROR_TABLE["unreachable-code"],
-            // tslint:disable-next-line: object-literal-shorthand
             errorId: params.errorId,
             extra: {
                 logsOnly: params.logsOnly,

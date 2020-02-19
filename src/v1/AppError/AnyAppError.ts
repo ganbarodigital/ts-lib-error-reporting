@@ -33,4 +33,9 @@
 //
 import { AppError } from "./AppError";
 
+/**
+ * represents any instance of AppError, including subclasses
+ *
+ * use this in generic type constraints
+ */
 export type AnyAppError = AppError<any, string, any, any, any, any>;

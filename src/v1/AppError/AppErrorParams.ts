@@ -32,4 +32,10 @@
 // POSSIBILITY OF SUCH DAMAGE.
 //
 
+/**
+ * combine this with your ExtraDataTemplate, to define the
+ * deconstructed object that your error's constructor accepts
+ *
+ * @see UnreachableCodeError for an example
+ */
 export type AppErrorParams = { errorId?: string };

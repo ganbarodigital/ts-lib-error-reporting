@@ -37,5 +37,8 @@ import { ExtraPublicData } from "./ExtraPublicData";
 
 /**
  * the internal data captured when an error occurs
+ *
+ * extend this when your error requires both `public` and `logsOnly`
+ * extra data
  */
 export interface AllExtraData extends ExtraPublicData, ExtraLogsOnlyData { }
