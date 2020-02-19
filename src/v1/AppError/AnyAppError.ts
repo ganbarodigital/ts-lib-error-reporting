@@ -33,4 +33,4 @@
 //
 import { AppError } from "./AppError";
 
-export type AnyAppError = AppError<any, string, any, any, any>;
+export type AnyAppError = AppError<any, string, any, any, any, any>;

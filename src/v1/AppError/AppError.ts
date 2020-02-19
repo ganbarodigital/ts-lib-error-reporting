@@ -47,27 +47,19 @@ export class AppError<
     N extends keyof T,
     M extends ErrorTableTemplate<T, N, E>,
     E extends ExtraDataTemplate | NoExtraDataTemplate,
-    R extends StructuredProblemReportData<T, N, M, E>
+    R extends StructuredProblemReportData<T, N, M, E>,
+    S extends StructuredProblemReport<T, N, M, E, R>
 > extends Error {
-    public static from<
-        T extends ErrorTable,
-        N extends keyof T,
-        M extends ErrorTableTemplate<T, N, E>,
-        E extends ExtraDataTemplate | NoExtraDataTemplate,
-        R extends StructuredProblemReportData<T, N, M, E>
-    >(details: StructuredProblemReport<T, N, M, E, R>) {
-        return new AppError(details);
-    }
-
     /**
      * information about what went wrong, in a type-safe structure
      */
-    public readonly details: StructuredProblemReport<T, N, M, E, R>;
+    public readonly details: S;
 
     /**
      * call `AppError.from()` to create a new instance of AppError
      */
-    protected constructor(details: StructuredProblemReport<T, N, M, E, R>) {
+    protected constructor(details: S) {
+        // const srp = StructuredProblemReport.from<T, N, M, E, R>(details);
         super(details.detail);
         this.details = details;
 

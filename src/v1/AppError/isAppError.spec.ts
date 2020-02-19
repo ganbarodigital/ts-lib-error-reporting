@@ -34,26 +34,19 @@
 import { expect } from "chai";
 import { describe } from "mocha";
 
-import { errorTable, UnitTestFailureData } from "../Fixtures";
-import { StructuredProblemReport } from "../StructuredProblemReport";
-import { AppError } from "./AppError";
+import { UnitTestFailure } from "../Fixtures";
 import { isAppError } from "./isAppError";
 
 describe("isAppError()", () => {
     it("is a type-guard for AppError objects", () => {
-        const problemData: UnitTestFailureData = {
-            template: errorTable["unit-test-failure"],
-            extra: {
-                public: {
-                    field1: "first field",
-                },
-                logsOnly: {
-                    field2: "second field",
-                },
+        const unit = new UnitTestFailure({
+            public: {
+                field1: "first field",
             },
-        };
-        const inputValue = StructuredProblemReport.from(problemData);
-        const unit = AppError.from(inputValue);
+            logsOnly: {
+                field2: "second field",
+            },
+        });
 
         if (isAppError(unit)) {
             expect(true).to.equal(true);

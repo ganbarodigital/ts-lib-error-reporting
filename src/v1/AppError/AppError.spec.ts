@@ -34,89 +34,66 @@
 import { expect } from "chai";
 import { describe } from "mocha";
 
-import { errorTable, UnitTestFailureData } from "../Fixtures";
+import { errorTable, UnitTestFailure } from "../Fixtures";
 import { StructuredProblemReport } from "../StructuredProblemReport";
 import { AppError } from "./AppError";
 
 describe("AppError", () => {
     it("is throwable", () => {
-        const inputValue: UnitTestFailureData = {
-            template: errorTable["unit-test-failure"],
-            extra: {
+        const unit = new UnitTestFailure({
+            public: {
+                field1: "first field",
+            },
+            logsOnly: {
+                field2: "second field",
+            },
+        });
+
+        expect(unit).to.be.instanceOf(Error);
+    }),
+    describe(".details", () => {
+        it("contains the structured problem report", () => {
+            const unit = new UnitTestFailure({
                 public: {
                     field1: "first field",
                 },
                 logsOnly: {
                     field2: "second field",
                 },
-            },
-        };
-        const unit = AppError.from(
-            StructuredProblemReport.from(inputValue),
-        );
-
-        expect(unit).to.be.instanceOf(Error);
-    }),
-    describe(".details", () => {
-        it("contains the structured problem report", () => {
-            const problemData: UnitTestFailureData = {
-                template: errorTable["unit-test-failure"],
-                extra: {
-                    public: {
-                        field1: "first field",
-                    },
-                    logsOnly: {
-                        field2: "second field",
-                    },
-                },
-            };
-            const inputValue = StructuredProblemReport.from(problemData);
-            const unit = AppError.from(inputValue);
+            });
 
             const actualValue = unit.details;
 
-            expect(actualValue).to.equal(inputValue);
+            expect(actualValue).to.be.instanceOf(StructuredProblemReport);
         });
     }),
     describe(" constructor()", () => {
         it("creates a new AppError", () => {
-            const inputValue: UnitTestFailureData = {
-                template: errorTable["unit-test-failure"],
-                extra: {
-                    public: {
-                        field1: "first field",
-                    },
-                    logsOnly: {
-                        field2: "second field",
-                    },
+            const unit = new UnitTestFailure({
+                public: {
+                    field1: "first field",
                 },
-            };
-            const actualValue = AppError.from(
-                StructuredProblemReport.from(inputValue),
-            );
+                logsOnly: {
+                    field2: "second field",
+                },
+            });
 
-            expect(actualValue).to.be.instanceOf(AppError);
+            expect(unit).to.be.instanceOf(AppError);
         });
     });
 
     describe(".message", () => {
         it("contains the error's details (from the underlying template)", () => {
-            const inputValue: UnitTestFailureData = {
-                template: errorTable["unit-test-failure"],
-                extra: {
-                    public: {
-                        field1: "first field",
-                    },
-                    logsOnly: {
-                        field2: "second field",
-                    },
+            const unit = new UnitTestFailure({
+                public: {
+                    field1: "first field",
                 },
-            };
-            const expectedValue = inputValue.template.detail;
+                logsOnly: {
+                    field2: "second field",
+                },
+            });
+            const expectedValue = errorTable["unit-test-failure"].detail;
 
-            const unit = AppError.from(
-                StructuredProblemReport.from(inputValue),
-            );
             const actualValue = unit.message;
 
             expect(actualValue).to.equal(expectedValue);
@@ -125,20 +102,17 @@ describe("AppError", () => {
 
     describe(".name", () => {
         it("contains the error's globally-unique name", () => {
-            const inputValue = StructuredProblemReport.from({
-                template: errorTable["unit-test-failure"],
-                extra: {
-                    public: {
-                        field1: "first field",
-                    },
-                    logsOnly: {
-                        field2: "second field",
-                    },
+            const unit = new UnitTestFailure({
+                public: {
+                    field1: "first field",
                 },
-            } as UnitTestFailureData);
-            const expectedValue = inputValue.fqErrorName;
+                logsOnly: {
+                    field2: "second field",
+                },
+            });
+            const expectedValue = errorTable["unit-test-failure"].packageName + "/"
+                + errorTable["unit-test-failure"].errorName;
 
-            const unit = AppError.from(inputValue);
             const actualValue = unit.name;
 
             expect(actualValue).to.equal(expectedValue);

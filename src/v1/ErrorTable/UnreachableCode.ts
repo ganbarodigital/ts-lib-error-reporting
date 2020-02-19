@@ -75,7 +75,8 @@ export class UnreachableCodeError extends AppError<
     "unreachable-code",
     UnreachableCodeTemplate,
     UnreachableCodeExtraData,
-    UnreachableCodeData
+    UnreachableCodeData,
+    UnreachableCodeSRP
 > {
     public constructor(instanceData: InstanceData) {
         const errorDetails: UnreachableCodeData = {
@@ -87,10 +88,7 @@ export class UnreachableCodeError extends AppError<
             },
         };
 
-        const srp: UnreachableCodeSRP =
-        StructuredProblemReport.from(errorDetails);
-
-        super(srp);
+        super(StructuredProblemReport.from(errorDetails));
     }
 }
 

@@ -31,10 +31,11 @@
 // ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
+import { AppError } from "../AppError";
 import { ErrorTableTemplateWithExtraData } from "../ErrorTableTemplate";
 import { AllExtraData } from "../ExtraData/AllExtraData";
-import { StructuredProblemReportDataWithExtraData } from "../StructuredProblemReport";
-import { UnitTestErrorTable } from "./UnitTestErrorTable";
+import { StructuredProblemReport, StructuredProblemReportDataWithExtraData } from "../StructuredProblemReport";
+import { errorTable, UnitTestErrorTable } from "./UnitTestErrorTable";
 
 export interface UnitTestFailureExtraData extends AllExtraData {
     public: {
@@ -57,3 +58,35 @@ export type UnitTestFailureData = StructuredProblemReportDataWithExtraData<
     UnitTestFailureTemplate,
     UnitTestFailureExtraData
 >;
+
+export type UnitTestFailureSRP = StructuredProblemReport<
+    UnitTestErrorTable,
+    "unit-test-failure",
+    UnitTestFailureTemplate,
+    UnitTestFailureExtraData,
+    UnitTestFailureData
+>;
+
+type InstanceData = UnitTestFailureExtraData & { errorId?: string };
+
+export class UnitTestFailure extends AppError<
+    UnitTestErrorTable,
+    "unit-test-failure",
+    UnitTestFailureTemplate,
+    UnitTestFailureExtraData,
+    UnitTestFailureData,
+    UnitTestFailureSRP
+> {
+    public constructor(details: InstanceData) {
+        const errorDetails: UnitTestFailureData = {
+            template: errorTable["unit-test-failure"],
+            errorId: details.errorId,
+            extra: {
+                public: details.public,
+                logsOnly: details.logsOnly,
+            },
+        };
+
+        super(StructuredProblemReport.from(errorDetails));
+    }
+}

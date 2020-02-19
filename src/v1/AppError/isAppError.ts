@@ -34,7 +34,7 @@
 import { ErrorTable } from "../ErrorTable";
 import { ErrorTableTemplateWithExtraData } from "../ErrorTableTemplate";
 import { ExtraDataTemplate } from "../ExtraData";
-import { StructuredProblemReportData } from "../StructuredProblemReport";
+import { StructuredProblemReport, StructuredProblemReportData } from "../StructuredProblemReport";
 import { AppError } from "./AppError";
 
 /**
@@ -46,9 +46,10 @@ export function isAppError<
     N extends keyof T,
     M extends ErrorTableTemplateWithExtraData<T, N, E>,
     E extends ExtraDataTemplate,
-    R extends StructuredProblemReportData<T, N, M, E>
+    R extends StructuredProblemReportData<T, N, M, E>,
+    S extends StructuredProblemReport<T, N, M, E, R>
 >(
     input: unknown,
-): input is AppError<T, N, M, E, R> {
+): input is AppError<T, N, M, E, R, S> {
     return (input instanceof AppError);
 }
