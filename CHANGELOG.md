@@ -21,6 +21,10 @@ For each release, changes are grouped under these headings:
 
 The following changes have been completed, and will be included in the next tagged release.
 
+## v0.0.3
+
+Released Wednesday, 19th February 2020.
+
 ### Fixes
 
 * `lib/v1` now exports our types.
