@@ -2,13 +2,20 @@
 
 ## Introduction
 
-This library offers a structured `AppError` type, based on [RFC 7807][RFC 7807]. It gives you a standard structure to use for creating Errors that are easy to report and handle.
+This library offers a structured `AppError` type, inspired by [RFC 7807][RFC 7807].
+
+* It gives you a standard structure to use for creating Errors that are easy to report and handle.
+* It also gives the TypeScript compiler the information it needs to catch mistakes when you're trying to create and throw errors.
+* The structured errors can be converted into the [RFC 7807][RFC 7807] format for API responses.
 
 - [Introduction](#introduction)
+- [Motivation](#motivation)
+  - [Prevent Error Handlers Crashing The Code](#prevent-error-handlers-crashing-the-code)
+  - [Handling Errors From Other Code](#handling-errors-from-other-code)
+  - [API Responses Containing Errors](#api-responses-containing-errors)
 - [Quick Start](#quick-start)
 - [V1 API](#v1-api)
   - [Introduction](#introduction-1)
-  - [Motivation](#motivation)
   - [Bootstrap Error Reporting In Your Package](#bootstrap-error-reporting-in-your-package)
   - [Defining A New Throwable Error](#defining-a-new-throwable-error)
   - [Throwing An Error](#throwing-an-error)
@@ -18,6 +25,28 @@ This library offers a structured `AppError` type, based on [RFC 7807][RFC 7807].
   - [npm run build](#npm-run-build)
   - [npm run test](#npm-run-test)
   - [npm run cover](#npm-run-cover)
+
+## Motivation
+
+### Prevent Error Handlers Crashing The Code
+
+The very last place you want a runtime error is in the code that reports an error, or handles an error that it has caught in a `try / catch` block. When something has gone wrong, you need to know about it.
+
+We can't eliminate all error-handling runtime errors using TypeScript, but we can make sure that if your `throw` and `catch` code compiles, it will run.
+
+### Handling Errors From Other Code
+
+The other difficult problem with error handling is dealing with unknown / undocumented / unexpected exceptions. They need turning into something that you (the developer) can understand in your logs, and into something that you can return to your end-user safely and within the limits of data protection law.
+
+We can make this much easier to handle by ensuring:
+
+* that all errors follow a common structure,
+* that all errors declare types for any unique parts of their structure,
+* that there's a central list of known errors for you to look at
+
+### API Responses Containing Errors
+
+Finally, we're backend developers. We mostly write APIs. When we send the details of an error back in an API response, we want that response to follow a standard structure. [RFC 7807][RFC 7807] gives us that standard structure.
 
 ## Quick Start
 
@@ -44,20 +73,6 @@ This library gives you:
 * an `ErrorTable` base class, which you extend to register a list of AppErrors that your code can throw
 
 What makes this library different is that we use TypeScript's type system to enforce the relationship between `ErrorTable` and `AppError`. You literally cannot create and throw an `AppError` unless it has also been defined in the `ErrorTable`.
-
-### Motivation
-
-The very last place you want a runtime error is in the code that reports an error, or handles an error that it has caught in a `try / catch` block. When something has gone wrong, you need to know about it.
-
-We can't eliminate all error-handling runtime errors using TypeScript, but we can make sure that if your `throw` and `catch` code compiles, it will run.
-
-The other difficult problem with error handling is dealing with unknown / undocumented / unexpected exceptions. They need turning into something that you (the developer) can understand in your logs, and into something that you can return to your end-user safely and within the limits of data protection law.
-
-We can make this much easier to handle by ensuring:
-
-* that all errors follow a common structure,
-* that all errors declare types for any unique parts of their structure,
-* that there's a central list of known errors for you to look at
 
 ### Bootstrap Error Reporting In Your Package
 
