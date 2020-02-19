@@ -34,6 +34,7 @@
 import { expect } from "chai";
 import { describe } from "mocha";
 
+import { PACKAGE_NAME } from "..";
 import { errorTable, UnitTestFailureData, UnitTestNoExtraData } from "../Fixtures";
 import { StructuredProblemReport } from "../StructuredProblemReport";
 
@@ -150,6 +151,64 @@ describe("StructuredProblemReport", () => {
 
             const unit = StructuredProblemReport.from(inputValue);
             const actualValue = unit.errorName;
+
+            expect(actualValue).to.equal(expectedValue);
+        });
+    });
+
+    describe(".extra", () => {
+        it("returns the extra data, for errors that have any", () => {
+            const expectedValue = {
+                public: {
+                    field1: "first field",
+                },
+                logsOnly: {
+                    field2: "second field",
+                },
+            };
+
+            const inputValue: UnitTestFailureData = {
+                template: errorTable["unit-test-failure"],
+                extra: expectedValue,
+            };
+
+            const unit = StructuredProblemReport.from(inputValue);
+            const actualValue = unit.extra;
+
+            expect(actualValue).to.equal(expectedValue);
+        });
+
+        it("returns `undefined`, for errors that have no extra data", () => {
+            const expectedValue = undefined;
+
+            const inputValue: UnitTestNoExtraData = {
+                template: errorTable["unit-test-no-extra"],
+            };
+
+            const unit = StructuredProblemReport.from(inputValue);
+            const actualValue = unit.extra;
+
+            expect(actualValue).to.equal(expectedValue);
+        });
+    });
+
+    describe(".fqErrorName", () => {
+        it("returns the fully-qualified name of the error", () => {
+            const inputValue: UnitTestFailureData = {
+                template: errorTable["unit-test-failure"],
+                extra: {
+                    public: {
+                        field1: "first field",
+                    },
+                    logsOnly: {
+                        field2: "second field",
+                    },
+                },
+            };
+            const expectedValue = PACKAGE_NAME + "/unit-test-failure";
+
+            const unit = StructuredProblemReport.from(inputValue);
+            const actualValue = unit.fqErrorName;
 
             expect(actualValue).to.equal(expectedValue);
         });
