@@ -59,7 +59,6 @@ export class AppError<
      * call `AppError.from()` to create a new instance of AppError
      */
     protected constructor(details: S) {
-        // const srp = StructuredProblemReport.from<T, N, M, E, R>(details);
         super(details.detail);
         this.details = details;
 
