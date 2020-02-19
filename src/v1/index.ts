@@ -51,3 +51,10 @@ export const PACKAGE_NAME = packageNameFrom("@ganbarodigital/ts-lib-apperror/lib
  * a list of all of the errors that this package can throw
  */
 export const ERROR_TABLE = new ErrorReportingErrorTable();
+
+export * from "./AppError";
+export * from "./ErrorTable";
+export * from "./ErrorTableTemplate";
+export * from "./ExtraData";
+export * from "./OnError";
+export * from "./StructuredProblemReport";
