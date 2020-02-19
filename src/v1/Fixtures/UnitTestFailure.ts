@@ -31,7 +31,7 @@
 // ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-import { AppError } from "../AppError";
+import { AppError, AppErrorParams } from "../AppError";
 import { ErrorTableTemplateWithExtraData } from "../ErrorTableTemplate";
 import { AllExtraData } from "../ExtraData/AllExtraData";
 import { StructuredProblemReport, StructuredProblemReportDataWithExtraData } from "../StructuredProblemReport";
@@ -67,7 +67,7 @@ export type UnitTestFailureSRP = StructuredProblemReport<
     UnitTestFailureData
 >;
 
-type InstanceData = UnitTestFailureExtraData & { errorId?: string };
+type InstanceData = UnitTestFailureExtraData & AppErrorParams;
 
 export class UnitTestFailure extends AppError<
     UnitTestErrorTable,

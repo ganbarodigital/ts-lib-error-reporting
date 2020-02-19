@@ -32,6 +32,4 @@
 // POSSIBILITY OF SUCH DAMAGE.
 //
 
-export * from "./AppError";
-export * from "./AppErrorParams";
-export * from "./AnyAppError";
+export type AppErrorParams = { errorId?: string };

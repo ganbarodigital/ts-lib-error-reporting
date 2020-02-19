@@ -32,7 +32,7 @@
 // POSSIBILITY OF SUCH DAMAGE.
 //
 import { ERROR_TABLE } from "../";
-import { AppError } from "../AppError";
+import { AppError, AppErrorParams } from "../AppError";
 import { ErrorTableTemplate } from "../ErrorTableTemplate";
 import { ExtraLogsOnlyData } from "../ExtraData/ExtraLogsOnlyData";
 import { StructuredProblemReport, StructuredProblemReportData } from "../StructuredProblemReport";
@@ -65,7 +65,7 @@ export type UnreachableCodeSRP = StructuredProblemReport<
     UnreachableCodeData
 >;
 
-type InstanceData = UnreachableCodeExtraData & { errorId?: string };
+type InstanceData = UnreachableCodeExtraData & AppErrorParams;
 
 /**
  * Javascript Error
