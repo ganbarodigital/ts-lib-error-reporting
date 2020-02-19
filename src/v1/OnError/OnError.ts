@@ -53,3 +53,12 @@ import { AnyAppError } from "../AppError";
  *        what error has occurred?
  */
 export type OnError<E extends AnyAppError = AnyAppError, R = never> = (err: E) => R;
+
+/**
+ * A default OnError handler.
+ *
+ * It just throws whatever error it was given.
+ */
+export const THROW_THE_ERROR: OnError = (e) => {
+    throw e;
+};

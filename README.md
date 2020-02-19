@@ -8,6 +8,8 @@ This library offers a structured `AppError` type, inspired by [RFC 7807][RFC 780
 * It also gives the TypeScript compiler the information it needs to catch mistakes when you're trying to create and throw errors.
 * The structured errors can be converted into the [RFC 7807][RFC 7807] format for API responses.
 
+It also offers an `OnError` callback definition, to help you separate error detection from error handling.
+
 - [Introduction](#introduction)
 - [Motivation](#motivation)
   - [Prevent Error Handlers Crashing The Code](#prevent-error-handlers-crashing-the-code)
@@ -20,6 +22,7 @@ This library offers a structured `AppError` type, inspired by [RFC 7807][RFC 780
   - [Defining A New Throwable Error](#defining-a-new-throwable-error)
   - [Throwing An Error](#throwing-an-error)
   - [Catching An Error](#catching-an-error)
+  - [OnError Callbacks](#onerror-callbacks)
 - [NPM Scripts](#npm-scripts)
   - [npm run clean](#npm-run-clean)
   - [npm run build](#npm-run-build)
@@ -69,8 +72,9 @@ __VS Code users:__ once you've added a single import anywhere in your project, y
 This library gives you:
 
 * an `AppError` base class, which you extend to create your own throwable Errors
-* a `StructuredProblemReport`, which holds information about your errors in a standardised format based on [RFC 7807][RFC 7807]
+* a `StructuredProblemReport`, which holds information about your errors in a standardised format that is easy to convert to [RFC 7807][RFC 7807] API error responses
 * an `ErrorTable` base class, which you extend to register a list of AppErrors that your code can throw
+* an `OnError` callback definition, which allows you to separate _error detection_ from _error handling_
 
 What makes this library different is that we use TypeScript's type system to enforce the relationship between `ErrorTable` and `AppError`. You literally cannot create and throw an `AppError` unless it has also been defined in the `ErrorTable`.
 
@@ -392,6 +396,56 @@ try {
     }
 }
 ```
+
+### OnError Callbacks
+
+Make your code more reusable by separating out _error detection_ from _error handling_.
+
+```typescript
+import { OnError, THROW_THE_ERROR } from "@ganbarodigital/ts-lib-error-reporting/lib/v1";
+
+function doSomething(input: string, onError: OnError = THROW_THE_ERROR) {
+    // detect if we have a problem
+    if (input.length < 10) {
+        // but ask the caller what to do about it
+        onError(new StringTooShort({
+            logsOnly: {
+                minLength: 10,
+            }
+        }));
+    }
+}
+```
+
+Here's the definition of `OnError`:
+
+```typescript
+/**
+ * signature for an error-handling function
+ *
+ * error-handling functions are there to delegate error handling back to
+ * the caller:
+ *
+ * * a library function accepts an error-handler as a parameter
+ * * the library function is responsible for determining if an error has
+ *   occurred
+ * * the library function calls the error-handler, and the error-handler
+ *   decides what action to take
+ *
+ * By default, OnError() expects any sub-class of AppError, and it
+ * never returns back to the caller. You can override either of these to
+ * suit your code.
+ *
+ * @param err
+ *        what error has occurred?
+ */
+export type OnError<E extends AnyAppError = AnyAppError, R = never> = (err: E) => R;
+```
+
+It takes two generic type parameters:
+
+- the type of error it will accept (the default is anything that's an `AppError`),
+- what the error handler will return (the default is that it never returns; ie that it must `throw` an error)
 
 ## NPM Scripts
 
