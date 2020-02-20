@@ -21,6 +21,15 @@ For each release, changes are grouped under these headings:
 
 The following changes have been completed, and will be included in the next tagged release.
 
+## v0.2.1
+
+Released Thursday, 20th February 2020.
+
+### Fixes
+
+* Resolved circular dependency between PackageErrorTable, packageNameFrom() and httpStatusCodeFrom()
+  - circular dependency only shows up when libraries that use us try and compile their unit tests (sigh)
+
 ## v0.2.0
 
 Released Thursday, 20th February 2020.

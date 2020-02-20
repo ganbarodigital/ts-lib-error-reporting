@@ -34,9 +34,9 @@
 import {
     ErrorTableTemplateWithNoExtraData,
     ExtraDataTemplate,
-    httpStatusCodeFrom,
+    HttpStatusCode,
     NoExtraDataTemplate,
-    packageNameFrom,
+    PackageName,
 } from "../internal";
 import { ErrorTable } from "./ErrorTable";
 import { HttpStatusCodeOutOfRangeTemplate } from "./HttpStatusCodeOutOfRange";
@@ -46,8 +46,13 @@ import { UnreachableCodeTemplate } from "./UnreachableCode";
 
 /**
  * we use this to track which package has thrown the errors
+ *
+ * we have to type-cast this here to prevent a circular dependency.
+ * in your own packages, you'll call `packageNameFrom()` instead.
+ *
+ * the same goes for all the HttpStatusCode type-casting in the table.
  */
-export const PACKAGE_NAME = packageNameFrom("@ganbarodigital/ts-lib-error-reporting/lib/v1");
+export const PACKAGE_NAME = "@ganbarodigital/ts-lib-error-reporting/lib/v1" as PackageName;
 
 /**
  * the ErrorTable for the package `@ganbarodigital/ts-lib-error-reporting`
@@ -63,7 +68,7 @@ export class PackageErrorTable implements ErrorTable {
         packageName: PACKAGE_NAME,
         errorName: "http-status-code-out-of-range",
         detail: "input falls outside the range of a valid HTTP status code",
-        status: httpStatusCodeFrom(422),
+        status: 422 as HttpStatusCode,
         extra: {
             public: {
                 input: 0,
@@ -75,7 +80,7 @@ export class PackageErrorTable implements ErrorTable {
         packageName: PACKAGE_NAME,
         errorName: "invalid-package-name",
         detail: "package name does not meet spec 'isPackageName()'",
-        status: httpStatusCodeFrom(422),
+        status: 422 as HttpStatusCode,
         extra: {
             public: {
                 packageName: "the package name we were given",
@@ -87,7 +92,7 @@ export class PackageErrorTable implements ErrorTable {
         packageName: PACKAGE_NAME,
         errorName: "not-an-integer",
         detail: "input must be an integer; was a float",
-        status: httpStatusCodeFrom(422),
+        status: 422 as HttpStatusCode,
         extra: {
             public: {
                 input: 0,
@@ -102,7 +107,7 @@ export class PackageErrorTable implements ErrorTable {
     public "unreachable-code": UnreachableCodeTemplate = {
         packageName: PACKAGE_NAME,
         errorName: "unreachable-code",
-        status: httpStatusCodeFrom(500),
+        status: 500 as HttpStatusCode,
         detail: "this code should never execute",
         extra: {
             logsOnly: {
