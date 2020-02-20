@@ -36,15 +36,16 @@ import {
     ExtraDataTemplate,
     HttpStatusCode,
     NoExtraDataTemplate,
-    PackageName,
+    packageNameFrom,
 } from "../internal";
 import { ErrorTable } from "./ErrorTable";
 import { InvalidPackageNameTemplate } from "./InvalidPackageName";
 import { UnreachableCodeTemplate } from "./UnreachableCode";
 
-// we can't use `packageNameFrom()` from `ts-lib-packagename` here, because
-// it creates a circular dependency that stops unit tests from compiling
-export const PACKAGE_NAME = "@ganbarodigital/ts-lib-error-reporting/lib/v1" as PackageName;
+/**
+ * we use this to track which package has thrown the errors
+ */
+export const PACKAGE_NAME = packageNameFrom("@ganbarodigital/ts-lib-error-reporting/lib/v1");
 
 /**
  * the ErrorTable for the package `@ganbarodigital/ts-lib-error-reporting`

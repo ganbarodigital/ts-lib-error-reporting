@@ -46,5 +46,6 @@ export * from "./ErrorTableTemplate";
 export * from "./StructuredProblemReport";
 export * from "./AppError";
 export * from "./ErrorTable";
-export { PACKAGE_NAME } from "./ErrorTable/PackageErrorTable";
+// export { PACKAGE_NAME } from "./ErrorTable/PackageErrorTable";
 export * from "./OnError";
+export * from "./internal/PackageName";

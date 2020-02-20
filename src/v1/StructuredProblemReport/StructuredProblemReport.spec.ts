@@ -34,8 +34,8 @@
 import { expect } from "chai";
 import { describe } from "mocha";
 
+import { PACKAGE_NAME } from "../ErrorTable/PackageErrorTable";
 import { UNIT_TEST_ERROR_TABLE, UnitTestFailureData, UnitTestNoExtraData } from "../Fixtures";
-import { PACKAGE_NAME } from "../internal";
 import { StructuredProblemReport } from "./StructuredProblemReport";
 
 describe("StructuredProblemReport", () => {
