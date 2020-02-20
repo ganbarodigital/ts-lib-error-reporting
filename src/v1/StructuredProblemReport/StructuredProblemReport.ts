@@ -32,12 +32,12 @@
 // POSSIBILITY OF SUCH DAMAGE.
 //
 import { StructuredProblemReportDataWithNoExtraData } from ".";
-import { HttpStatusCode } from "../copied/HttpStatusCode";
-import { PackageName } from "../copied/PackageName";
-import { ValueObject } from "../copied/Values";
 import { ErrorTable } from "../ErrorTable";
 import { ErrorTableTemplateWithNoExtraData } from "../ErrorTableTemplate";
 import { ExtraDataTemplate, NoExtraDataTemplate } from "../ExtraData";
+import { HttpStatusCode } from "../internal/HttpStatusCode";
+import { PackageName } from "../internal/PackageName";
+import { ValueObject } from "../internal/Values";
 
 /**
  * value object. represents a problem (a logic or robustness error) that

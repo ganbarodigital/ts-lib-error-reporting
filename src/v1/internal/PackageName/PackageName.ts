@@ -31,34 +31,26 @@
 // ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-import { PackageErrorTable } from "../ErrorTable";
-import { PACKAGE_NAME } from "../ErrorTable/PackageErrorTable";
-import { HttpStatusCode } from "../internal/HttpStatusCode";
-import { UnitTestFailureTemplate } from "./UnitTestFailure";
-import { UnitTestNoExtraTemplate } from "./UnitTestNoExtra";
+import { Branded } from "../nominals/Branded";
 
-export class UnitTestErrorTable extends PackageErrorTable {
-    public "unit-test-failure": UnitTestFailureTemplate = {
-        packageName: PACKAGE_NAME,
-        errorName: "unit-test-failure",
-        status: 500 as HttpStatusCode,
-        detail: "this code should never execute",
-        extra: {
-            public: {
-                field1: "you can put anything you want here",
-            },
-            logsOnly: {
-                field2: "you can put anything you want here too",
-            },
-        },
-    };
-
-    public "unit-test-no-extra": UnitTestNoExtraTemplate = {
-        packageName: PACKAGE_NAME,
-        errorName: "unit-test-no-extra",
-        status: 500 as HttpStatusCode,
-        detail: "an example of an error with no extra information",
-    };
-}
-
-export const errorTable = new UnitTestErrorTable();
+/**
+ * represents the name of a TypeScript package
+ *
+ * the package can be:
+ * - any valid NPM package name
+ * - and can include sub-package names too
+ *
+ * Sub-package names can include uppercase characters.
+ *
+ * examples of valid PackageNames include:
+ *
+ * - ts-lib-packagename
+ * - @ganbarodigital/ts-lib-packagename
+ * - @ganbarodigital/ts-lib-packagename/v1
+ * - @ganbarodigital/ts-lib-packagename/V1/types
+ *
+ * Relative module names are not supported.
+ *
+ * At runtime, PackageName resolves to being just a `string`.
+ */
+export type PackageName = Branded<string, "@ganbarodigital/PackageName">;

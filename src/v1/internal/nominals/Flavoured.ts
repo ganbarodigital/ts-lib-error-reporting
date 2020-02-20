@@ -32,24 +32,10 @@
 // POSSIBILITY OF SUCH DAMAGE.
 //
 
-/**
- * represents the name of a TypeScript package
- *
- * the package can be:
- * - any valid NPM package name
- * - and can include sub-package names too
- *
- * Sub-package names can include uppercase characters.
- *
- * examples of valid PackageNames include:
- *
- * - ts-lib-packagename
- * - @ganbarodigital/ts-lib-packagename
- * - @ganbarodigital/ts-lib-packagename/v1
- * - @ganbarodigital/ts-lib-packagename/V1/types
- *
- * Relative module names are not supported.
- *
- * At runtime, PackageName resolves to being just a `string`.
- */
-export type PackageName = string & { _type: "@ganbarodigital/PackageName" };
+// the idea of flavouring came from this blog post:
+//
+// https://spin.atomicobject.com/2018/01/15/typescript-flexible-nominal-typing/
+//
+export type Flavoured<T, FlavourT extends string> = T & { _type?: FlavourT };
+
+export type AnyFlavoured = Flavoured<any, any>;

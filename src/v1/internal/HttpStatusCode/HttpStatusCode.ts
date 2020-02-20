@@ -31,14 +31,7 @@
 // ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-
-// copied from ts-lib-value-objects, so that we can break the
-// circular dependency
-interface Branding<BrandingT extends string> {
-    BrandingT: BrandingT;
-}
-
-type Branded<T, BrandingT extends string> = T & Branding<BrandingT>;
+import { Branded } from "../nominals/Branded";
 
 /**
  * represents any HTTP status code in the range `100` to `599` inclusive
