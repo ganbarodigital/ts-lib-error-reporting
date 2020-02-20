@@ -31,10 +31,9 @@
 // ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-import { HttpStatusCode } from "@ganbarodigital/ts-lib-http-types/lib/v1";
-
 import { ErrorTable } from "../ErrorTable";
 import { ExtraDataTemplate, NoExtraDataTemplate } from "../ExtraData";
+import { HttpStatusCode } from "../HttpStatusCode";
 import { PackageName } from "../PackageName";
 
 /**
