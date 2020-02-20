@@ -32,14 +32,16 @@
 // POSSIBILITY OF SUCH DAMAGE.
 //
 import { httpStatusCodeFrom } from "@ganbarodigital/ts-lib-http-types/lib/v1";
-import { packageNameFrom } from "@ganbarodigital/ts-lib-packagename/lib/v1";
 
 import { ErrorTableTemplateWithNoExtraData } from "../ErrorTableTemplate";
 import { ExtraDataTemplate, NoExtraDataTemplate } from "../ExtraData";
+import { PackageName } from "../PackageName";
 import { ErrorTable } from "./ErrorTable";
 import { UnreachableCodeTemplate } from "./UnreachableCode";
 
-export const PACKAGE_NAME = packageNameFrom("@ganbarodigital/ts-lib-error-reporting/lib/v1");
+// we can't use `packageNameFrom()` from `ts-lib-packagename` here, because
+// it creates a circular dependency that stops unit tests from compiling
+export const PACKAGE_NAME = "@ganbarodigital/ts-lib-error-reporting/lib/v1" as PackageName;
 
 /**
  * the ErrorTable for the package `@ganbarodigital/ts-lib-error-reporting`

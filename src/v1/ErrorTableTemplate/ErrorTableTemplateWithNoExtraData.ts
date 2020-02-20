@@ -32,10 +32,10 @@
 // POSSIBILITY OF SUCH DAMAGE.
 //
 import { HttpStatusCode } from "@ganbarodigital/ts-lib-http-types/lib/v1";
-import { PackageName } from "@ganbarodigital/ts-lib-packagename/lib/v1";
 
 import { ErrorTable } from "../ErrorTable";
 import { ExtraDataTemplate, NoExtraDataTemplate } from "../ExtraData";
+import { PackageName } from "../PackageName";
 
 /**
  * these go in your ErrorTable, and they define what your structured problem
