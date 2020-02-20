@@ -31,14 +31,13 @@
 // ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-import { HttpStatusCode } from "@ganbarodigital/ts-lib-http-types/lib/v1";
-import { PackageName } from "@ganbarodigital/ts-lib-packagename/lib/v1";
-import { ValueObject } from "@ganbarodigital/ts-lib-value-objects/lib/v2";
-
 import { StructuredProblemReportDataWithNoExtraData } from ".";
 import { ErrorTable } from "../ErrorTable";
 import { ErrorTableTemplateWithNoExtraData } from "../ErrorTableTemplate";
 import { ExtraDataTemplate, NoExtraDataTemplate } from "../ExtraData";
+import { HttpStatusCode } from "../HttpStatusCode";
+import { PackageName } from "../PackageName";
+import { ValueObject } from "../Values";
 
 /**
  * value object. represents a problem (a logic or robustness error) that

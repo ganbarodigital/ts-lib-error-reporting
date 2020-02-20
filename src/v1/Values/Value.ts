@@ -31,63 +31,29 @@
 // ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-import { HttpStatusCode } from "../HttpStatusCode";
 
 /**
- * the error information to return to the end-user
+ * Value<T> describes the behaviour of data that does have a value,
+ * but does not have an identity (a primary key).
  *
- * this is normally built from a StructuredProblemReport
+ * It is useful for ensuring all value objects have a *minimal* set
+ * of common behaviour, whether or not they share a common base class.
+ *
+ * Use Entity<ID,T> for data that does have an identity.
  */
-export interface Rfc7807PayloadData {
+export interface Value<T> {
     /**
-     * URI to a description of this type of error
+     * a type-guard.
      *
-     * this may be an absolute URI; it may also be a relative URI.
+     * added mostly for completeness
      */
-    type: string;
+    isValue(): this is Value<T>;
 
     /**
-     * unique name of this error
+     * returns the wrapped value
      *
-     * this is normally the final fragment of the URI above
+     * for types passed by reference, we do NOT return a clone of any kind.
+     * You have to be careful not to accidentally change this value.
      */
-    title: string;
-
-    /**
-     * the HTTP status that best fits this kind of error
-     *
-     * NOTE that this is from the point-of-view of the code that throws
-     * the error.
-     *
-     * e.g. a library may report a `422` (validation failure),
-     * but it doesn't know where the rejected input comes from.
-     *
-     * the calling app DOES know, and it may decide to report a `500`
-     * (internal server error) back to the end-user instead
-     */
-    status: HttpStatusCode;
-
-    /**
-     * a human-readable summary of the problem
-     *
-     * this should be the same string for each instance of this error
-     * (i.e., don't make it a `printf()` format string!)
-     *
-     * put instance-specific details into the `extra` section
-     */
-    detail: string;
-
-    /**
-     * a URI, that contains information about the specific instance of
-     * the problem
-     */
-    instance?: string;
-
-    /**
-     * use this to hold any extra information that should be sent back
-     * to the end-user
-     *
-     * information in this object will also be written to the app's logs
-     */
-    extra?: object;
+    valueOf(): T;
 }

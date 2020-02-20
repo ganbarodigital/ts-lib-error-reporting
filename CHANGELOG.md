@@ -26,6 +26,7 @@ The following changes have been completed, and will be included in the next tagg
 * Copied in code from these packages, to break circular dependency problems affecting unit test compilation:
   - ts-lib-http-types
   - ts-lib-packagename
+  - ts-lib-value-objects
 
 ## v0.1.0
 

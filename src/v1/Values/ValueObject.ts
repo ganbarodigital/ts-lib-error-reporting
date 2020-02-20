@@ -31,63 +31,61 @@
 // ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-import { HttpStatusCode } from "../HttpStatusCode";
+import { Value } from "./Value";
 
 /**
- * the error information to return to the end-user
+ * ValueObject<T> is the base class for defining your Value Object
+ * hierarchies.
  *
- * this is normally built from a StructuredProblemReport
+ * Every Value Object:
+ *
+ * - has a stored value
+ * - that you can get the valueOf()
+ *
+ * We've deliberately kept this as minimal as possible. We're looking to
+ * support idiomatic TypeScript code, rather than functional programming.
+ *
+ * If you do want fully-functional programming, use one of the many
+ * excellent libraries that are out there instead.
+ *
+ * Use EntityObject<ID,T> for data that has an identity (a primary key).
  */
-export interface Rfc7807PayloadData {
+export class ValueObject<T> implements Value<T> {
     /**
-     * URI to a description of this type of error
+     * this is the data that we wrap
      *
-     * this may be an absolute URI; it may also be a relative URI.
+     * child classes are welcome to access it directly (to avoid the cost
+     * of a call to `valueOf()`), but should never modify the data at all
      */
-    type: string;
+    protected readonly value: T;
 
     /**
-     * unique name of this error
+     * this constructor does no contract / specification enforcement at all
+     * do that in your constructor, before calling super()
      *
-     * this is normally the final fragment of the URI above
+     * if you don't need to enforce a contract, your class can safely
+     * create a public constructor
      */
-    title: string;
+    protected constructor(input: T) {
+        this.value = input;
+    }
 
     /**
-     * the HTTP status that best fits this kind of error
+     * returns the wrapped value
      *
-     * NOTE that this is from the point-of-view of the code that throws
-     * the error.
-     *
-     * e.g. a library may report a `422` (validation failure),
-     * but it doesn't know where the rejected input comes from.
-     *
-     * the calling app DOES know, and it may decide to report a `500`
-     * (internal server error) back to the end-user instead
+     * for types passed by reference, we do NOT return a clone of any kind.
+     * You have to be careful not to accidentally change this value.
      */
-    status: HttpStatusCode;
+    public valueOf(): T {
+        return this.value;
+    }
 
     /**
-     * a human-readable summary of the problem
+     * a type-guard. It proves that an object is a wrapper around type `T`.
      *
-     * this should be the same string for each instance of this error
-     * (i.e., don't make it a `printf()` format string!)
-     *
-     * put instance-specific details into the `extra` section
+     * added mostly for completeness
      */
-    detail: string;
-
-    /**
-     * a URI, that contains information about the specific instance of
-     * the problem
-     */
-    instance?: string;
-
-    /**
-     * use this to hold any extra information that should be sent back
-     * to the end-user
-     *
-     * information in this object will also be written to the app's logs
-     */
-    extra?: object;
+    public isValue(): this is Value<T> {
+        return true;
+    }
 }
