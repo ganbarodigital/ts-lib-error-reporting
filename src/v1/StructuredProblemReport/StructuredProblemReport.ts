@@ -31,11 +31,10 @@
 // ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-import { HttpStatusCode } from "@ganbarodigital/ts-lib-http-types/lib/v1";
-import { PackageName } from "@ganbarodigital/ts-lib-packagename/lib/v1";
-import { ValueObject } from "@ganbarodigital/ts-lib-value-objects/lib/v2";
-
 import { StructuredProblemReportDataWithNoExtraData } from ".";
+import { HttpStatusCode } from "../copied/HttpStatusCode";
+import { PackageName } from "../copied/PackageName";
+import { ValueObject } from "../copied/Values";
 import { ErrorTable } from "../ErrorTable";
 import { ErrorTableTemplateWithNoExtraData } from "../ErrorTableTemplate";
 import { ExtraDataTemplate, NoExtraDataTemplate } from "../ExtraData";

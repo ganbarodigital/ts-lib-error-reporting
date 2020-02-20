@@ -21,6 +21,17 @@ For each release, changes are grouped under these headings:
 
 The following changes have been completed, and will be included in the next tagged release.
 
+## v0.1.1
+
+Released Thursday, 20th February 2020.
+
+### Dependencies
+
+* Copied in code from these packages, to break circular dependency problems affecting unit test compilation:
+  - ts-lib-http-types
+  - ts-lib-packagename
+  - ts-lib-value-objects
+
 ## v0.1.0
 
 Released Thursday, 20th February 2020.

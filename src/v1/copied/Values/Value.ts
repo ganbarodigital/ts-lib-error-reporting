@@ -31,34 +31,29 @@
 // ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-import { HttpStatusCode } from "../copied/HttpStatusCode";
-import { PackageErrorTable } from "../ErrorTable";
-import { PACKAGE_NAME } from "../ErrorTable/PackageErrorTable";
-import { UnitTestFailureTemplate } from "./UnitTestFailure";
-import { UnitTestNoExtraTemplate } from "./UnitTestNoExtra";
 
-export class UnitTestErrorTable extends PackageErrorTable {
-    public "unit-test-failure": UnitTestFailureTemplate = {
-        packageName: PACKAGE_NAME,
-        errorName: "unit-test-failure",
-        status: 500 as HttpStatusCode,
-        detail: "this code should never execute",
-        extra: {
-            public: {
-                field1: "you can put anything you want here",
-            },
-            logsOnly: {
-                field2: "you can put anything you want here too",
-            },
-        },
-    };
+/**
+ * Value<T> describes the behaviour of data that does have a value,
+ * but does not have an identity (a primary key).
+ *
+ * It is useful for ensuring all value objects have a *minimal* set
+ * of common behaviour, whether or not they share a common base class.
+ *
+ * Use Entity<ID,T> for data that does have an identity.
+ */
+export interface Value<T> {
+    /**
+     * a type-guard.
+     *
+     * added mostly for completeness
+     */
+    isValue(): this is Value<T>;
 
-    public "unit-test-no-extra": UnitTestNoExtraTemplate = {
-        packageName: PACKAGE_NAME,
-        errorName: "unit-test-no-extra",
-        status: 500 as HttpStatusCode,
-        detail: "an example of an error with no extra information",
-    };
+    /**
+     * returns the wrapped value
+     *
+     * for types passed by reference, we do NOT return a clone of any kind.
+     * You have to be careful not to accidentally change this value.
+     */
+    valueOf(): T;
 }
-
-export const errorTable = new UnitTestErrorTable();

@@ -31,34 +31,6 @@
 // ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-import { HttpStatusCode } from "../copied/HttpStatusCode";
-import { PackageErrorTable } from "../ErrorTable";
-import { PACKAGE_NAME } from "../ErrorTable/PackageErrorTable";
-import { UnitTestFailureTemplate } from "./UnitTestFailure";
-import { UnitTestNoExtraTemplate } from "./UnitTestNoExtra";
 
-export class UnitTestErrorTable extends PackageErrorTable {
-    public "unit-test-failure": UnitTestFailureTemplate = {
-        packageName: PACKAGE_NAME,
-        errorName: "unit-test-failure",
-        status: 500 as HttpStatusCode,
-        detail: "this code should never execute",
-        extra: {
-            public: {
-                field1: "you can put anything you want here",
-            },
-            logsOnly: {
-                field2: "you can put anything you want here too",
-            },
-        },
-    };
-
-    public "unit-test-no-extra": UnitTestNoExtraTemplate = {
-        packageName: PACKAGE_NAME,
-        errorName: "unit-test-no-extra",
-        status: 500 as HttpStatusCode,
-        detail: "an example of an error with no extra information",
-    };
-}
-
-export const errorTable = new UnitTestErrorTable();
+export * from "./Value";
+export * from "./ValueObject";
