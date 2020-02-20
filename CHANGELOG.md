@@ -21,6 +21,14 @@ For each release, changes are grouped under these headings:
 
 The following changes have been completed, and will be included in the next tagged release.
 
+## v0.1.0
+
+Released Thursday, 20th February 2020.
+
+### Dependencies
+
+* Updated to latest `ts-lib-packagename` and `ts-lib-http-types` releases.
+
 ## v0.0.4
 
 Released Wednesday, 19th February 2020.

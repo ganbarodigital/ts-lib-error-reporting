@@ -31,26 +31,6 @@
 // ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-import { packageNameFrom } from "@ganbarodigital/ts-lib-packagename/lib/v1";
-import { OnError } from "@ganbarodigital/ts-on-error/lib/V1";
-
-import { ErrorReportingErrorTable } from "./ErrorTable";
-
-const onError: OnError = (reason: symbol, desc: string, extra: object) => {
-    throw new Error("invalid package name");
-};
-
-/**
- * official name of this package.
- *
- * used in our ErrorTable definitions.
- */
-export const PACKAGE_NAME = packageNameFrom("@ganbarodigital/ts-lib-apperror/lib/v1", onError);
-
-/**
- * a list of all of the errors that this package can throw
- */
-export const ERROR_TABLE = new ErrorReportingErrorTable();
 
 export * from "./AppError";
 export * from "./ErrorTable";

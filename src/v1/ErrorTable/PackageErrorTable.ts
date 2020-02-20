@@ -32,12 +32,14 @@
 // POSSIBILITY OF SUCH DAMAGE.
 //
 import { httpStatusCodeFrom } from "@ganbarodigital/ts-lib-http-types/lib/v1";
+import { packageNameFrom } from "@ganbarodigital/ts-lib-packagename/lib/v1";
 
-import { PACKAGE_NAME } from "..";
 import { ErrorTableTemplateWithNoExtraData } from "../ErrorTableTemplate";
 import { ExtraDataTemplate, NoExtraDataTemplate } from "../ExtraData";
 import { ErrorTable } from "./ErrorTable";
 import { UnreachableCodeTemplate } from "./UnreachableCode";
+
+export const PACKAGE_NAME = packageNameFrom("@ganbarodigital/ts-lib-error-reporting/lib/v1");
 
 /**
  * the ErrorTable for the package `@ganbarodigital/ts-lib-error-reporting`
@@ -45,7 +47,7 @@ import { UnreachableCodeTemplate } from "./UnreachableCode";
  * You can extend this in your own package, if you want to reuse the errors
  * that we provide.
  */
-export class ErrorReportingErrorTable implements ErrorTable {
+export class PackageErrorTable implements ErrorTable {
     // everything in this class has to follow the same structure
     [key: string]: ErrorTableTemplateWithNoExtraData<any, string, ExtraDataTemplate | NoExtraDataTemplate>;
 
@@ -65,3 +67,8 @@ export class ErrorReportingErrorTable implements ErrorTable {
         },
     };
 }
+
+/**
+ * a list of all of the errors that this package can throw
+ */
+export const ERROR_TABLE = new PackageErrorTable();
