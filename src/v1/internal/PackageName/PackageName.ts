@@ -31,7 +31,7 @@
 // ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-import { Branded } from "../nominals/Branded";
+import { Branded } from "../../internal";
 
 /**
  * represents the name of a TypeScript package

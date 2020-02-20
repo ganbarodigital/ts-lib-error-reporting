@@ -34,14 +34,14 @@
 import { expect } from "chai";
 import { describe } from "mocha";
 
-import { errorTable, UnitTestFailureData } from "../Fixtures";
+import { UNIT_TEST_ERROR_TABLE, UnitTestFailureData } from "../Fixtures";
 
 describe("StructuredProblemReportData", () => {
     it("instance can be created inline", () => {
         let unit: UnitTestFailureData;
 
         unit = {
-            template: errorTable["unit-test-failure"],
+            template: UNIT_TEST_ERROR_TABLE["unit-test-failure"],
             extra: {
                 public: {
                     field1: "a unit test",

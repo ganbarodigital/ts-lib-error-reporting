@@ -34,7 +34,7 @@
 import { expect } from "chai";
 import { describe } from "mocha";
 
-import { errorTable, UnitTestFailure } from "../Fixtures";
+import { UNIT_TEST_ERROR_TABLE, UnitTestFailure } from "../Fixtures";
 import { StructuredProblemReport } from "../StructuredProblemReport";
 import { AppError } from "./AppError";
 
@@ -94,7 +94,7 @@ describe("AppError", () => {
                     field2: "second field",
                 },
             });
-            const expectedValue = errorTable["unit-test-failure"].detail;
+            const expectedValue = UNIT_TEST_ERROR_TABLE["unit-test-failure"].detail;
 
             const actualValue = unit.message;
 
@@ -112,8 +112,8 @@ describe("AppError", () => {
                     field2: "second field",
                 },
             });
-            const expectedValue = errorTable["unit-test-failure"].packageName + "/"
-                + errorTable["unit-test-failure"].errorName;
+            const expectedValue = UNIT_TEST_ERROR_TABLE["unit-test-failure"].packageName + "/"
+                + UNIT_TEST_ERROR_TABLE["unit-test-failure"].errorName;
 
             const actualValue = unit.name;
 

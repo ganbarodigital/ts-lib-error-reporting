@@ -33,3 +33,6 @@
 //
 
 export * from "./PackageName";
+export * from "./isPackageNameData";
+export * from "./mustBePackageNameData";
+export * from "./packageNameFrom";

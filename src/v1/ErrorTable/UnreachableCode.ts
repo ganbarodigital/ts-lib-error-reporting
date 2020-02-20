@@ -31,12 +31,16 @@
 // ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-import { ERROR_TABLE } from "../";
-import { AppError, AppErrorParams } from "../AppError";
-import { ErrorTableTemplateWithExtraData } from "../ErrorTableTemplate";
-import { ExtraLogsOnlyData } from "../ExtraData/ExtraLogsOnlyData";
-import { StructuredProblemReport, StructuredProblemReportDataWithExtraData } from "../StructuredProblemReport";
+import {
+    AppError,
+    AppErrorParams,
+    ErrorTableTemplateWithExtraData,
+    ExtraLogsOnlyData,
+    StructuredProblemReport,
+    StructuredProblemReportDataWithExtraData,
+} from "../internal";
 import { ErrorTable } from "./ErrorTable";
+import { ERROR_TABLE } from "./PackageErrorTable";
 
 /**
  * the ExtraData that must be provided for each UnreachableCodeError

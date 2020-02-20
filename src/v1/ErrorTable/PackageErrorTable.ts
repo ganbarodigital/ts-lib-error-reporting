@@ -31,11 +31,15 @@
 // ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-import { ErrorTableTemplateWithNoExtraData } from "../ErrorTableTemplate";
-import { ExtraDataTemplate, NoExtraDataTemplate } from "../ExtraData";
-import { HttpStatusCode } from "../internal/HttpStatusCode";
-import { PackageName } from "../internal/PackageName";
+import {
+    ErrorTableTemplateWithNoExtraData,
+    ExtraDataTemplate,
+    HttpStatusCode,
+    NoExtraDataTemplate,
+    PackageName,
+} from "../internal";
 import { ErrorTable } from "./ErrorTable";
+import { InvalidPackageNameTemplate } from "./InvalidPackageName";
 import { UnreachableCodeTemplate } from "./UnreachableCode";
 
 // we can't use `packageNameFrom()` from `ts-lib-packagename` here, because
@@ -51,6 +55,18 @@ export const PACKAGE_NAME = "@ganbarodigital/ts-lib-error-reporting/lib/v1" as P
 export class PackageErrorTable implements ErrorTable {
     // everything in this class has to follow the same structure
     [key: string]: ErrorTableTemplateWithNoExtraData<any, string, ExtraDataTemplate | NoExtraDataTemplate>;
+
+    public "invalid-package-name": InvalidPackageNameTemplate = {
+        packageName: PACKAGE_NAME,
+        errorName: "invalid-package-name",
+        detail: "package name does not meet spec 'isPackageName()'",
+        status: 422 as HttpStatusCode,
+        extra: {
+            public: {
+                packageName: "the package name we were given",
+            },
+        },
+    };
 
     /**
      * use this error in if/else & the default clause of switch statements

@@ -35,7 +35,7 @@ import { AppError, AppErrorParams } from "../AppError";
 import { ErrorTableTemplateWithExtraData } from "../ErrorTableTemplate";
 import { AllExtraData } from "../ExtraData/AllExtraData";
 import { StructuredProblemReport, StructuredProblemReportDataWithExtraData } from "../StructuredProblemReport";
-import { errorTable, UnitTestErrorTable } from "./UnitTestErrorTable";
+import { UNIT_TEST_ERROR_TABLE, UnitTestErrorTable } from "./UnitTestErrorTable";
 
 export interface UnitTestFailureExtraData extends AllExtraData {
     public: {
@@ -79,7 +79,7 @@ export class UnitTestFailure extends AppError<
 > {
     public constructor(details: InstanceData) {
         const errorDetails: UnitTestFailureData = {
-            template: errorTable["unit-test-failure"],
+            template: UNIT_TEST_ERROR_TABLE["unit-test-failure"],
             errorId: details.errorId,
             extra: {
                 public: details.public,

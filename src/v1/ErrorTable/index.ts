@@ -34,4 +34,5 @@
 
 export * from "./ErrorTable";
 export { PackageErrorTable, ERROR_TABLE } from "./PackageErrorTable";
+export { InvalidPackageNameError } from "./InvalidPackageName";
 export { UnreachableCodeError } from "./UnreachableCode";

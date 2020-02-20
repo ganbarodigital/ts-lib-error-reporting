@@ -31,30 +31,44 @@
 // ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-import { ErrorTable, ExtraDataTemplate } from "../internal";
-import { ErrorTableTemplateWithNoExtraData } from "./ErrorTableTemplateWithNoExtraData";
+import { DataGuarantee, OnError, THROW_THE_ERROR } from "../../internal";
+
+export type RefinedTypeFactory<BI, BR> = (input: BI, onError?: OnError) => BR;
 
 /**
- * these go in your ErrorTable, and they define what your structured problem
- * reports will look like
+ * makeRefinedTypeFactory creates factories for your branded and
+ * flavoured types.
  *
- * this turns the optional `extra` field into a mandatory one
+ * You tell it:
+ *
+ * - what input type your factory should accept
+ * - the DataGuarantee to enforce
+ * - the default error handler to call if the DataGuarantee fails
+ * - what output type your factory should return
+ *
+ * and it will return a type-safe function that you can re-use to validate
+ * and create your branded and flavoured types.
+ *
+ * `BI` is the input type that your factory accepts (e.g. `string`)
+ * `BR` is the type that your factory returns
+ *
+ * @param mustBe
+ *        this will be called every time you use the function that we return.
+ *        Make sure that it has no side-effects whatsoever.
+ * @param defaultOnError
+ *        the function that we return has an optional `onError` parameter.
+ *        If the caller doesn't provide an `onError` parameter, the function
+ *        will call this error handler instead.
  */
-export interface ErrorTableTemplateWithExtraData<
-    T extends ErrorTable,
-    N extends keyof T,
-    E extends ExtraDataTemplate
-> extends ErrorTableTemplateWithNoExtraData<T, N, E> {
-    /**
-     * the internal data captured when an error occurs
-     *
-     * this is split up into (up to) two properties:
-     *
-     * - `public`: data that can be shared with the caller
-     *   (e.g. included in an API response payload)
-     *   this data will also be written to the logs
-     * - `logsOnly`: data that can only be written to the logs
-     *   (i.e. it must not be shared with the caller)
-     */
-    extra: E;
-}
+export const makeRefinedTypeFactory = <BI, BR>(
+    mustBe: DataGuarantee<BI>,
+    defaultOnError: OnError = THROW_THE_ERROR,
+): RefinedTypeFactory<BI, BR> => {
+    return (input: BI, onError: OnError = defaultOnError): BR => {
+        // enforce the contract
+        mustBe(input, onError);
+
+        // we're good at this point
+        return (input as unknown) as BR;
+    };
+};

@@ -31,13 +31,18 @@
 // ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-import { StructuredProblemReportDataWithNoExtraData } from ".";
-import { ErrorTable } from "../ErrorTable";
-import { ErrorTableTemplateWithNoExtraData } from "../ErrorTableTemplate";
-import { ExtraDataTemplate, NoExtraDataTemplate } from "../ExtraData";
-import { HttpStatusCode } from "../internal/HttpStatusCode";
-import { PackageName } from "../internal/PackageName";
-import { ValueObject } from "../internal/Values";
+import {
+    ErrorTable,
+    ErrorTableTemplateWithNoExtraData,
+    ExtraDataTemplate,
+    HttpStatusCode,
+    NoExtraDataTemplate,
+    PackageName,
+    ValueObject,
+} from "../internal";
+import {
+    StructuredProblemReportDataWithNoExtraData,
+} from "./StructuredProblemReportDataWithNoExtraData";
 
 /**
  * value object. represents a problem (a logic or robustness error) that

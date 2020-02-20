@@ -31,30 +31,60 @@
 // ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-import { ErrorTable, ExtraDataTemplate } from "../internal";
-import { ErrorTableTemplateWithNoExtraData } from "./ErrorTableTemplateWithNoExtraData";
+import {
+    AppError,
+    AppErrorParams,
+    ErrorTableTemplateWithExtraData,
+    ExtraPublicData,
+    StructuredProblemReport,
+    StructuredProblemReportDataWithExtraData,
+} from "../internal";
+import { ERROR_TABLE, PackageErrorTable } from "./PackageErrorTable";
 
-/**
- * these go in your ErrorTable, and they define what your structured problem
- * reports will look like
- *
- * this turns the optional `extra` field into a mandatory one
- */
-export interface ErrorTableTemplateWithExtraData<
-    T extends ErrorTable,
-    N extends keyof T,
-    E extends ExtraDataTemplate
-> extends ErrorTableTemplateWithNoExtraData<T, N, E> {
-    /**
-     * the internal data captured when an error occurs
-     *
-     * this is split up into (up to) two properties:
-     *
-     * - `public`: data that can be shared with the caller
-     *   (e.g. included in an API response payload)
-     *   this data will also be written to the logs
-     * - `logsOnly`: data that can only be written to the logs
-     *   (i.e. it must not be shared with the caller)
-     */
-    extra: E;
+interface InvalidPackageNameExtraData extends ExtraPublicData {
+    public: {
+        packageName: string;
+    };
+}
+
+export type InvalidPackageNameTemplate = ErrorTableTemplateWithExtraData<
+    PackageErrorTable,
+    "invalid-package-name",
+    InvalidPackageNameExtraData
+>;
+
+type InvalidPackageNameData = StructuredProblemReportDataWithExtraData<
+    PackageErrorTable,
+    "invalid-package-name",
+    InvalidPackageNameTemplate,
+    InvalidPackageNameExtraData
+>;
+
+type InvalidPackageNameSPR = StructuredProblemReport<
+    PackageErrorTable,
+    "invalid-package-name",
+    InvalidPackageNameTemplate,
+    InvalidPackageNameExtraData,
+    InvalidPackageNameData
+>;
+
+export class InvalidPackageNameError extends AppError<
+    PackageErrorTable,
+    "invalid-package-name",
+    InvalidPackageNameTemplate,
+    InvalidPackageNameExtraData,
+    InvalidPackageNameData,
+    InvalidPackageNameSPR
+> {
+    public constructor(params: InvalidPackageNameExtraData & AppErrorParams) {
+        const errorData: InvalidPackageNameData = {
+            template: ERROR_TABLE["invalid-package-name"],
+            errorId: params.errorId,
+            extra: {
+                public: params.public,
+            },
+        };
+
+        super(StructuredProblemReport.from(errorData));
+    }
 }
