@@ -33,4 +33,5 @@
 //
 
 export * from "./ErrorTable";
-export * from "./ErrorReportingErrorTable";
+export { PackageErrorTable, ERROR_TABLE } from "./PackageErrorTable";
+export { UnreachableCodeError } from "./UnreachableCode";

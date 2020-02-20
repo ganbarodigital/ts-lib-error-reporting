@@ -33,12 +33,12 @@
 //
 import { httpStatusCodeFrom } from "@ganbarodigital/ts-lib-http-types/lib/v1";
 
-import { PACKAGE_NAME } from "..";
-import { ErrorReportingErrorTable } from "../ErrorTable";
+import { PackageErrorTable } from "../ErrorTable";
+import { PACKAGE_NAME } from "../ErrorTable/PackageErrorTable";
 import { UnitTestFailureTemplate } from "./UnitTestFailure";
 import { UnitTestNoExtraTemplate } from "./UnitTestNoExtra";
 
-export class UnitTestErrorTable extends ErrorReportingErrorTable {
+export class UnitTestErrorTable extends PackageErrorTable {
     public "unit-test-failure": UnitTestFailureTemplate = {
         packageName: PACKAGE_NAME,
         errorName: "unit-test-failure",
