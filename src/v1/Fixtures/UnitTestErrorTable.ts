@@ -31,9 +31,9 @@
 // ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
+import { HttpStatusCode } from "../copied/HttpStatusCode";
 import { PackageErrorTable } from "../ErrorTable";
 import { PACKAGE_NAME } from "../ErrorTable/PackageErrorTable";
-import { HttpStatusCode } from "../HttpStatusCode";
 import { UnitTestFailureTemplate } from "./UnitTestFailure";
 import { UnitTestNoExtraTemplate } from "./UnitTestNoExtra";
 

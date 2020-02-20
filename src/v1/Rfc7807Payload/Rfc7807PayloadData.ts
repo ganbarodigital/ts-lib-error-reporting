@@ -31,7 +31,7 @@
 // ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-import { HttpStatusCode } from "../HttpStatusCode";
+import { HttpStatusCode } from "../copied/HttpStatusCode";
 
 /**
  * the error information to return to the end-user
