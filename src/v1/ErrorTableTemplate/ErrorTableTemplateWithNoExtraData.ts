@@ -31,10 +31,13 @@
 // ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-import { HttpStatusCode } from "../copied/HttpStatusCode";
-import { PackageName } from "../copied/PackageName";
-import { ErrorTable } from "../ErrorTable";
-import { ExtraDataTemplate, NoExtraDataTemplate } from "../ExtraData";
+import {
+    ErrorTable,
+    ExtraDataTemplate,
+    HttpStatusCode,
+    NoExtraDataTemplate,
+    PackageName,
+} from "../internal";
 
 /**
  * these go in your ErrorTable, and they define what your structured problem

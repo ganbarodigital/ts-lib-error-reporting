@@ -31,30 +31,26 @@
 // ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-import { ErrorTable, ExtraDataTemplate } from "../internal";
-import { ErrorTableTemplateWithNoExtraData } from "./ErrorTableTemplateWithNoExtraData";
+import { Branded } from "../../internal";
 
 /**
- * these go in your ErrorTable, and they define what your structured problem
- * reports will look like
+ * represents the name of a TypeScript package
  *
- * this turns the optional `extra` field into a mandatory one
+ * the package can be:
+ * - any valid NPM package name
+ * - and can include sub-package names too
+ *
+ * Sub-package names can include uppercase characters.
+ *
+ * examples of valid PackageNames include:
+ *
+ * - ts-lib-packagename
+ * - @ganbarodigital/ts-lib-packagename
+ * - @ganbarodigital/ts-lib-packagename/v1
+ * - @ganbarodigital/ts-lib-packagename/V1/types
+ *
+ * Relative module names are not supported.
+ *
+ * At runtime, PackageName resolves to being just a `string`.
  */
-export interface ErrorTableTemplateWithExtraData<
-    T extends ErrorTable,
-    N extends keyof T,
-    E extends ExtraDataTemplate
-> extends ErrorTableTemplateWithNoExtraData<T, N, E> {
-    /**
-     * the internal data captured when an error occurs
-     *
-     * this is split up into (up to) two properties:
-     *
-     * - `public`: data that can be shared with the caller
-     *   (e.g. included in an API response payload)
-     *   this data will also be written to the logs
-     * - `logsOnly`: data that can only be written to the logs
-     *   (i.e. it must not be shared with the caller)
-     */
-    extra: E;
-}
+export type PackageName = Branded<string, "@ganbarodigital/PackageName">;

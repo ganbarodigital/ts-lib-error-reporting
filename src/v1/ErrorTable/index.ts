@@ -34,4 +34,7 @@
 
 export * from "./ErrorTable";
 export { PackageErrorTable, ERROR_TABLE } from "./PackageErrorTable";
+export { HttpStatusCodeOutOfRangeError } from "./HttpStatusCodeOutOfRange";
+export { InvalidPackageNameError } from "./InvalidPackageName";
+export { NotAnIntegerError } from "./NotAnInteger";
 export { UnreachableCodeError } from "./UnreachableCode";

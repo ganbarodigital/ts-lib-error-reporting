@@ -31,13 +31,29 @@
 // ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-import { HttpStatusCode } from "../copied/HttpStatusCode";
 import { PackageErrorTable } from "../ErrorTable";
 import { PACKAGE_NAME } from "../ErrorTable/PackageErrorTable";
+import { HttpStatusCode } from "../internal/HttpStatusCode";
+import { NeverABrandedUuidTemplate } from "./NeverABrandedUuid";
+import { NeverAFlavouredUuidTemplate } from "./NeverAFlavouredUuid";
 import { UnitTestFailureTemplate } from "./UnitTestFailure";
 import { UnitTestNoExtraTemplate } from "./UnitTestNoExtra";
 
 export class UnitTestErrorTable extends PackageErrorTable {
+    public "never-a-branded-uuid": NeverABrandedUuidTemplate = {
+        packageName: PACKAGE_NAME,
+        errorName: "never-a-branded-uuid",
+        status: 500 as HttpStatusCode,
+        detail: "value is not a branded uuid",
+    };
+
+    public "never-a-flavoured-uuid": NeverAFlavouredUuidTemplate = {
+        packageName: PACKAGE_NAME,
+        errorName: "never-a-flavoured-uuid",
+        status: 500 as HttpStatusCode,
+        detail: "value is not a flavoured uuid",
+    };
+
     public "unit-test-failure": UnitTestFailureTemplate = {
         packageName: PACKAGE_NAME,
         errorName: "unit-test-failure",
@@ -61,4 +77,4 @@ export class UnitTestErrorTable extends PackageErrorTable {
     };
 }
 
-export const errorTable = new UnitTestErrorTable();
+export const UNIT_TEST_ERROR_TABLE = new UnitTestErrorTable();

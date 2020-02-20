@@ -31,30 +31,11 @@
 // ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-import { ErrorTable, ExtraDataTemplate } from "../internal";
-import { ErrorTableTemplateWithNoExtraData } from "./ErrorTableTemplateWithNoExtraData";
 
-/**
- * these go in your ErrorTable, and they define what your structured problem
- * reports will look like
- *
- * this turns the optional `extra` field into a mandatory one
- */
-export interface ErrorTableTemplateWithExtraData<
-    T extends ErrorTable,
-    N extends keyof T,
-    E extends ExtraDataTemplate
-> extends ErrorTableTemplateWithNoExtraData<T, N, E> {
-    /**
-     * the internal data captured when an error occurs
-     *
-     * this is split up into (up to) two properties:
-     *
-     * - `public`: data that can be shared with the caller
-     *   (e.g. included in an API response payload)
-     *   this data will also be written to the logs
-     * - `logsOnly`: data that can only be written to the logs
-     *   (i.e. it must not be shared with the caller)
-     */
-    extra: E;
-}
+// the idea of flavouring came from this blog post:
+//
+// https://spin.atomicobject.com/2018/01/15/typescript-flexible-nominal-typing/
+//
+export type Flavoured<T, FlavourT extends string> = T & { _type?: FlavourT };
+
+export type AnyFlavoured = Flavoured<any, any>;

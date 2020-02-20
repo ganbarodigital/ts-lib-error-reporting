@@ -31,16 +31,22 @@
 // ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-
-// copied from ts-lib-value-objects, so that we can break the
-// circular dependency
-interface Branding<BrandingT extends string> {
-    BrandingT: BrandingT;
-}
-
-type Branded<T, BrandingT extends string> = T & Branding<BrandingT>;
+import { InvalidPackageNameError } from "../../ErrorTable";
+import { OnError, THROW_THE_ERROR } from "../../internal";
+import { isPackageNameData } from "./isPackageNameData";
 
 /**
- * represents any HTTP status code in the range `100` to `599` inclusive
+ * data guarantee. calls the supplied OnError handler if the input string
+ * does not meet the specification for a valid PackageName.
  */
-export type HttpStatusCode = Branded<number, "@ganbarodigital/HttpStatusCode">;
+export function mustBePackageNameData(
+    name: string,
+    onError: OnError = THROW_THE_ERROR,
+): void {
+    // what does the spec say?
+    if (!isPackageNameData(name)) {
+        onError(new InvalidPackageNameError({public: { packageName: name }}));
+    }
+
+    // if we get here, all is well
+}

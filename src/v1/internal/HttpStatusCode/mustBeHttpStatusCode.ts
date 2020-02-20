@@ -31,25 +31,29 @@
 // ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
+import { isHttpStatusCode } from ".";
+import { HttpStatusCodeOutOfRangeError } from "../../ErrorTable/HttpStatusCodeOutOfRange";
+import { NotAnIntegerError } from "../../ErrorTable/NotAnInteger";
+import { OnError, THROW_THE_ERROR } from "../../internal";
 
 /**
- * represents the name of a TypeScript package
- *
- * the package can be:
- * - any valid NPM package name
- * - and can include sub-package names too
- *
- * Sub-package names can include uppercase characters.
- *
- * examples of valid PackageNames include:
- *
- * - ts-lib-packagename
- * - @ganbarodigital/ts-lib-packagename
- * - @ganbarodigital/ts-lib-packagename/v1
- * - @ganbarodigital/ts-lib-packagename/V1/types
- *
- * Relative module names are not supported.
- *
- * At runtime, PackageName resolves to being just a `string`.
+ * data guarantee. calls the supplied `onError()` handler if the `input`
+ * number is not a valid HTTP status code.
  */
-export type PackageName = string & { _type: "@ganbarodigital/PackageName" };
+export function mustBeHttpStatusCode(input: number, onError: OnError = THROW_THE_ERROR): void {
+    // make sure that `input` is an integer
+    //
+    // if anyone passes in a massive number, this will report a false
+    // error ... but the performance increase that comes from the bitshift
+    // operation is more than worth it
+    // tslint:disable-next-line: no-bitwise
+    if (input >>> 0 !== input) {
+        onError(new NotAnIntegerError({public: {input}}));
+    }
+
+    if (!isHttpStatusCode(input)) {
+        onError(new HttpStatusCodeOutOfRangeError({public: {input}}));
+    }
+
+    // if we get here, all is good
+}

@@ -32,5 +32,6 @@
 // POSSIBILITY OF SUCH DAMAGE.
 //
 
+export * from "./DataGuarantee";
 export * from "./Value";
 export * from "./ValueObject";

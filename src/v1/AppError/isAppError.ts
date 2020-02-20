@@ -32,9 +32,12 @@
 // POSSIBILITY OF SUCH DAMAGE.
 //
 import { ErrorTable } from "../ErrorTable";
-import { ErrorTableTemplateWithNoExtraData } from "../ErrorTableTemplate";
-import { ExtraDataTemplate } from "../ExtraData";
-import { StructuredProblemReport, StructuredProblemReportDataWithNoExtraData } from "../StructuredProblemReport";
+import {
+    ErrorTableTemplateWithNoExtraData,
+    ExtraDataTemplate,
+    StructuredProblemReportDataWithNoExtraData,
+} from "../internal";
+import { StructuredProblemReport } from "../StructuredProblemReport";
 import { AppError } from "./AppError";
 
 /**

@@ -32,4 +32,6 @@
 // POSSIBILITY OF SUCH DAMAGE.
 //
 
-export * from "./PackageName";
+export * from "./Branded";
+export * from "./Factory";
+export * from "./Flavoured";

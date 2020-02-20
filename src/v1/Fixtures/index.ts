@@ -32,6 +32,8 @@
 // POSSIBILITY OF SUCH DAMAGE.
 //
 
-export * from "./UnitTestFailure";
 export * from "./UnitTestErrorTable";
+export * from "./UnitTestFailure";
 export * from "./UnitTestNoExtra";
+export * from "./NeverABrandedUuid";
+export * from "./NeverAFlavouredUuid";

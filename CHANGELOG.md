@@ -21,6 +21,18 @@ For each release, changes are grouped under these headings:
 
 The following changes have been completed, and will be included in the next tagged release.
 
+## v0.2.0
+
+Released Thursday, 20th February 2020.
+
+In this release, we're taking steps to ensure that it's easier to keep our copied definitions in sync with the external libraries.
+
+### New
+
+* Core code from `ts-lib-http-types` has been added
+* Core code from `ts-lib-packagename` has been added
+* Core code from `ts-lib-value-objects` has been added
+
 ## v0.1.1
 
 Released Thursday, 20th February 2020.

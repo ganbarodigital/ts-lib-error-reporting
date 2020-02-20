@@ -32,48 +32,59 @@
 // POSSIBILITY OF SUCH DAMAGE.
 //
 import {
-    ErrorTable,
-    ErrorTableTemplateWithNoExtraData,
-    ExtraDataTemplate,
-    NoExtraDataTemplate,
+    AppError,
+    AppErrorParams,
+    ErrorTableTemplateWithExtraData,
+    ExtraPublicData,
+    StructuredProblemReport,
+    StructuredProblemReportDataWithExtraData,
 } from "../internal";
+import { ERROR_TABLE, PackageErrorTable } from "./PackageErrorTable";
 
-/**
- * the internal data captured when an error occurs
- *
- * this defines the structure that you pass into
- * `StructuredProblemReport.from()` when you create problem reports at
- * runtime
- *
- *  use this as your base interface when defining errors that have NO
- * `extra` bits of data
- */
-export interface StructuredProblemReportDataWithNoExtraData<
-    T extends ErrorTable,
-    N extends keyof T,
-    M extends ErrorTableTemplateWithNoExtraData<T, N, E>,
-    E extends ExtraDataTemplate | NoExtraDataTemplate
+interface HttpStatusCodeOutOfRangeExtraData extends ExtraPublicData {
+    public: {
+        input: number;
+    };
+}
+
+export type HttpStatusCodeOutOfRangeTemplate = ErrorTableTemplateWithExtraData<
+    PackageErrorTable,
+    "http-status-code-out-of-range",
+    HttpStatusCodeOutOfRangeExtraData
+>;
+
+type HttpStatusCodeOutOfRangeData = StructuredProblemReportDataWithExtraData<
+    PackageErrorTable,
+    "http-status-code-out-of-range",
+    HttpStatusCodeOutOfRangeTemplate,
+    HttpStatusCodeOutOfRangeExtraData
+>;
+
+type HttpStatusCodeOutOfRangeSPR = StructuredProblemReport<
+    PackageErrorTable,
+    "http-status-code-out-of-range",
+    HttpStatusCodeOutOfRangeTemplate,
+    HttpStatusCodeOutOfRangeExtraData,
+    HttpStatusCodeOutOfRangeData
+>;
+
+export class HttpStatusCodeOutOfRangeError extends AppError<
+    PackageErrorTable,
+    "http-status-code-out-of-range",
+    HttpStatusCodeOutOfRangeTemplate,
+    HttpStatusCodeOutOfRangeExtraData,
+    HttpStatusCodeOutOfRangeData,
+    HttpStatusCodeOutOfRangeSPR
 > {
-    template: M;
+    public constructor(params: HttpStatusCodeOutOfRangeExtraData & AppErrorParams) {
+        const errorData: HttpStatusCodeOutOfRangeData = {
+            template: ERROR_TABLE["http-status-code-out-of-range"],
+            errorId: params.errorId,
+            extra: {
+                public: params.public,
+            },
+        };
 
-    /**
-     * unique ID of this instance.
-     *
-     * if present, may be used to build a URI that is shared with the
-     * end-user.
-     */
-    errorId?: string;
-
-    /**
-     * the internal data captured when an error occurs
-     *
-     * this is split up into (up to) two properties:
-     *
-     * - `public`: data that can be shared with the caller
-     *   (e.g. included in an API response payload)
-     *   this data will also be written to the logs
-     * - `logsOnly`: data that can only be written to the logs
-     *   (i.e. it must not be shared with the caller)
-     */
-    extra?: E;
+        super(StructuredProblemReport.from(errorData));
+    }
 }

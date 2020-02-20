@@ -31,16 +31,23 @@
 // ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-import { HttpStatusCode } from "../copied/HttpStatusCode";
-import { PackageName } from "../copied/PackageName";
-import { ErrorTableTemplateWithNoExtraData } from "../ErrorTableTemplate";
-import { ExtraDataTemplate, NoExtraDataTemplate } from "../ExtraData";
+import {
+    ErrorTableTemplateWithNoExtraData,
+    ExtraDataTemplate,
+    httpStatusCodeFrom,
+    NoExtraDataTemplate,
+    packageNameFrom,
+} from "../internal";
 import { ErrorTable } from "./ErrorTable";
+import { HttpStatusCodeOutOfRangeTemplate } from "./HttpStatusCodeOutOfRange";
+import { InvalidPackageNameTemplate } from "./InvalidPackageName";
+import { NotAnIntegerTemplate } from "./NotAnInteger";
 import { UnreachableCodeTemplate } from "./UnreachableCode";
 
-// we can't use `packageNameFrom()` from `ts-lib-packagename` here, because
-// it creates a circular dependency that stops unit tests from compiling
-export const PACKAGE_NAME = "@ganbarodigital/ts-lib-error-reporting/lib/v1" as PackageName;
+/**
+ * we use this to track which package has thrown the errors
+ */
+export const PACKAGE_NAME = packageNameFrom("@ganbarodigital/ts-lib-error-reporting/lib/v1");
 
 /**
  * the ErrorTable for the package `@ganbarodigital/ts-lib-error-reporting`
@@ -52,6 +59,42 @@ export class PackageErrorTable implements ErrorTable {
     // everything in this class has to follow the same structure
     [key: string]: ErrorTableTemplateWithNoExtraData<any, string, ExtraDataTemplate | NoExtraDataTemplate>;
 
+    public "http-status-code-out-of-range": HttpStatusCodeOutOfRangeTemplate = {
+        packageName: PACKAGE_NAME,
+        errorName: "http-status-code-out-of-range",
+        detail: "input falls outside the range of a valid HTTP status code",
+        status: httpStatusCodeFrom(422),
+        extra: {
+            public: {
+                input: 0,
+            },
+        },
+    };
+
+    public "invalid-package-name": InvalidPackageNameTemplate = {
+        packageName: PACKAGE_NAME,
+        errorName: "invalid-package-name",
+        detail: "package name does not meet spec 'isPackageName()'",
+        status: httpStatusCodeFrom(422),
+        extra: {
+            public: {
+                packageName: "the package name we were given",
+            },
+        },
+    };
+
+    public "not-an-integer": NotAnIntegerTemplate = {
+        packageName: PACKAGE_NAME,
+        errorName: "not-an-integer",
+        detail: "input must be an integer; was a float",
+        status: httpStatusCodeFrom(422),
+        extra: {
+            public: {
+                input: 0,
+            },
+        },
+    };
+
     /**
      * use this error in if/else & the default clause of switch statements
      * to spot things that should never happen
@@ -59,7 +102,7 @@ export class PackageErrorTable implements ErrorTable {
     public "unreachable-code": UnreachableCodeTemplate = {
         packageName: PACKAGE_NAME,
         errorName: "unreachable-code",
-        status: 500 as HttpStatusCode,
+        status: httpStatusCodeFrom(500),
         detail: "this code should never execute",
         extra: {
             logsOnly: {

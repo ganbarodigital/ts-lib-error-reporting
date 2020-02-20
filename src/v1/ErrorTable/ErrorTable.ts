@@ -31,8 +31,11 @@
 // ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-import { ErrorTableTemplateWithNoExtraData } from "../ErrorTableTemplate";
-import { ExtraDataTemplate, NoExtraDataTemplate } from "../ExtraData";
+import {
+    ErrorTableTemplateWithNoExtraData,
+    ExtraDataTemplate,
+    NoExtraDataTemplate,
+} from "../internal";
 
 /**
  * a list of all of the structured problems that your app or package

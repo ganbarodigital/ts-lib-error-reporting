@@ -31,10 +31,10 @@
 // ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-import { ErrorTable } from "../ErrorTable";
-import { ErrorTableTemplateWithNoExtraData } from "../ErrorTableTemplate";
-import { ExtraDataTemplate } from "../ExtraData";
-import { StructuredProblemReportDataWithNoExtraData } from "./StructuredProblemReportDataWithNoExtraData";
+import { ErrorTable, ErrorTableTemplateWithNoExtraData, ExtraDataTemplate } from "../internal";
+import {
+    StructuredProblemReportDataWithNoExtraData,
+} from "./StructuredProblemReportDataWithNoExtraData";
 
 /**
  * the internal data captured when an error occurs

@@ -31,30 +31,30 @@
 // ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-import { ErrorTable, ExtraDataTemplate } from "../internal";
-import { ErrorTableTemplateWithNoExtraData } from "./ErrorTableTemplateWithNoExtraData";
+import { expect } from "chai";
+import { describe } from "mocha";
 
-/**
- * these go in your ErrorTable, and they define what your structured problem
- * reports will look like
- *
- * this turns the optional `extra` field into a mandatory one
- */
-export interface ErrorTableTemplateWithExtraData<
-    T extends ErrorTable,
-    N extends keyof T,
-    E extends ExtraDataTemplate
-> extends ErrorTableTemplateWithNoExtraData<T, N, E> {
-    /**
-     * the internal data captured when an error occurs
-     *
-     * this is split up into (up to) two properties:
-     *
-     * - `public`: data that can be shared with the caller
-     *   (e.g. included in an API response payload)
-     *   this data will also be written to the logs
-     * - `logsOnly`: data that can only be written to the logs
-     *   (i.e. it must not be shared with the caller)
-     */
-    extra: E;
-}
+import { isHttpStatusCode } from ".";
+
+describe("isHttpStatusCode()", () => {
+    it("accepts numbers in the range 100-599 inclusive", () => {
+        for (let inputValue = 100; inputValue < 599; inputValue++) {
+            const actualValue = isHttpStatusCode(inputValue);
+            expect(actualValue).to.equal(true);
+        }
+    });
+
+    it("rejects numbers below 100", () => {
+        for (let inputValue = -100; inputValue < 100; inputValue++) {
+            const actualValue = isHttpStatusCode(inputValue);
+            expect(actualValue).to.equal(false);
+        }
+    });
+
+    it("rejects numbers above 600", () => {
+        for (let inputValue = 6000; inputValue < 1000; inputValue++) {
+            const actualValue = isHttpStatusCode(inputValue);
+            expect(actualValue).to.equal(false);
+        }
+    });
+});

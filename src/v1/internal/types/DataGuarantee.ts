@@ -31,30 +31,24 @@
 // ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-import { ErrorTable, ExtraDataTemplate } from "../internal";
-import { ErrorTableTemplateWithNoExtraData } from "./ErrorTableTemplateWithNoExtraData";
+import { OnError } from "../../internal";
 
 /**
- * these go in your ErrorTable, and they define what your structured problem
- * reports will look like
+ * A DataGuarantee inspects the given data, to see if the given data
+ * meets a defined contract / specification.
  *
- * this turns the optional `extra` field into a mandatory one
+ * If the given data does meet the given contract / specification, the
+ * DataGuarantee returns the given data.
+ *
+ * If the given data does not meet the given contract / specification,
+ * the DataGuarantee calls the supplied OnError handler. The OnError
+ * handler must throw an Error of some kind.
+ *
+ * `T` is the type of data to be inspected
+ *
+ * When you implement a DataGuarantee, make it a wrapper around one or more
+ * TypeGuards and/or DataGuards - and even other DataGuarantees if
+ * appropriate. That's the best way to make your code as reusable as possible.
  */
-export interface ErrorTableTemplateWithExtraData<
-    T extends ErrorTable,
-    N extends keyof T,
-    E extends ExtraDataTemplate
-> extends ErrorTableTemplateWithNoExtraData<T, N, E> {
-    /**
-     * the internal data captured when an error occurs
-     *
-     * this is split up into (up to) two properties:
-     *
-     * - `public`: data that can be shared with the caller
-     *   (e.g. included in an API response payload)
-     *   this data will also be written to the logs
-     * - `logsOnly`: data that can only be written to the logs
-     *   (i.e. it must not be shared with the caller)
-     */
-    extra: E;
-}
+export type DataGuarantee<T>
+  = (input: T, onError: OnError) => void;

@@ -31,30 +31,60 @@
 // ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-import { ErrorTable, ExtraDataTemplate } from "../internal";
-import { ErrorTableTemplateWithNoExtraData } from "./ErrorTableTemplateWithNoExtraData";
+import {
+    AppError,
+    AppErrorParams,
+    ErrorTableTemplateWithExtraData,
+    ExtraPublicData,
+    StructuredProblemReport,
+    StructuredProblemReportDataWithExtraData,
+} from "../internal";
+import { ERROR_TABLE, PackageErrorTable } from "./PackageErrorTable";
 
-/**
- * these go in your ErrorTable, and they define what your structured problem
- * reports will look like
- *
- * this turns the optional `extra` field into a mandatory one
- */
-export interface ErrorTableTemplateWithExtraData<
-    T extends ErrorTable,
-    N extends keyof T,
-    E extends ExtraDataTemplate
-> extends ErrorTableTemplateWithNoExtraData<T, N, E> {
-    /**
-     * the internal data captured when an error occurs
-     *
-     * this is split up into (up to) two properties:
-     *
-     * - `public`: data that can be shared with the caller
-     *   (e.g. included in an API response payload)
-     *   this data will also be written to the logs
-     * - `logsOnly`: data that can only be written to the logs
-     *   (i.e. it must not be shared with the caller)
-     */
-    extra: E;
+interface NotAnIntegerExtraData extends ExtraPublicData {
+    public: {
+        input: number;
+    };
+}
+
+export type NotAnIntegerTemplate = ErrorTableTemplateWithExtraData<
+    PackageErrorTable,
+    "not-an-integer",
+    NotAnIntegerExtraData
+>;
+
+type NotAnIntegerData = StructuredProblemReportDataWithExtraData<
+    PackageErrorTable,
+    "not-an-integer",
+    NotAnIntegerTemplate,
+    NotAnIntegerExtraData
+>;
+
+type NotAnIntegerSPR = StructuredProblemReport<
+    PackageErrorTable,
+    "not-an-integer",
+    NotAnIntegerTemplate,
+    NotAnIntegerExtraData,
+    NotAnIntegerData
+>;
+
+export class NotAnIntegerError extends AppError<
+    PackageErrorTable,
+    "not-an-integer",
+    NotAnIntegerTemplate,
+    NotAnIntegerExtraData,
+    NotAnIntegerData,
+    NotAnIntegerSPR
+> {
+    public constructor(params: NotAnIntegerExtraData & AppErrorParams) {
+        const errorData: NotAnIntegerData = {
+            template: ERROR_TABLE["not-an-integer"],
+            errorId: params.errorId,
+            extra: {
+                public: params.public,
+            },
+        };
+
+        super(StructuredProblemReport.from(errorData));
+    }
 }

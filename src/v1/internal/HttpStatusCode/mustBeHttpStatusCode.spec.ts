@@ -34,25 +34,43 @@
 import { expect } from "chai";
 import { describe } from "mocha";
 
-import { UNIT_TEST_ERROR_TABLE, UnitTestFailureData } from "../Fixtures";
+import { mustBeHttpStatusCode } from ".";
+import { AnyAppError, OnError } from "../../internal";
 
-describe("StructuredProblemReportData", () => {
-    it("instance can be created inline", () => {
-        let unit: UnitTestFailureData;
+describe("mustBeHttpStatusCode()", () => {
+    const onError: OnError = (e: AnyAppError): never => {
+        throw new Error(JSON.stringify(e.details.extra));
+    };
 
-        unit = {
-            template: UNIT_TEST_ERROR_TABLE["unit-test-failure"],
-            extra: {
-                public: {
-                    field1: "a unit test",
-                },
-                logsOnly: {
-                    field2: "that went wrong",
-                },
-            },
-        };
+    it("accepts integers in the range 100-599 inclusive", () => {
+        for (let inputValue = 100; inputValue < 600; inputValue++) {
+            mustBeHttpStatusCode(inputValue);
+        }
+    });
 
-        // if it compiles, it passes
-        expect(unit).to.equal(unit);
+    it("rejects non-integers in the range 100-599 inclusive", () => {
+        for (let inputValue = 100.5; inputValue < 600; inputValue++) {
+            const expectedMessage = "{\"input\":" + inputValue + "}";
+            expect(() => mustBeHttpStatusCode(inputValue, onError)).to.throw(expectedMessage);
+        }
+    });
+
+    it("rejects numbers below 100", () => {
+        for (let inputValue = -100; inputValue < 100; inputValue++) {
+            const expectedMessage = "{\"input\":" + inputValue + "}";
+            expect(() => mustBeHttpStatusCode(inputValue, onError)).to.throw(expectedMessage);
+        }
+    });
+
+    it("rejects numbers above 599", () => {
+        for (let inputValue = 600; inputValue < 1000; inputValue++) {
+            const expectedMessage = "{\"input\":" + inputValue + "}";
+            expect(() => mustBeHttpStatusCode(inputValue, onError)).to.throw(expectedMessage);
+        }
+    });
+
+    it("has a default error handler", () => {
+        const expectedMessage = "input falls outside the range of a valid HTTP status code";
+        expect(() => mustBeHttpStatusCode(700)).to.throw(expectedMessage);
     });
 });

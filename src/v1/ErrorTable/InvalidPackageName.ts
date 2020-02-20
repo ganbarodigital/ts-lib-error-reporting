@@ -31,5 +31,60 @@
 // ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
+import {
+    AppError,
+    AppErrorParams,
+    ErrorTableTemplateWithExtraData,
+    ExtraPublicData,
+    StructuredProblemReport,
+    StructuredProblemReportDataWithExtraData,
+} from "../internal";
+import { ERROR_TABLE, PackageErrorTable } from "./PackageErrorTable";
 
-export * from "./HttpStatusCode";
+interface InvalidPackageNameExtraData extends ExtraPublicData {
+    public: {
+        packageName: string;
+    };
+}
+
+export type InvalidPackageNameTemplate = ErrorTableTemplateWithExtraData<
+    PackageErrorTable,
+    "invalid-package-name",
+    InvalidPackageNameExtraData
+>;
+
+type InvalidPackageNameData = StructuredProblemReportDataWithExtraData<
+    PackageErrorTable,
+    "invalid-package-name",
+    InvalidPackageNameTemplate,
+    InvalidPackageNameExtraData
+>;
+
+type InvalidPackageNameSPR = StructuredProblemReport<
+    PackageErrorTable,
+    "invalid-package-name",
+    InvalidPackageNameTemplate,
+    InvalidPackageNameExtraData,
+    InvalidPackageNameData
+>;
+
+export class InvalidPackageNameError extends AppError<
+    PackageErrorTable,
+    "invalid-package-name",
+    InvalidPackageNameTemplate,
+    InvalidPackageNameExtraData,
+    InvalidPackageNameData,
+    InvalidPackageNameSPR
+> {
+    public constructor(params: InvalidPackageNameExtraData & AppErrorParams) {
+        const errorData: InvalidPackageNameData = {
+            template: ERROR_TABLE["invalid-package-name"],
+            errorId: params.errorId,
+            extra: {
+                public: params.public,
+            },
+        };
+
+        super(StructuredProblemReport.from(errorData));
+    }
+}

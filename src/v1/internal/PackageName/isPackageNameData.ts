@@ -31,30 +31,18 @@
 // ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-import { ErrorTable, ExtraDataTemplate } from "../internal";
-import { ErrorTableTemplateWithNoExtraData } from "./ErrorTableTemplateWithNoExtraData";
 
 /**
- * these go in your ErrorTable, and they define what your structured problem
- * reports will look like
+ * A regex that will match:
  *
- * this turns the optional `extra` field into a mandatory one
+ * [@scope]/<package-name>[/<subpackage-name>]
  */
-export interface ErrorTableTemplateWithExtraData<
-    T extends ErrorTable,
-    N extends keyof T,
-    E extends ExtraDataTemplate
-> extends ErrorTableTemplateWithNoExtraData<T, N, E> {
-    /**
-     * the internal data captured when an error occurs
-     *
-     * this is split up into (up to) two properties:
-     *
-     * - `public`: data that can be shared with the caller
-     *   (e.g. included in an API response payload)
-     *   this data will also be written to the logs
-     * - `logsOnly`: data that can only be written to the logs
-     *   (i.e. it must not be shared with the caller)
-     */
-    extra: E;
+export const PackageNameDataRegex = new RegExp("^(?:@[a-z0-9-*~][a-z0-9-*._~]*/)?[a-z0-9-~][a-z0-9-._~]+(/[A-Za-z0-9-~][A-Za-z0-9-._~]+)*$");
+
+/**
+ * data guard. confirms if a proposed name for a PackageName fits
+ * our legal scheme or not.
+ */
+export function isPackageNameData(name: string): boolean {
+    return PackageNameDataRegex.test(name);
 }

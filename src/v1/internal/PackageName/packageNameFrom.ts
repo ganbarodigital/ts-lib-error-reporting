@@ -31,30 +31,14 @@
 // ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-import { ErrorTable, ExtraDataTemplate } from "../internal";
-import { ErrorTableTemplateWithNoExtraData } from "./ErrorTableTemplateWithNoExtraData";
+import { OnError, PackageName, THROW_THE_ERROR } from "../../internal";
+import { mustBePackageNameData } from "./mustBePackageNameData";
 
 /**
- * these go in your ErrorTable, and they define what your structured problem
- * reports will look like
- *
- * this turns the optional `extra` field into a mandatory one
+ * smart constructor. Checks that the input string is a valid package name,
+ * and converts it into a PackageName type.
  */
-export interface ErrorTableTemplateWithExtraData<
-    T extends ErrorTable,
-    N extends keyof T,
-    E extends ExtraDataTemplate
-> extends ErrorTableTemplateWithNoExtraData<T, N, E> {
-    /**
-     * the internal data captured when an error occurs
-     *
-     * this is split up into (up to) two properties:
-     *
-     * - `public`: data that can be shared with the caller
-     *   (e.g. included in an API response payload)
-     *   this data will also be written to the logs
-     * - `logsOnly`: data that can only be written to the logs
-     *   (i.e. it must not be shared with the caller)
-     */
-    extra: E;
+export function packageNameFrom(name: string, onError: OnError = THROW_THE_ERROR): PackageName {
+    mustBePackageNameData(name, onError);
+    return name as PackageName;
 }
