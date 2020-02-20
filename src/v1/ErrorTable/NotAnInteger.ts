@@ -31,10 +31,60 @@
 // ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
+import {
+    AppError,
+    AppErrorParams,
+    ErrorTableTemplateWithExtraData,
+    ExtraPublicData,
+    StructuredProblemReport,
+    StructuredProblemReportDataWithExtraData,
+} from "../internal";
+import { ERROR_TABLE, PackageErrorTable } from "./PackageErrorTable";
 
-export * from "./ErrorTable";
-export { PackageErrorTable, ERROR_TABLE } from "./PackageErrorTable";
-export { HttpStatusCodeOutOfRangeError } from "./HttpStatusCodeOutOfRange";
-export { InvalidPackageNameError } from "./InvalidPackageName";
-export { NotAnIntegerError } from "./NotAnInteger";
-export { UnreachableCodeError } from "./UnreachableCode";
+interface NotAnIntegerExtraData extends ExtraPublicData {
+    public: {
+        input: number;
+    };
+}
+
+export type NotAnIntegerTemplate = ErrorTableTemplateWithExtraData<
+    PackageErrorTable,
+    "not-an-integer",
+    NotAnIntegerExtraData
+>;
+
+type NotAnIntegerData = StructuredProblemReportDataWithExtraData<
+    PackageErrorTable,
+    "not-an-integer",
+    NotAnIntegerTemplate,
+    NotAnIntegerExtraData
+>;
+
+type NotAnIntegerSPR = StructuredProblemReport<
+    PackageErrorTable,
+    "not-an-integer",
+    NotAnIntegerTemplate,
+    NotAnIntegerExtraData,
+    NotAnIntegerData
+>;
+
+export class NotAnIntegerError extends AppError<
+    PackageErrorTable,
+    "not-an-integer",
+    NotAnIntegerTemplate,
+    NotAnIntegerExtraData,
+    NotAnIntegerData,
+    NotAnIntegerSPR
+> {
+    public constructor(params: NotAnIntegerExtraData & AppErrorParams) {
+        const errorData: NotAnIntegerData = {
+            template: ERROR_TABLE["not-an-integer"],
+            errorId: params.errorId,
+            extra: {
+                public: params.public,
+            },
+        };
+
+        super(StructuredProblemReport.from(errorData));
+    }
+}

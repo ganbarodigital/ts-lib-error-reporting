@@ -32,9 +32,12 @@
 // POSSIBILITY OF SUCH DAMAGE.
 //
 
-export * from "./ErrorTable";
-export { PackageErrorTable, ERROR_TABLE } from "./PackageErrorTable";
-export { HttpStatusCodeOutOfRangeError } from "./HttpStatusCodeOutOfRange";
-export { InvalidPackageNameError } from "./InvalidPackageName";
-export { NotAnIntegerError } from "./NotAnInteger";
-export { UnreachableCodeError } from "./UnreachableCode";
+/**
+ * data guard. checks to see if the `input` value is in the range
+ * of HTTP status codes.
+ *
+ * returns `true` if `input` is a number between 100 and 599 inclusive.
+ */
+export function isHttpStatusCode(input: number): boolean {
+    return (input >= 100 && input <= 599);
+}

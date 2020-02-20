@@ -33,3 +33,6 @@
 //
 
 export * from "./HttpStatusCode";
+export * from "./httpStatusCodeFrom";
+export * from "./isHttpStatusCode";
+export * from "./mustBeHttpStatusCode";

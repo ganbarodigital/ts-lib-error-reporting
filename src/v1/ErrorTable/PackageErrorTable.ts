@@ -34,12 +34,14 @@
 import {
     ErrorTableTemplateWithNoExtraData,
     ExtraDataTemplate,
-    HttpStatusCode,
+    httpStatusCodeFrom,
     NoExtraDataTemplate,
     packageNameFrom,
 } from "../internal";
 import { ErrorTable } from "./ErrorTable";
+import { HttpStatusCodeOutOfRangeTemplate } from "./HttpStatusCodeOutOfRange";
 import { InvalidPackageNameTemplate } from "./InvalidPackageName";
+import { NotAnIntegerTemplate } from "./NotAnInteger";
 import { UnreachableCodeTemplate } from "./UnreachableCode";
 
 /**
@@ -57,14 +59,38 @@ export class PackageErrorTable implements ErrorTable {
     // everything in this class has to follow the same structure
     [key: string]: ErrorTableTemplateWithNoExtraData<any, string, ExtraDataTemplate | NoExtraDataTemplate>;
 
+    public "http-status-code-out-of-range": HttpStatusCodeOutOfRangeTemplate = {
+        packageName: PACKAGE_NAME,
+        errorName: "http-status-code-out-of-range",
+        detail: "input falls outside the range of a valid HTTP status code",
+        status: httpStatusCodeFrom(422),
+        extra: {
+            public: {
+                input: 0,
+            },
+        },
+    };
+
     public "invalid-package-name": InvalidPackageNameTemplate = {
         packageName: PACKAGE_NAME,
         errorName: "invalid-package-name",
         detail: "package name does not meet spec 'isPackageName()'",
-        status: 422 as HttpStatusCode,
+        status: httpStatusCodeFrom(422),
         extra: {
             public: {
                 packageName: "the package name we were given",
+            },
+        },
+    };
+
+    public "not-an-integer": NotAnIntegerTemplate = {
+        packageName: PACKAGE_NAME,
+        errorName: "not-an-integer",
+        detail: "input must be an integer; was a float",
+        status: httpStatusCodeFrom(422),
+        extra: {
+            public: {
+                input: 0,
             },
         },
     };
@@ -76,7 +102,7 @@ export class PackageErrorTable implements ErrorTable {
     public "unreachable-code": UnreachableCodeTemplate = {
         packageName: PACKAGE_NAME,
         errorName: "unreachable-code",
-        status: 500 as HttpStatusCode,
+        status: httpStatusCodeFrom(500),
         detail: "this code should never execute",
         extra: {
             logsOnly: {

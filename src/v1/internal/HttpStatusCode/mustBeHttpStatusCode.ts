@@ -31,10 +31,29 @@
 // ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
+import { isHttpStatusCode } from ".";
+import { HttpStatusCodeOutOfRangeError } from "../../ErrorTable/HttpStatusCodeOutOfRange";
+import { NotAnIntegerError } from "../../ErrorTable/NotAnInteger";
+import { OnError, THROW_THE_ERROR } from "../../internal";
 
-export * from "./ErrorTable";
-export { PackageErrorTable, ERROR_TABLE } from "./PackageErrorTable";
-export { HttpStatusCodeOutOfRangeError } from "./HttpStatusCodeOutOfRange";
-export { InvalidPackageNameError } from "./InvalidPackageName";
-export { NotAnIntegerError } from "./NotAnInteger";
-export { UnreachableCodeError } from "./UnreachableCode";
+/**
+ * data guarantee. calls the supplied `onError()` handler if the `input`
+ * number is not a valid HTTP status code.
+ */
+export function mustBeHttpStatusCode(input: number, onError: OnError = THROW_THE_ERROR): void {
+    // make sure that `input` is an integer
+    //
+    // if anyone passes in a massive number, this will report a false
+    // error ... but the performance increase that comes from the bitshift
+    // operation is more than worth it
+    // tslint:disable-next-line: no-bitwise
+    if (input >>> 0 !== input) {
+        onError(new NotAnIntegerError({public: {input}}));
+    }
+
+    if (!isHttpStatusCode(input)) {
+        onError(new HttpStatusCodeOutOfRangeError({public: {input}}));
+    }
+
+    // if we get here, all is good
+}

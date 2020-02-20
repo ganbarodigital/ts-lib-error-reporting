@@ -31,10 +31,30 @@
 // ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
+import { expect } from "chai";
+import { describe } from "mocha";
 
-export * from "./ErrorTable";
-export { PackageErrorTable, ERROR_TABLE } from "./PackageErrorTable";
-export { HttpStatusCodeOutOfRangeError } from "./HttpStatusCodeOutOfRange";
-export { InvalidPackageNameError } from "./InvalidPackageName";
-export { NotAnIntegerError } from "./NotAnInteger";
-export { UnreachableCodeError } from "./UnreachableCode";
+import { isHttpStatusCode } from ".";
+
+describe("isHttpStatusCode()", () => {
+    it("accepts numbers in the range 100-599 inclusive", () => {
+        for (let inputValue = 100; inputValue < 599; inputValue++) {
+            const actualValue = isHttpStatusCode(inputValue);
+            expect(actualValue).to.equal(true);
+        }
+    });
+
+    it("rejects numbers below 100", () => {
+        for (let inputValue = -100; inputValue < 100; inputValue++) {
+            const actualValue = isHttpStatusCode(inputValue);
+            expect(actualValue).to.equal(false);
+        }
+    });
+
+    it("rejects numbers above 600", () => {
+        for (let inputValue = 6000; inputValue < 1000; inputValue++) {
+            const actualValue = isHttpStatusCode(inputValue);
+            expect(actualValue).to.equal(false);
+        }
+    });
+});

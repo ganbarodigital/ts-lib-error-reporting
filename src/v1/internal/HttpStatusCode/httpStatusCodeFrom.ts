@@ -31,10 +31,14 @@
 // ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
+import { HttpStatusCode, mustBeHttpStatusCode } from ".";
+import { OnError, THROW_THE_ERROR } from "../../internal";
 
-export * from "./ErrorTable";
-export { PackageErrorTable, ERROR_TABLE } from "./PackageErrorTable";
-export { HttpStatusCodeOutOfRangeError } from "./HttpStatusCodeOutOfRange";
-export { InvalidPackageNameError } from "./InvalidPackageName";
-export { NotAnIntegerError } from "./NotAnInteger";
-export { UnreachableCodeError } from "./UnreachableCode";
+/**
+ * smart constructor. turns a `number` type into a `HttpStatusCode` type
+ */
+export function httpStatusCodeFrom(input: number, onError: OnError = THROW_THE_ERROR): HttpStatusCode {
+    mustBeHttpStatusCode(input, onError);
+
+    return input as HttpStatusCode;
+}
