@@ -29,12 +29,11 @@
     "V1/**"
   ],
   "license": "BSD-3-Clause",
-  "dependencies": {
+  "dependencies": {},
+  "devDependencies": {
     "@types/node": "^13.7.4",
     "tslint": "^5.20.1",
-    "typescript": "^3.7.4"
-  },
-  "devDependencies": {
+    "typescript": "^3.7.4",
     "@types/chai": "^4.2.9",
     "@types/mocha": "^7.0.1",
     "chai": "^4.2.0",
