@@ -31,16 +31,16 @@
   "license": "BSD-3-Clause",
   "dependencies": {},
   "devDependencies": {
-    "@types/node": "^13.7.4",
-    "tslint": "^5.20.1",
-    "typescript": "^3.7.4",
-    "@types/chai": "^4.2.9",
-    "@types/mocha": "^7.0.1",
+    "@types/chai": "^4.2.11",
+    "@types/mocha": "^7.0.2",
+    "@types/node": "^13.11.0",
     "chai": "^4.2.0",
     "chai-bytes": "^0.1.2",
-    "mocha": "^7.0.1",
-    "nyc": "^15.0.0",
+    "mocha": "^7.1.1",
+    "nyc": "^15.0.1",
     "rimraf": "^3.0.2",
-    "ts-node": "^8.0.0"
+    "ts-node": "^8.8.2",
+    "tslint": "^5.20.1",
+    "typescript": "^3.8.3"
   }
 }
