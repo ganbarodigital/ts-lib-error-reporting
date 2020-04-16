@@ -32,9 +32,12 @@
 // POSSIBILITY OF SUCH DAMAGE.
 //
 import { AppError, AppErrorParams } from "../AppError";
-import { ErrorTableTemplateWithExtraData } from "../ErrorTableTemplate";
+import { ErrorTableTemplate } from "../ErrorTableTemplate";
 import { AllExtraData } from "../ExtraData/AllExtraData";
-import { StructuredProblemReport, StructuredProblemReportDataWithExtraData } from "../StructuredProblemReport";
+import {
+    StructuredProblemReport,
+    StructuredProblemReportDataWithExtraData,
+} from "../StructuredProblemReport";
 import { UNIT_TEST_ERROR_TABLE, UnitTestErrorTable } from "./UnitTestErrorTable";
 
 export interface UnitTestFailureExtraData extends AllExtraData {
@@ -46,10 +49,9 @@ export interface UnitTestFailureExtraData extends AllExtraData {
     };
 }
 
-export type UnitTestFailureTemplate = ErrorTableTemplateWithExtraData<
+export type UnitTestFailureTemplate = ErrorTableTemplate<
     UnitTestErrorTable,
-    "unit-test-failure",
-    UnitTestFailureExtraData
+    "unit-test-failure"
 >;
 
 export type UnitTestFailureData = StructuredProblemReportDataWithExtraData<

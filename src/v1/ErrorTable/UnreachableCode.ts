@@ -34,7 +34,7 @@
 import {
     AppError,
     AppErrorParams,
-    ErrorTableTemplateWithExtraData,
+    ErrorTableTemplate,
     ExtraLogsOnlyData,
     StructuredProblemReport,
     StructuredProblemReportDataWithExtraData,
@@ -58,10 +58,9 @@ export interface UnreachableCodeExtraData extends ExtraLogsOnlyData {
  *
  * @see ErrorReportingErrorTable
  */
-export type UnreachableCodeTemplate = ErrorTableTemplateWithExtraData<
+export type UnreachableCodeTemplate = ErrorTableTemplate<
     ErrorTable,
-    "unreachable-code",
-    UnreachableCodeExtraData
+    "unreachable-code"
 >;
 
 /**

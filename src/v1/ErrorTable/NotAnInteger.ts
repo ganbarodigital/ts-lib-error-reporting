@@ -34,7 +34,7 @@
 import {
     AppError,
     AppErrorParams,
-    ErrorTableTemplateWithExtraData,
+    ErrorTableTemplate,
     ExtraPublicData,
     StructuredProblemReport,
     StructuredProblemReportDataWithExtraData,
@@ -47,10 +47,9 @@ interface NotAnIntegerExtraData extends ExtraPublicData {
     };
 }
 
-export type NotAnIntegerTemplate = ErrorTableTemplateWithExtraData<
+export type NotAnIntegerTemplate = ErrorTableTemplate<
     PackageErrorTable,
-    "not-an-integer",
-    NotAnIntegerExtraData
+    "not-an-integer"
 >;
 
 type NotAnIntegerData = StructuredProblemReportDataWithExtraData<

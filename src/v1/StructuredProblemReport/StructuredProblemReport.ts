@@ -33,7 +33,7 @@
 //
 import {
     ErrorTable,
-    ErrorTableTemplateWithNoExtraData,
+    ErrorTableTemplate,
     ExtraDataTemplate,
     HttpStatusCode,
     NoExtraDataTemplate,
@@ -51,7 +51,7 @@ import {
 export class StructuredProblemReport<
     T extends ErrorTable,
     N extends keyof T,
-    M extends ErrorTableTemplateWithNoExtraData<T, N, E>,
+    M extends ErrorTableTemplate<T, N>,
     E extends ExtraDataTemplate | NoExtraDataTemplate,
     R extends StructuredProblemReportDataWithNoExtraData<T, N, M, E>
 >
@@ -62,7 +62,7 @@ export class StructuredProblemReport<
     public static from<
         T extends ErrorTable,
         N extends keyof T,
-        M extends ErrorTableTemplateWithNoExtraData<T, N, E>,
+        M extends ErrorTableTemplate<T, N>,
         E extends ExtraDataTemplate | null,
         R extends StructuredProblemReportDataWithNoExtraData<T, N, M, E>
     >(

@@ -31,7 +31,7 @@
 // ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-import { ErrorTable, ErrorTableTemplateWithNoExtraData, ExtraDataTemplate } from "../internal";
+import { ErrorTable, ErrorTableTemplate, ExtraDataTemplate } from "../internal";
 import {
     StructuredProblemReportDataWithNoExtraData,
 } from "./StructuredProblemReportDataWithNoExtraData";
@@ -49,7 +49,7 @@ import {
 export interface StructuredProblemReportDataWithExtraData<
     T extends ErrorTable,
     N extends keyof T,
-    M extends ErrorTableTemplateWithNoExtraData<T, N, E>,
+    M extends ErrorTableTemplate<T, N>,
     E extends ExtraDataTemplate
 > extends StructuredProblemReportDataWithNoExtraData<T, N, M, E> {
 

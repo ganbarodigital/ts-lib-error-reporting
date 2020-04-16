@@ -34,7 +34,7 @@
 import {
     AppError,
     AppErrorParams,
-    ErrorTableTemplateWithExtraData,
+    ErrorTableTemplate,
     ExtraPublicData,
     StructuredProblemReport,
     StructuredProblemReportDataWithExtraData,
@@ -47,10 +47,9 @@ interface InvalidPackageNameExtraData extends ExtraPublicData {
     };
 }
 
-export type InvalidPackageNameTemplate = ErrorTableTemplateWithExtraData<
+export type InvalidPackageNameTemplate = ErrorTableTemplate<
     PackageErrorTable,
-    "invalid-package-name",
-    InvalidPackageNameExtraData
+    "invalid-package-name"
 >;
 
 type InvalidPackageNameData = StructuredProblemReportDataWithExtraData<
