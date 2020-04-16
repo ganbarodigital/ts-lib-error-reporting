@@ -31,6 +31,7 @@ The following changes have been completed, and will be included in the next tagg
 ### Tests
 
 * Added missing code coverage for `ValueObject`
+* Added missing code coverage for `UnreachableCodeError`
 
 ## v0.2.2
 
