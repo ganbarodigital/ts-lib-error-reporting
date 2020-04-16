@@ -28,6 +28,10 @@ The following changes have been completed, and will be included in the next tagg
   - The `extra` section no longer appears in your `ErrorTable`
   - The index signature on `ErrorTable` has been simplified
 
+### Tests
+
+* Added missing code coverage for `ValueObject`
+
 ## v0.2.2
 
 Released Monday, 6th April 2020.
