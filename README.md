@@ -16,7 +16,7 @@ It also offers an `OnError` callback definition, to help you separate error dete
   - [Handling Errors From Other Code](#handling-errors-from-other-code)
   - [API Responses Containing Errors](#api-responses-containing-errors)
 - [Quick Start](#quick-start)
-- [V1 API](#v1-api)
+- [v1 API](#v1-api)
   - [Introduction](#introduction-1)
   - [Bootstrap Error Reporting In Your Package](#bootstrap-error-reporting-in-your-package)
   - [Defining A New Throwable Error](#defining-a-new-throwable-error)
@@ -65,7 +65,7 @@ import { AppError } from "@ganbarodigital/ts-lib-error-reporting/lib/v1"
 
 __VS Code users:__ once you've added a single import anywhere in your project, you'll then be able to auto-import anything else that this library exports.
 
-## V1 API
+## v1 API
 
 ### Introduction
 
@@ -102,14 +102,13 @@ Create your `ErrorTable` by implementing the `ErrorTable` interface:
 
 ```typescript
 import {
-  ErrorTable,
-  ExtraDataTemplate,
-  NoExtraDataTemplate,
+    ErrorTable,
+    ErrorTableTemplate,
 } from "@ganbarodigital/ts-lib-error-reporting/lib/v1";
 
 export class MyPackageErrorTable implements ErrorTable {
     // everything in this class has to follow the same structure
-    [key: string]: ErrorTableTemplate<any, string, ExtraDataTemplate | NoExtraDataTemplate>;
+    [key: string]: ErrorTableTemplate<any, string>;
 }
 
 /**
@@ -127,12 +126,12 @@ Now that you've got your `ErrorTable`, you're ready to define the errors that yo
 
 Here's how to define a new throwable error in your app or package:
 
-1. Define an `ExtraDataTemplate` interface for your new error.
-2. Define an `ErrorTableTemplate` for your new error.
-3. Add an entry for your new error to your `ErrorTable` class.
-4. Define a `StructuredProblemReportData` type for your new error.
-5. Define a `StructuredProblemReport` type for your new error.
-6. Define a `class` that `extends AppError` (this will be the class that you create and `throw` at runtime)
+1. Define an `ErrorTableTemplate` for your new error.
+2. Define an `ExtraDataTemplate` interface for your new error.
+3. Define a `StructuredProblemReportData` type for your new error.
+4. Define a `StructuredProblemReport` type for your new error.
+5. Define a `class` that `extends AppError` (this will be the class that you create and `throw` at runtime)
+6. Add an entry for your new error to your `ErrorTable` class.
 
 I'm sorry that it's a lot of steps. We need them:
 
@@ -142,7 +141,22 @@ I'm sorry that it's a lot of steps. We need them:
 
 Most of these steps are very small. Because they define types, they don't increase the amount of unit tests you have to write.
 
-#### Step 1: Defining The ExtraData For Your New Error Type
+__Be aware__ that your code won't compile until you've completed all of these steps. This is by design: it forces you to create errors that are correctly published in your `ErrorTable` too.
+
+#### Step 1: Creating The Template For Your New Error Type
+
+The _ErrorTableTemplate_ defines the structure that goes into your app/package's `ErrorTable`. Each error has its own `ErrorTableTemplate`, so that each error can have its own structure.
+
+```typescript
+import { ErrorTableTemplate } from "@ganbarodigital/ts-lib-error-reporting/lib/v1";
+
+export type UnreachableCodeTemplate = ErrorTableTemplate<
+    MyPackageErrorTable,
+    "unreachable-code"
+>;
+```
+
+#### Step 2: Defining The ExtraData For Your New Error Type
 
 _Extra data_ is data captured at runtime about the error. It's captured to:
 
@@ -205,86 +219,7 @@ import { NoExtraDataTemplate } from "@ganbarodigital/ts-lib-error-reporting/lib/
 export interface UnreachableCodeExtraData extends NoExtraDataTemplate { }
 ```
 
-You're now ready to build an `ErrorTableTemplate` for your new error type.
-
-#### Step 2: Creating The Template For Your New Error Type
-
-The _ErrorTableTemplate_ defines the structure that goes into your app/package's `ErrorTable`. Each error has its own `ErrorTableTemplate`, so that each error can have its own structure.
-
-If your error has _extra data_, create a type alias using `ErrorTableTemplateWithExtraData`:
-
-```typescript
-import { ErrorTableTemplateWithExtraData } from "@ganbarodigital/ts-lib-error-reporting/lib/v1";
-
-export type UnreachableCodeTemplate = ErrorTableTemplateWithExtraData<
-    MyPackageErrorTable,
-    "unreachable-code",
-    UnreachableCodeExtraData
->;
-```
-
-If your error does **not** have any _extra data_, create a type alias using `ErrorTableTemplateWithNoExtraData`:
-
-```typescript
-import { ErrorTableTemplateWithNoExtraData } from "@ganbarodigital/ts-lib-error-reporting/lib/v1";
-
-export type UnreachableCodeTemplate = ErrorTableTemplateWithNoExtraData<
-    MyPackageErrorTable,
-    "unreachable-code",
-    UnreachableCodeExtraData
->;
-```
-
-What's going on here?
-
-* The first generic parameter is the name of your `ErrorTable` class.
-* Every error gets added to your `ErrorTable` class as a property. The second generic parameter is the name of that property. It _has_ to be a static string. It cannot be a variable or constant that you've defined.
-* The third generic property is your error's `ExtraData` interface.
-
-This ties each `ErrorTableTemplate` to a property on your `ErrorTable` class.
-
-#### Step 3: Adding Your New Error To Your ErrorTable
-
-Add an entry for your error to your `ErrorTable` class:
-
-```typescript
-import { httpStatusCodeFrom } from "@ganbarodigital/ts-lib-http-types/lib/v1";
-import { packageNameFrom } from "@ganbarodigital/ts-lib-packagename/lib/v1";
-import { ErrorTable, ErrorTableTemplateWithNoExtraData } from "@ganbarodigital/ts-lib-error-reporting/lib/v1";
-
-export class MyPackageErrorTable implements ErrorTable {
-    // everything in this class has to follow the same structure
-    [key: string]: ErrorTableTemplateWithNoExtraData<any, string, ExtraDataTemplate | NoExtraDataTemplate>;
-
-    // this is your new error
-    //
-    // the property name:
-    // - MUST be a static string
-    // - MUST match the name used when you defined your ErrorTableTemplate
-    public "unreachable-code": UnreachableCodeTemplate = {
-        // this helps devs find out which package defined the error
-        packageName: PACKAGE_NAME,
-        // this must be the same as the property name
-        errorName: "unreachable-code",
-        // this is a HTTP status code. try/catch blocks may use it
-        // when sending an API response back to an end-user
-        status: httpStatusCodeFrom(500),
-        // a human-readable description of the error
-        detail: "this code should never execute",
-        // the `ExtraData` section we defined earlier
-        // fill it with dummy or example data here
-        extra: {
-            logsOnly: {
-                function: "the function that threw this error",
-            },
-        },
-    };
-}
-```
-
-We've finished defining our error. Next, you need to make it possible to create and throw the error at runtime.
-
-#### Step 4: Creating A StructuredProblemReportData Type
+#### Step 3: Creating A StructuredProblemReportData Type
 
 Throwable errors are classes that `extend AppError`. `AppError` itself is a JavaScript `Error` class that holds extra information in what we call a `StructuredProblemReport`.
 
@@ -316,9 +251,7 @@ export type UnreachableCodeData = StructuredProblemReportDataWithNoExtraData<
 >;
 ```
 
-Once again, we're typing this type to a named property on your `ErrorTable` class.
-
-#### Step 5: Create A StructuredProblemReport Type
+#### Step 4: Create A StructuredProblemReport Type
 
 Next, you need to define a `StructuredProblemReport` type that contains your `StructuredProblemReportData`.
 
@@ -334,9 +267,9 @@ export type UnreachableCodeSRP = StructuredProblemReport<
 >;
 ```
 
-#### Step 6: Creating A Throwable Error Class
+#### Step 5: Creating A Throwable Error Class
 
-Finally, you can pull it all together, and create a new class that `extends AppError`.
+Now, you can pull it all together, and create a new class that `extends AppError`.
 
 ```typescript
 import { AppError, AppErrorParams } from "@ganbarodigital/ts-lib-error-reporting/lib/v1";
@@ -373,6 +306,40 @@ The constructor takes an object as its parameter. That object will contain:
 * `public`: if your `ExtraDataTemplate` has defined a `public` section,
 * `logsOnly`: if your `ExtraDataTemplate` has defined a `logsOnly` section,
 * `errorId`: this is an optional string. If present, it should contain a unique ID for this error, as per [RFC 7807][RFC 7807]'s `instance` field.
+
+#### Step 6: Adding Your New Error To Your ErrorTable
+
+Finally, add an entry for your error to your `ErrorTable` class:
+
+```typescript
+import { httpStatusCodeFrom } from "@ganbarodigital/ts-lib-http-types/lib/v1";
+import { packageNameFrom } from "@ganbarodigital/ts-lib-packagename/lib/v1";
+import { ErrorTable, ErrorTableTemplate } from "@ganbarodigital/ts-lib-error-reporting/lib/v1";
+
+export class MyPackageErrorTable implements ErrorTable {
+    // everything in this class has to follow the same structure
+    [key: string]: ErrorTableTemplate<any, string>;
+
+    // this is your new error
+    //
+    // the property name:
+    // - MUST be a static string
+    // - MUST match the name used when you defined your ErrorTableTemplate
+    public "unreachable-code": UnreachableCodeTemplate = {
+        // this helps devs find out which package defined the error
+        packageName: PACKAGE_NAME,
+        // this must be the same as the property name
+        errorName: "unreachable-code",
+        // this is a HTTP status code. try/catch blocks may use it
+        // when sending an API response back to an end-user
+        status: httpStatusCodeFrom(500),
+        // a human-readable description of the error
+        detail: "this code should never execute",
+    };
+}
+```
+
+At this point, both your error class and your error table should now compile.
 
 ### Throwing An Error
 
