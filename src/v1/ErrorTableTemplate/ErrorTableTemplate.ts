@@ -31,30 +31,50 @@
 // ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-import { ErrorTable, ExtraDataTemplate } from "../internal";
-import { ErrorTableTemplateWithNoExtraData } from "./ErrorTableTemplateWithNoExtraData";
+import { ErrorTable, HttpStatusCode, PackageName } from "../internal";
 
 /**
  * these go in your ErrorTable, and they define what your structured problem
  * reports will look like
- *
- * this turns the optional `extra` field into a mandatory one
  */
-export interface ErrorTableTemplateWithExtraData<
+export interface ErrorTableTemplate<
     T extends ErrorTable,
-    N extends keyof T,
-    E extends ExtraDataTemplate
-> extends ErrorTableTemplateWithNoExtraData<T, N, E> {
+    N extends keyof T
+> {
     /**
-     * the internal data captured when an error occurs
-     *
-     * this is split up into (up to) two properties:
-     *
-     * - `public`: data that can be shared with the caller
-     *   (e.g. included in an API response payload)
-     *   this data will also be written to the logs
-     * - `logsOnly`: data that can only be written to the logs
-     *   (i.e. it must not be shared with the caller)
+     * which package has defined this template?
      */
-    extra: E;
+    packageName: PackageName;
+
+    /**
+     * what kind of error is this?
+     *
+     * - `T` is your ErrorTable (a list of all the errors you've declared)
+     * - `N` is the name of your error (must be a property of your ErrorTable)
+     */
+    errorName: N;
+
+    /**
+     * the HTTP status that best fits this kind of error
+     *
+     * NOTE that this is from the point-of-view of the code that throws
+     * the error.
+     *
+     * e.g. a library may report a `422` (validation failure),
+     * but it doesn't know where the rejected input comes from.
+     *
+     * the calling app DOES know, and it may decide to report a `500`
+     * (internal server error) back to the end-user instead
+     */
+    status: HttpStatusCode;
+
+    /**
+     * a human-readable summary of the problem
+     *
+     * this should be the same string for each instance of this error
+     * (i.e., don't make it a `printf()` format string!)
+     *
+     * put instance-specific details into the `extra` section
+     */
+    detail: string;
 }

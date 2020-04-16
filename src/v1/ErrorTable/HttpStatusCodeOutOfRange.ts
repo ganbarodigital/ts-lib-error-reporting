@@ -34,7 +34,7 @@
 import {
     AppError,
     AppErrorParams,
-    ErrorTableTemplateWithExtraData,
+    ErrorTableTemplate,
     ExtraPublicData,
     StructuredProblemReport,
     StructuredProblemReportDataWithExtraData,
@@ -47,10 +47,9 @@ interface HttpStatusCodeOutOfRangeExtraData extends ExtraPublicData {
     };
 }
 
-export type HttpStatusCodeOutOfRangeTemplate = ErrorTableTemplateWithExtraData<
+export type HttpStatusCodeOutOfRangeTemplate = ErrorTableTemplate<
     PackageErrorTable,
-    "http-status-code-out-of-range",
-    HttpStatusCodeOutOfRangeExtraData
+    "http-status-code-out-of-range"
 >;
 
 type HttpStatusCodeOutOfRangeData = StructuredProblemReportDataWithExtraData<

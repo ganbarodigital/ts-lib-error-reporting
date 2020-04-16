@@ -31,13 +31,7 @@
 // ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-import {
-    ErrorTableTemplateWithNoExtraData,
-    ExtraDataTemplate,
-    HttpStatusCode,
-    NoExtraDataTemplate,
-    PackageName,
-} from "../internal";
+import { ErrorTableTemplate, HttpStatusCode, PackageName } from "../internal";
 import { ErrorTable } from "./ErrorTable";
 import { HttpStatusCodeOutOfRangeTemplate } from "./HttpStatusCodeOutOfRange";
 import { InvalidPackageNameTemplate } from "./InvalidPackageName";
@@ -62,18 +56,13 @@ export const PACKAGE_NAME = "@ganbarodigital/ts-lib-error-reporting/lib/v1" as P
  */
 export class PackageErrorTable implements ErrorTable {
     // everything in this class has to follow the same structure
-    [key: string]: ErrorTableTemplateWithNoExtraData<any, string, ExtraDataTemplate | NoExtraDataTemplate>;
+    [key: string]: ErrorTableTemplate<any, string>;
 
     public "http-status-code-out-of-range": HttpStatusCodeOutOfRangeTemplate = {
         packageName: PACKAGE_NAME,
         errorName: "http-status-code-out-of-range",
         detail: "input falls outside the range of a valid HTTP status code",
         status: 422 as HttpStatusCode,
-        extra: {
-            public: {
-                input: 0,
-            },
-        },
     };
 
     public "invalid-package-name": InvalidPackageNameTemplate = {
@@ -81,11 +70,6 @@ export class PackageErrorTable implements ErrorTable {
         errorName: "invalid-package-name",
         detail: "package name does not meet spec 'isPackageName()'",
         status: 422 as HttpStatusCode,
-        extra: {
-            public: {
-                packageName: "the package name we were given",
-            },
-        },
     };
 
     public "not-an-integer": NotAnIntegerTemplate = {
@@ -93,11 +77,6 @@ export class PackageErrorTable implements ErrorTable {
         errorName: "not-an-integer",
         detail: "input must be an integer; was a float",
         status: 422 as HttpStatusCode,
-        extra: {
-            public: {
-                input: 0,
-            },
-        },
     };
 
     /**
@@ -109,11 +88,6 @@ export class PackageErrorTable implements ErrorTable {
         errorName: "unreachable-code",
         status: 500 as HttpStatusCode,
         detail: "this code should never execute",
-        extra: {
-            logsOnly: {
-                reason: "explain why this code should be unreachable",
-            },
-        },
     };
 }
 

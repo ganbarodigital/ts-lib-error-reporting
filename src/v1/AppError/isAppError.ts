@@ -33,7 +33,7 @@
 //
 import { ErrorTable } from "../ErrorTable";
 import {
-    ErrorTableTemplateWithNoExtraData,
+    ErrorTableTemplate,
     ExtraDataTemplate,
     StructuredProblemReportDataWithNoExtraData,
 } from "../internal";
@@ -49,7 +49,7 @@ import { AppError } from "./AppError";
 export function isAppError<
     T extends ErrorTable,
     N extends keyof T,
-    M extends ErrorTableTemplateWithNoExtraData<T, N, E>,
+    M extends ErrorTableTemplate<T, N>,
     E extends ExtraDataTemplate,
     R extends StructuredProblemReportDataWithNoExtraData<T, N, M, E>,
     S extends StructuredProblemReport<T, N, M, E, R>
