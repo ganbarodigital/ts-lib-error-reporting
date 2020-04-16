@@ -21,6 +21,22 @@ For each release, changes are grouped under these headings:
 
 The following changes have been completed, and will be included in the next tagged release.
 
+## v0.3.0
+
+Released Thursday, 16th April 2020.
+
+### Backwards-Compatibility Breaks
+
+* Dropped support for the `extra` section in `ErrorTableTemplate`s
+  - `ErrorTableTemplateWithNoExtraData` and `ErrorTableTemplateWithExtraData` are replaced with just `ErrorTableTemplate`
+  - The `extra` section no longer appears in your `ErrorTable`
+  - The index signature on `ErrorTable` has been simplified
+
+### Tests
+
+* Added missing code coverage for `ValueObject`
+* Added missing code coverage for `UnreachableCodeError`
+
 ## v0.2.2
 
 Released Monday, 6th April 2020.

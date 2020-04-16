@@ -31,19 +31,42 @@
 // ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-import { ErrorTableTemplate } from "../ErrorTableTemplate";
-import { NoExtraDataTemplate } from "../ExtraData";
-import { StructuredProblemReportDataWithNoExtraData } from "../StructuredProblemReport";
-import { UnitTestErrorTable } from "./UnitTestErrorTable";
+import { expect } from "chai";
+import { describe } from "mocha";
 
-export type UnitTestNoExtraTemplate = ErrorTableTemplate<
-    UnitTestErrorTable,
-    "unit-test-no-extra"
->;
+import { ValueObject } from "./ValueObject";
 
-export type UnitTestNoExtraData = StructuredProblemReportDataWithNoExtraData<
-    UnitTestErrorTable,
-    "unit-test-no-extra",
-    UnitTestNoExtraTemplate,
-    NoExtraDataTemplate
->;
+class TestUnit extends ValueObject<string> {
+    public constructor(input: string) {
+        super(input);
+    }
+}
+
+describe("ValueObject", () => {
+    describe(".constructor()", () => {
+        it("sets .value to the input parameter", () => {
+            const inputValue = "this is a test";
+            const unit = new TestUnit(inputValue);
+
+            const actualValue = unit.valueOf();
+            expect(actualValue).to.equal(inputValue);
+        });
+    });
+
+    describe(".valueOf()", () => {
+        it("returns the value passed to the constructor's input parameter", () => {
+            const inputValue = "this is a test";
+            const unit = new TestUnit(inputValue);
+
+            const actualValue = unit.valueOf();
+            expect(actualValue).to.equal(inputValue);
+        });
+    });
+
+    describe(".isValue()", () => {
+        it("returns `true`", () => {
+            const unit = new TestUnit("this is a test");
+            expect(unit.isValue()).to.equal(true);
+        });
+    });
+});

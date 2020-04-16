@@ -33,7 +33,7 @@
 //
 import {
     ErrorTable,
-    ErrorTableTemplateWithNoExtraData,
+    ErrorTableTemplate,
     ExtraDataTemplate,
     NoExtraDataTemplate,
     StructuredProblemReport,
@@ -49,7 +49,7 @@ import {
 export class AppError<
     T extends ErrorTable,
     N extends keyof T,
-    M extends ErrorTableTemplateWithNoExtraData<T, N, E>,
+    M extends ErrorTableTemplate<T, N>,
     E extends ExtraDataTemplate | NoExtraDataTemplate,
     R extends StructuredProblemReportDataWithNoExtraData<T, N, M, E>,
     S extends StructuredProblemReport<T, N, M, E, R>

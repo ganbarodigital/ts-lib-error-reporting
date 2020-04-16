@@ -33,7 +33,7 @@
 //
 import {
     ErrorTable,
-    ErrorTableTemplateWithNoExtraData,
+    ErrorTableTemplate,
     ExtraDataTemplate,
     NoExtraDataTemplate,
 } from "../internal";
@@ -51,7 +51,7 @@ import {
 export interface StructuredProblemReportDataWithNoExtraData<
     T extends ErrorTable,
     N extends keyof T,
-    M extends ErrorTableTemplateWithNoExtraData<T, N, E>,
+    M extends ErrorTableTemplate<T, N>,
     E extends ExtraDataTemplate | NoExtraDataTemplate
 > {
     template: M;

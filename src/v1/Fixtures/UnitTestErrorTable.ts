@@ -59,14 +59,6 @@ export class UnitTestErrorTable extends PackageErrorTable {
         errorName: "unit-test-failure",
         status: 500 as HttpStatusCode,
         detail: "this code should never execute",
-        extra: {
-            public: {
-                field1: "you can put anything you want here",
-            },
-            logsOnly: {
-                field2: "you can put anything you want here too",
-            },
-        },
     };
 
     public "unit-test-no-extra": UnitTestNoExtraTemplate = {

@@ -31,22 +31,15 @@
 // ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-import {
-    ErrorTable,
-    ExtraDataTemplate,
-    HttpStatusCode,
-    NoExtraDataTemplate,
-    PackageName,
-} from "../internal";
+import { ErrorTable, HttpStatusCode, PackageName } from "../internal";
 
 /**
  * these go in your ErrorTable, and they define what your structured problem
  * reports will look like
  */
-export interface ErrorTableTemplateWithNoExtraData<
+export interface ErrorTableTemplate<
     T extends ErrorTable,
-    N extends keyof T,
-    E extends ExtraDataTemplate | NoExtraDataTemplate
+    N extends keyof T
 > {
     /**
      * which package has defined this template?
@@ -84,17 +77,4 @@ export interface ErrorTableTemplateWithNoExtraData<
      * put instance-specific details into the `extra` section
      */
     detail: string;
-
-    /**
-     * the internal data captured when an error occurs
-     *
-     * this is split up into (up to) two properties:
-     *
-     * - `public`: data that can be shared with the caller
-     *   (e.g. included in an API response payload)
-     *   this data will also be written to the logs
-     * - `logsOnly`: data that can only be written to the logs
-     *   (i.e. it must not be shared with the caller)
-     */
-    extra?: E;
 }

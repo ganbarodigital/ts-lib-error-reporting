@@ -31,11 +31,7 @@
 // ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-import {
-    ErrorTableTemplateWithNoExtraData,
-    ExtraDataTemplate,
-    NoExtraDataTemplate,
-} from "../internal";
+import { ErrorTableTemplate } from "../internal";
 
 /**
  * a list of all of the structured problems that your app or package
@@ -49,5 +45,5 @@ import {
  */
 export interface ErrorTable {
     // everything in the ErrorTable has to follow the same structure
-    [key: string]: ErrorTableTemplateWithNoExtraData<any, string, ExtraDataTemplate | NoExtraDataTemplate>;
+    [key: string]: ErrorTableTemplate<any, string>;
 }
