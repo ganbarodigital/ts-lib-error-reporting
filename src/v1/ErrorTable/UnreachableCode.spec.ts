@@ -42,7 +42,7 @@ describe("UnreachableCodeError", () => {
             const unit = new UnreachableCodeError({
                 logsOnly: {
                     reason: "something went wrong",
-                }
+                },
             });
 
             expect(unit).to.be.instanceOf(Error);

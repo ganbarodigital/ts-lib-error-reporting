@@ -21,6 +21,10 @@ For each release, changes are grouped under these headings:
 
 The following changes have been completed, and will be included in the next tagged release.
 
+## v0.3.0
+
+Released Thursday, 16th April 2020.
+
 ### Backwards-Compatibility Breaks
 
 * Dropped support for the `extra` section in `ErrorTableTemplate`s
