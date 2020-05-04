@@ -503,7 +503,9 @@ In Javascript, programmers can `throw` just about any type. Handling all of thes
 export function extractStackFromCaught(e: any): string;
 ```
 
-Use `extractStackFromError()` in your `catch` block, to get the `.stack` property of the caught value. If the caught value doesn't have a `.stack` property, we return an empty string.
+Use `extractStackFromError()` in your `catch` block, to get the stack trace of the caught value. If the caught value doesn't have a `.stack` property, we return an empty string.
+
+The first line of any NodeJS stack trace includes the `e.name` and `e.message` properties. `extractStackFromError()` strips that off, so that the string only contains stack frames.
 
 ## NPM Scripts
 

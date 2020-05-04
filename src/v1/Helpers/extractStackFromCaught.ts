@@ -43,5 +43,6 @@ export function extractStackFromCaught(e: any): string {
         return "";
     }
 
-    return e.stack;
+    // strip off the error name and message
+    return (e.stack as string).substring(e.stack.indexOf("\n") + 1);
 }
