@@ -23,6 +23,8 @@ It also offers an `OnError` callback definition, to help you separate error dete
   - [Throwing An Error](#throwing-an-error)
   - [Catching An Error](#catching-an-error)
   - [OnError Callbacks](#onerror-callbacks)
+  - [extractReasonFromCaught()](#extractreasonfromcaught)
+  - [extractStackFromError()](#extractstackfromerror)
 - [NPM Scripts](#npm-scripts)
   - [npm run clean](#npm-run-clean)
   - [npm run build](#npm-run-build)
@@ -442,6 +444,68 @@ It takes two generic type parameters:
 
 - the type of error it will accept (the default is anything that's an `AppError`),
 - what the error handler will return (the default is that it never returns; ie that it must `throw` an error)
+
+### extractReasonFromCaught()
+
+```typescript
+// how to import into your own code
+import {
+    DEFAULT_ERROR_REASON,
+    extractReasonFromCaught,
+} from "@ganbarodigital/ts-lib-error-reporting/lib/v1";
+
+/**
+ * turn a value caught by a `catch()` statement into a string, to be used
+ * in your AppError's constructor params
+ *
+ * we return DEFAULT_ERROR_REASON unless `e.toString()` exists, and
+ * isn't the default `Object.toString()`
+ *
+ * for Errors, we also append any available stack trace if requested
+ */
+export function extractReasonFromCaught(
+    e: any,
+    { stackTrace = false }: { stackTrace?: boolean } = {},
+): string;
+```
+
+Use `extractReasonFromCaught()` in your `catch()` blocks:
+
+```typescript
+try {
+    doSomething();
+} catch (e) {
+    if (e instanceof ExpectedAppError) {
+        // ...
+    }
+    else {
+        // an unexpected error occurred
+        const reason = extractReasonFromCaught(e);
+
+        throw new MyAppError({public:{ reason }});
+    }
+}
+```
+
+In Javascript, programmers can `throw` just about any type. Handling all of these in your `catch` blocks is a lot of work. If you try to do that by hand, you'll almost certainly end up doing it inconsistently across your codebase.
+
+`extractReasonFromCaught()` gives you a consistent approach to dealing with caught values.
+
+### extractStackFromError()
+
+```typescript
+/**
+ * get the stack trace from a value caught by a `catch()` statement,
+ * if it has one
+ *
+ * we return an empty string if there is no stack trace available
+ */
+export function extractStackFromCaught(e: any): string;
+```
+
+Use `extractStackFromError()` in your `catch` block, to get the stack trace of the caught value. If the caught value doesn't have a `.stack` property, we return an empty string.
+
+The first line of any NodeJS stack trace includes the `e.name` and `e.message` properties. `extractStackFromError()` strips that off, so that the string only contains stack frames.
 
 ## NPM Scripts
 
