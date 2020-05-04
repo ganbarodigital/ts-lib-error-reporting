@@ -461,11 +461,11 @@ import {
  * we return DEFAULT_ERROR_REASON unless `e.toString()` exists, and
  * isn't the default `Object.toString()`
  *
- * for Errors, we also append any available stack trace by default
+ * for Errors, we also append any available stack trace if requested
  */
 export function extractReasonFromCaught(
     e: any,
-    { stackTrace = true }: { stackTrace?: boolean } = {},
+    { stackTrace = false }: { stackTrace?: boolean } = {},
 ): string;
 ```
 

@@ -43,7 +43,7 @@ export const DEFAULT_ERROR_REASON = "no error information available";
  */
 export function extractReasonFromCaught(
     e: any,
-    { stackTrace = true }: { stackTrace?: boolean } = {},
+    { stackTrace = false }: { stackTrace?: boolean } = {},
 ): string {
     // let's assume the worst for now
     let reason = DEFAULT_ERROR_REASON;
@@ -56,10 +56,12 @@ export function extractReasonFromCaught(
     //
     // do we have an Error with a stack trace?
     if (e instanceof Error) {
-        reason = e.toString();
-
         if (stackTrace && e.stack) {
-            reason = reason + "; stack is: " + e.stack;
+            // the stack trace already includes the `name` and `message`
+            // properties; no need to duplicate them!
+            reason = e.stack;
+        } else {
+            reason = e.toString();
         }
 
         return reason;
