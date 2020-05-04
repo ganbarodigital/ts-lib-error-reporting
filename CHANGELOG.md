@@ -25,6 +25,7 @@ The following changes have been completed, and will be included in the next tagg
 
 * Added some helpers for working with `catch` values:
   - added `extractReasonFromCaught()`
+  - added `extractStackFromCaught()`
 
 ### Tools
 

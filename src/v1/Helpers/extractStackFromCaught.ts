@@ -32,5 +32,16 @@
 // POSSIBILITY OF SUCH DAMAGE.
 //
 
-export * from "./extractReasonFromCaught";
-export * from "./extractStackFromCaught";
+/**
+ * get the stack trace from a value caught by a `catch()` statement,
+ * if it has one
+ *
+ * we return an empty string if there is no stack trace available
+ */
+export function extractStackFromCaught(e: any): string {
+    if (e instanceof Error === false) {
+        return "";
+    }
+
+    return e.stack;
+}

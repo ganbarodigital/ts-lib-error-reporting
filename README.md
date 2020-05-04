@@ -24,6 +24,7 @@ It also offers an `OnError` callback definition, to help you separate error dete
   - [Catching An Error](#catching-an-error)
   - [OnError Callbacks](#onerror-callbacks)
   - [extractReasonFromCaught()](#extractreasonfromcaught)
+  - [extractStackFromError()](#extractstackfromerror)
 - [NPM Scripts](#npm-scripts)
   - [npm run clean](#npm-run-clean)
   - [npm run build](#npm-run-build)
@@ -489,6 +490,20 @@ try {
 In Javascript, programmers can `throw` just about any type. Handling all of these in your `catch` blocks is a lot of work. If you try to do that by hand, you'll almost certainly end up doing it inconsistently across your codebase.
 
 `extractReasonFromCaught()` gives you a consistent approach to dealing with caught values.
+
+### extractStackFromError()
+
+```typescript
+/**
+ * get the stack trace from a value caught by a `catch()` statement,
+ * if it has one
+ *
+ * we return an empty string if there is no stack trace available
+ */
+export function extractStackFromCaught(e: any): string;
+```
+
+Use `extractStackFromError()` in your `catch` block, to get the `.stack` property of the caught value. If the caught value doesn't have a `.stack` property, we return an empty string.
 
 ## NPM Scripts
 
