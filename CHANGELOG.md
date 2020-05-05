@@ -21,6 +21,10 @@ For each release, changes are grouped under these headings:
 
 The following changes have been completed, and will be included in the next tagged release.
 
+## v0.3.1
+
+Released Tuesday, 5th May 2020.
+
 ### New
 
 * Added some helpers for working with `catch` values:
