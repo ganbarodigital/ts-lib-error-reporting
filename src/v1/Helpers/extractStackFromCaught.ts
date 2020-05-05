@@ -32,10 +32,17 @@
 // POSSIBILITY OF SUCH DAMAGE.
 //
 
-export * from "./AppError";
-export * from "./ErrorTable";
-export * from "./ErrorTableTemplate";
-export * from "./ExtraData";
-export * from "./Helpers";
-export * from "./OnError";
-export * from "./StructuredProblemReport";
+/**
+ * get the stack trace from a value caught by a `catch()` statement,
+ * if it has one
+ *
+ * we return an empty string if there is no stack trace available
+ */
+export function extractStackFromCaught(e: any): string {
+    if (e instanceof Error === false) {
+        return "";
+    }
+
+    // strip off the error name and message
+    return (e.stack as string).substring(e.stack.indexOf("\n") + 1);
+}

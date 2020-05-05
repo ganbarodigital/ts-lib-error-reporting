@@ -21,6 +21,20 @@ For each release, changes are grouped under these headings:
 
 The following changes have been completed, and will be included in the next tagged release.
 
+## v0.3.1
+
+Released Tuesday, 5th May 2020.
+
+### New
+
+* Added some helpers for working with `catch` values:
+  - added `extractReasonFromCaught()`
+  - added `extractStackFromCaught()`
+
+### Tools
+
+* Upgraded the `scripts` section in `package.json` to our latest standard.
+
 ## v0.3.0
 
 Released Thursday, 16th April 2020.
