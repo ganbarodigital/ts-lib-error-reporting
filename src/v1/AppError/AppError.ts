@@ -31,14 +31,12 @@
 // ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-import {
-    ErrorTable,
-    ErrorTableTemplate,
-    ExtraDataTemplate,
-    NoExtraDataTemplate,
-    StructuredProblemReport,
-    StructuredProblemReportDataWithNoExtraData,
-} from "../internal";
+import { ErrorTable } from "../ErrorTable/ErrorTable";
+import { ErrorTableTemplate } from "../ErrorTableTemplate/ErrorTableTemplate";
+import { ExtraDataTemplate } from "../ExtraData/ExtraDataTemplate";
+import { NoExtraDataTemplate } from "../ExtraData/NoExtraDataTemplate";
+import { StructuredProblemReport} from "../StructuredProblemReport/StructuredProblemReport";
+import { StructuredProblemReportDataWithNoExtraData } from "../StructuredProblemReport/StructuredProblemReportDataWithNoExtraData";
 
 /**
  * base class for throwable Javascript Errors.

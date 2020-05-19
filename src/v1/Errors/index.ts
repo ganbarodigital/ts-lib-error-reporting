@@ -31,59 +31,10 @@
 // ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-import {
-    AppError,
-    AppErrorParams,
-    ErrorTableTemplate,
-    ExtraPublicData,
-    StructuredProblemReport,
-    StructuredProblemReportDataWithExtraData,
-} from "../internal";
-import { ERROR_TABLE, PackageErrorTable } from "./PackageErrorTable";
 
-interface HttpStatusCodeOutOfRangeExtraData extends ExtraPublicData {
-    public: {
-        input: number;
-    };
-}
-
-export type HttpStatusCodeOutOfRangeTemplate = ErrorTableTemplate<
-    PackageErrorTable,
-    "http-status-code-out-of-range"
->;
-
-type HttpStatusCodeOutOfRangeData = StructuredProblemReportDataWithExtraData<
-    PackageErrorTable,
-    "http-status-code-out-of-range",
-    HttpStatusCodeOutOfRangeTemplate,
-    HttpStatusCodeOutOfRangeExtraData
->;
-
-type HttpStatusCodeOutOfRangeSPR = StructuredProblemReport<
-    PackageErrorTable,
-    "http-status-code-out-of-range",
-    HttpStatusCodeOutOfRangeTemplate,
-    HttpStatusCodeOutOfRangeExtraData,
-    HttpStatusCodeOutOfRangeData
->;
-
-export class HttpStatusCodeOutOfRangeError extends AppError<
-    PackageErrorTable,
-    "http-status-code-out-of-range",
-    HttpStatusCodeOutOfRangeTemplate,
-    HttpStatusCodeOutOfRangeExtraData,
-    HttpStatusCodeOutOfRangeData,
-    HttpStatusCodeOutOfRangeSPR
-> {
-    public constructor(params: HttpStatusCodeOutOfRangeExtraData & AppErrorParams) {
-        const errorData: HttpStatusCodeOutOfRangeData = {
-            template: ERROR_TABLE["http-status-code-out-of-range"],
-            errorId: params.errorId,
-            extra: {
-                public: params.public,
-            },
-        };
-
-        super(StructuredProblemReport.from(errorData));
-    }
-}
+// export { PackageErrorTable, ERROR_TABLE } from "./PackageErrorTable";
+export { HttpStatusCodeOutOfRangeError } from "./HttpStatusCodeOutOfRange";
+export { InvalidPackageNameError } from "./InvalidPackageName";
+export { NotAnIntegerError } from "./NotAnInteger";
+export { NotImplementedError } from "./NotImplemented";
+export { UnreachableCodeError } from "./UnreachableCode";

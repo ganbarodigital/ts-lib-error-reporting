@@ -32,7 +32,7 @@
 // POSSIBILITY OF SUCH DAMAGE.
 //
 import { HttpStatusCode, mustBeHttpStatusCode } from ".";
-import { OnError, THROW_THE_ERROR } from "../../internal";
+import { OnError, THROW_THE_ERROR } from "../../OnError";
 
 /**
  * smart constructor. turns a `number` type into a `HttpStatusCode` type

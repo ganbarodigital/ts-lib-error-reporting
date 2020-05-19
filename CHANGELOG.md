@@ -26,6 +26,11 @@ The following changes have been completed, and will be included in the next tagg
 * Generic errors
   - added `NotImplementedError`
 
+### Refactoring
+
+* Moved reusable errors into their own folder, for ease of maintenance
+* Eliminated the `internals` import file
+
 ## v0.3.1
 
 Released Tuesday, 5th May 2020.

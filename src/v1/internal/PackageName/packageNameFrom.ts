@@ -31,8 +31,9 @@
 // ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-import { OnError, PackageName, THROW_THE_ERROR } from "../../internal";
+import { OnError, THROW_THE_ERROR } from "../../OnError";
 import { mustBePackageNameData } from "./mustBePackageNameData";
+import { PackageName } from "../PackageName/PackageName";
 
 /**
  * smart constructor. Checks that the input string is a valid package name,

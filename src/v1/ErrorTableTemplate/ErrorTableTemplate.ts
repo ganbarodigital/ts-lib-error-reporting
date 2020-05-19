@@ -31,7 +31,9 @@
 // ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-import { ErrorTable, HttpStatusCode, PackageName } from "../internal";
+import { ErrorTable } from "../ErrorTable/ErrorTable";
+import { HttpStatusCode } from "../internal/HttpStatusCode/HttpStatusCode";
+import { PackageName } from "../internal/PackageName/PackageName";
 
 /**
  * these go in your ErrorTable, and they define what your structured problem

@@ -31,14 +31,12 @@
 // ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-import {
-    AppError,
-    AppErrorParams,
-    ErrorTableTemplate,
-    ExtraPublicData,
-    StructuredProblemReport,
-    StructuredProblemReportDataWithExtraData,
-} from "../internal";
+import { AppError } from "../AppError/AppError";
+import { AppErrorParams } from "../AppError/AppErrorParams";
+import { ErrorTableTemplate } from "../ErrorTableTemplate/ErrorTableTemplate";
+import { ExtraPublicData } from "../ExtraData/ExtraPublicData";
+import { StructuredProblemReport } from "../StructuredProblemReport/StructuredProblemReport";
+import { StructuredProblemReportDataWithExtraData } from "../StructuredProblemReport/StructuredProblemReportDataWithExtraData";
 import { ERROR_TABLE, PackageErrorTable } from "./PackageErrorTable";
 
 interface NotAnIntegerExtraData extends ExtraPublicData {

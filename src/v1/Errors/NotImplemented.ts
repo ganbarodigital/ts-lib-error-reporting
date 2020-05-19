@@ -31,16 +31,13 @@
 // ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-import {
-    AppError,
-    AppErrorParams,
-    ErrorTableTemplate,
-    NoExtraDataTemplate,
-    StructuredProblemReport,
-    StructuredProblemReportDataWithNoExtraData,
-} from "../internal";
-import { ErrorTable } from "./ErrorTable";
-import { ERROR_TABLE } from "./PackageErrorTable";
+import { AppError } from "../AppError/AppError";
+import { AppErrorParams } from "../AppError/AppErrorParams";
+import { ErrorTableTemplate } from "../ErrorTableTemplate/ErrorTableTemplate";
+import { NoExtraDataTemplate } from "../ExtraData/NoExtraDataTemplate";
+import { StructuredProblemReport } from "../StructuredProblemReport/StructuredProblemReport";
+import { StructuredProblemReportDataWithNoExtraData } from "../StructuredProblemReport/StructuredProblemReportDataWithNoExtraData";
+import { ERROR_TABLE, PackageErrorTable } from "./PackageErrorTable";
 
 /**
  * the ExtraData that must be provided for each NotImplementedError
@@ -51,7 +48,7 @@ export type NotImplementedExtraData = NoExtraDataTemplate;
  * defines the structure of the data that goes into our ErrorTable
  */
 export type NotImplementedTemplate = ErrorTableTemplate<
-    ErrorTable,
+    PackageErrorTable,
     "not-implemented"
 >;
 
@@ -59,7 +56,7 @@ export type NotImplementedTemplate = ErrorTableTemplate<
  * defines the data that goes into our StructuredProblemReport
  */
 export type NotImplementedData = StructuredProblemReportDataWithNoExtraData<
-    ErrorTable,
+    PackageErrorTable,
     "not-implemented",
     NotImplementedTemplate,
     NotImplementedExtraData
@@ -69,7 +66,7 @@ export type NotImplementedData = StructuredProblemReportDataWithNoExtraData<
  * a type alias for our StructuredProblemReport
  */
 export type NotImplementedSRP = StructuredProblemReport<
-    ErrorTable,
+    PackageErrorTable,
     "not-implemented",
     NotImplementedTemplate,
     NotImplementedExtraData,
@@ -85,7 +82,7 @@ export type NotImplementedSRP = StructuredProblemReport<
  * of input than it was originally written to support
  */
 export class NotImplementedError extends AppError<
-    ErrorTable,
+    PackageErrorTable,
     "not-implemented",
     NotImplementedTemplate,
     NotImplementedExtraData,

@@ -35,9 +35,10 @@ import { expect } from "chai";
 import { describe } from "mocha";
 
 import { NeverABrandedUuidError, NeverAFlavouredUuidError } from "../../Fixtures";
-import { AnyAppError, OnError } from "../../internal";
+import { AnyAppError } from "../../AppError/AnyAppError";
 import { Branded } from "./Branded";
 import { makeRefinedTypeFactory, RefinedTypeFactory } from "./Factory";
+import { OnError } from "../../OnError/OnError";
 import { Flavoured } from "./Flavoured";
 
 function defaultErrorHandler(e: AnyAppError): never {
