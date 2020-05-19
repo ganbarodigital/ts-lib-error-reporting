@@ -31,11 +31,14 @@
 // ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-import { ErrorTableTemplate, HttpStatusCode, PackageName } from "../internal";
-import { ErrorTable } from "./ErrorTable";
+import { ErrorTable } from "../ErrorTable";
+import { ErrorTableTemplate } from "../ErrorTableTemplate/ErrorTableTemplate";
+import { HttpStatusCode } from "../internal/HttpStatusCode/HttpStatusCode";
 import { HttpStatusCodeOutOfRangeTemplate } from "./HttpStatusCodeOutOfRange";
 import { InvalidPackageNameTemplate } from "./InvalidPackageName";
 import { NotAnIntegerTemplate } from "./NotAnInteger";
+import { NotImplementedTemplate } from "./NotImplemented";
+import { PackageName } from "../internal/PackageName/PackageName";
 import { UnreachableCodeTemplate } from "./UnreachableCode";
 
 /**
@@ -77,6 +80,13 @@ export class PackageErrorTable implements ErrorTable {
         errorName: "not-an-integer",
         detail: "input must be an integer; was a float",
         status: 422 as HttpStatusCode,
+    };
+
+    public "not-implemented": NotImplementedTemplate = {
+        packageName: PACKAGE_NAME,
+        errorName: "not-implemented",
+        detail: "this function or feature has not been implemented",
+        status: 500 as HttpStatusCode,
     };
 
     /**

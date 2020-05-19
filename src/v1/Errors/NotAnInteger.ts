@@ -31,53 +31,51 @@
 // ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-import {
-    AppError,
-    AppErrorParams,
-    ErrorTableTemplate,
-    ExtraPublicData,
-    StructuredProblemReport,
-    StructuredProblemReportDataWithExtraData,
-} from "../internal";
+import { AppError } from "../AppError/AppError";
+import { AppErrorParams } from "../AppError/AppErrorParams";
+import { ErrorTableTemplate } from "../ErrorTableTemplate/ErrorTableTemplate";
+import { ExtraPublicData } from "../ExtraData/ExtraPublicData";
+import { StructuredProblemReport } from "../StructuredProblemReport/StructuredProblemReport";
+import { StructuredProblemReportDataWithExtraData } from "../StructuredProblemReport/StructuredProblemReportDataWithExtraData";
 import { ERROR_TABLE, PackageErrorTable } from "./PackageErrorTable";
 
-interface HttpStatusCodeOutOfRangeExtraData extends ExtraPublicData {
+interface NotAnIntegerExtraData extends ExtraPublicData {
     public: {
         input: number;
     };
 }
 
-export type HttpStatusCodeOutOfRangeTemplate = ErrorTableTemplate<
+export type NotAnIntegerTemplate = ErrorTableTemplate<
     PackageErrorTable,
-    "http-status-code-out-of-range"
+    "not-an-integer"
 >;
 
-type HttpStatusCodeOutOfRangeData = StructuredProblemReportDataWithExtraData<
+type NotAnIntegerData = StructuredProblemReportDataWithExtraData<
     PackageErrorTable,
-    "http-status-code-out-of-range",
-    HttpStatusCodeOutOfRangeTemplate,
-    HttpStatusCodeOutOfRangeExtraData
+    "not-an-integer",
+    NotAnIntegerTemplate,
+    NotAnIntegerExtraData
 >;
 
-type HttpStatusCodeOutOfRangeSPR = StructuredProblemReport<
+type NotAnIntegerSPR = StructuredProblemReport<
     PackageErrorTable,
-    "http-status-code-out-of-range",
-    HttpStatusCodeOutOfRangeTemplate,
-    HttpStatusCodeOutOfRangeExtraData,
-    HttpStatusCodeOutOfRangeData
+    "not-an-integer",
+    NotAnIntegerTemplate,
+    NotAnIntegerExtraData,
+    NotAnIntegerData
 >;
 
-export class HttpStatusCodeOutOfRangeError extends AppError<
+export class NotAnIntegerError extends AppError<
     PackageErrorTable,
-    "http-status-code-out-of-range",
-    HttpStatusCodeOutOfRangeTemplate,
-    HttpStatusCodeOutOfRangeExtraData,
-    HttpStatusCodeOutOfRangeData,
-    HttpStatusCodeOutOfRangeSPR
+    "not-an-integer",
+    NotAnIntegerTemplate,
+    NotAnIntegerExtraData,
+    NotAnIntegerData,
+    NotAnIntegerSPR
 > {
-    public constructor(params: HttpStatusCodeOutOfRangeExtraData & AppErrorParams) {
-        const errorData: HttpStatusCodeOutOfRangeData = {
-            template: ERROR_TABLE["http-status-code-out-of-range"],
+    public constructor(params: NotAnIntegerExtraData & AppErrorParams) {
+        const errorData: NotAnIntegerData = {
+            template: ERROR_TABLE["not-an-integer"],
             errorId: params.errorId,
             extra: {
                 public: params.public,

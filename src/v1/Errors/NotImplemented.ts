@@ -31,40 +31,70 @@
 // ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-import { ErrorTable } from "../ErrorTable/ErrorTable";
+import { AppError } from "../AppError/AppError";
+import { AppErrorParams } from "../AppError/AppErrorParams";
 import { ErrorTableTemplate } from "../ErrorTableTemplate/ErrorTableTemplate";
-import { ExtraDataTemplate } from "../ExtraData/ExtraDataTemplate";
 import { NoExtraDataTemplate } from "../ExtraData/NoExtraDataTemplate";
-import { StructuredProblemReport} from "../StructuredProblemReport/StructuredProblemReport";
+import { StructuredProblemReport } from "../StructuredProblemReport/StructuredProblemReport";
 import { StructuredProblemReportDataWithNoExtraData } from "../StructuredProblemReport/StructuredProblemReportDataWithNoExtraData";
+import { ERROR_TABLE, PackageErrorTable } from "./PackageErrorTable";
 
 /**
- * base class for throwable Javascript Errors.
- *
- * It includes structured information about the error that is being
- * reported.
+ * the ExtraData that must be provided for each NotImplementedError
  */
-export class AppError<
-    T extends ErrorTable,
-    N extends keyof T,
-    M extends ErrorTableTemplate<T, N>,
-    E extends ExtraDataTemplate | NoExtraDataTemplate,
-    R extends StructuredProblemReportDataWithNoExtraData<T, N, M, E>,
-    S extends StructuredProblemReport<T, N, M, E, R>
-> extends Error {
-    /**
-     * information about what went wrong, in a type-safe structure
-     */
-    public readonly details: S;
+export type NotImplementedExtraData = NoExtraDataTemplate;
 
-    /**
-     * call `AppError.from()` to create a new instance of AppError
-     */
-    protected constructor(details: S) {
-        super(details.detail);
-        this.details = details;
+/**
+ * defines the structure of the data that goes into our ErrorTable
+ */
+export type NotImplementedTemplate = ErrorTableTemplate<
+    PackageErrorTable,
+    "not-implemented"
+>;
 
-        // we want the error name to be ours
-        this.name = this.details.packageName + "/" + this.details.errorName;
+/**
+ * defines the data that goes into our StructuredProblemReport
+ */
+export type NotImplementedData = StructuredProblemReportDataWithNoExtraData<
+    PackageErrorTable,
+    "not-implemented",
+    NotImplementedTemplate,
+    NotImplementedExtraData
+>;
+
+/**
+ * a type alias for our StructuredProblemReport
+ */
+export type NotImplementedSRP = StructuredProblemReport<
+    PackageErrorTable,
+    "not-implemented",
+    NotImplementedTemplate,
+    NotImplementedExtraData,
+    NotImplementedData
+>;
+
+/**
+ * throwable Javascript Error, for when code that should never execute
+ * has, in fact, executed
+ *
+ * commonly used in the `default:` clause of a `switch` statement, to
+ * catch problems when the `switch` statement is handling a wider range
+ * of input than it was originally written to support
+ */
+export class NotImplementedError extends AppError<
+    PackageErrorTable,
+    "not-implemented",
+    NotImplementedTemplate,
+    NotImplementedExtraData,
+    NotImplementedData,
+    NotImplementedSRP
+> {
+    public constructor(params: AppErrorParams = {}) {
+        const errorDetails: NotImplementedData = {
+            template: ERROR_TABLE["not-implemented"],
+            errorId: params.errorId,
+        };
+
+        super(StructuredProblemReport.from(errorDetails));
     }
 }

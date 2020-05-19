@@ -31,7 +31,7 @@
 // ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-import { ErrorTableTemplate } from "../internal";
+import { ErrorTableTemplate } from "../ErrorTableTemplate/ErrorTableTemplate";
 
 /**
  * a list of all of the structured problems that your app or package

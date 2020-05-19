@@ -34,7 +34,7 @@
 import { expect } from "chai";
 import { describe } from "mocha";
 
-import { AnyAppError } from "../../internal";
+import { AnyAppError } from "../../AppError/AnyAppError";
 import { packageNameFrom } from "./packageNameFrom";
 
 const onError = (e: AnyAppError): never => {

@@ -31,21 +31,17 @@
 // ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
+import { expect } from "chai";
+import { describe } from "mocha";
 
-export { Branded } from "./internal/nominals/Branded";
-export { Flavoured } from "./internal/nominals/Flavoured";
-export { HttpStatusCode } from "./internal/HttpStatusCode/HttpStatusCode";
-export { PackageName } from "./internal/PackageName/PackageName";
-export { isPackageNameData } from "./internal/PackageName/isPackageNameData";
-export { Value } from "./internal/types/Value";
-export { ValueObject } from "./internal/types/ValueObject";
-export { DataGuarantee } from "./internal/types/DataGuarantee";
+import { NotImplementedError } from ".";
 
-export * from "./ExtraData";
-export * from "./ErrorTableTemplate";
-export * from "./StructuredProblemReport";
-export * from "./AppError";
-export * from "./ErrorTable";
-export * from "./OnError";
-export * from "./internal/HttpStatusCode";
-export * from "./internal/PackageName";
+describe("NotImplementedError", () => {
+    describe(".constructor()", () => {
+        it("creates a Javascript error", () => {
+            const unit = new NotImplementedError();
+
+            expect(unit).to.be.instanceOf(Error);
+        });
+    });
+});

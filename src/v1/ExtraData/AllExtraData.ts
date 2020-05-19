@@ -1,6 +1,3 @@
-import { ExtraLogsOnlyData } from "./ExtraLogsOnlyData";
-import { ExtraPublicData } from "./ExtraPublicData";
-
 //
 // Copyright (c) 2020-present Ganbaro Digital Ltd
 // All rights reserved.
@@ -34,6 +31,9 @@ import { ExtraPublicData } from "./ExtraPublicData";
 // ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
+
+import { ExtraLogsOnlyData } from "./ExtraLogsOnlyData";
+import { ExtraPublicData } from "./ExtraPublicData";
 
 /**
  * the internal data captured when an error occurs

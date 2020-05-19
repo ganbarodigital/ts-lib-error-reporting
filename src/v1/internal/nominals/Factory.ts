@@ -31,7 +31,8 @@
 // ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-import { DataGuarantee, OnError, THROW_THE_ERROR } from "../../internal";
+import { OnError, THROW_THE_ERROR } from "../../OnError/OnError";
+import { DataGuarantee } from "../types/DataGuarantee";
 
 export type RefinedTypeFactory<BI, BR> = (input: BI, onError?: OnError) => BR;
 

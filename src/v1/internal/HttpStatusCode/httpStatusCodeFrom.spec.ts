@@ -35,7 +35,8 @@ import { expect } from "chai";
 import { describe } from "mocha";
 
 import { httpStatusCodeFrom } from ".";
-import { AnyAppError, OnError } from "../../internal";
+import { AnyAppError } from "../../AppError/AnyAppError";
+import { OnError } from "../../OnError/OnError";
 
 describe("httpStatusCodeFrom()", () => {
     const onError: OnError = (e: AnyAppError): never => {

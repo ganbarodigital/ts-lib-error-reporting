@@ -32,9 +32,9 @@
 // POSSIBILITY OF SUCH DAMAGE.
 //
 import { isHttpStatusCode } from ".";
-import { HttpStatusCodeOutOfRangeError } from "../../ErrorTable/HttpStatusCodeOutOfRange";
-import { NotAnIntegerError } from "../../ErrorTable/NotAnInteger";
-import { OnError, THROW_THE_ERROR } from "../../internal";
+import { HttpStatusCodeOutOfRangeError } from "../../Errors/HttpStatusCodeOutOfRange";
+import { NotAnIntegerError } from "../../Errors/NotAnInteger";
+import { OnError, THROW_THE_ERROR } from "../../OnError";
 
 /**
  * data guarantee. calls the supplied `onError()` handler if the `input`

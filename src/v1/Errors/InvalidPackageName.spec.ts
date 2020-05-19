@@ -31,59 +31,21 @@
 // ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-import {
-    AppError,
-    AppErrorParams,
-    ErrorTableTemplate,
-    ExtraPublicData,
-    StructuredProblemReport,
-    StructuredProblemReportDataWithExtraData,
-} from "../internal";
-import { ERROR_TABLE, PackageErrorTable } from "./PackageErrorTable";
+import { expect } from "chai";
+import { describe } from "mocha";
 
-interface InvalidPackageNameExtraData extends ExtraPublicData {
-    public: {
-        packageName: string;
-    };
-}
+import { InvalidPackageNameError } from ".";
 
-export type InvalidPackageNameTemplate = ErrorTableTemplate<
-    PackageErrorTable,
-    "invalid-package-name"
->;
+describe("InvalidPackageNameError", () => {
+    describe(".constructor()", () => {
+        it("creates a Javascript error", () => {
+            const unit = new InvalidPackageNameError({
+                public: {
+                    packageName: "invalid",
+                },
+            });
 
-type InvalidPackageNameData = StructuredProblemReportDataWithExtraData<
-    PackageErrorTable,
-    "invalid-package-name",
-    InvalidPackageNameTemplate,
-    InvalidPackageNameExtraData
->;
-
-type InvalidPackageNameSPR = StructuredProblemReport<
-    PackageErrorTable,
-    "invalid-package-name",
-    InvalidPackageNameTemplate,
-    InvalidPackageNameExtraData,
-    InvalidPackageNameData
->;
-
-export class InvalidPackageNameError extends AppError<
-    PackageErrorTable,
-    "invalid-package-name",
-    InvalidPackageNameTemplate,
-    InvalidPackageNameExtraData,
-    InvalidPackageNameData,
-    InvalidPackageNameSPR
-> {
-    public constructor(params: InvalidPackageNameExtraData & AppErrorParams) {
-        const errorData: InvalidPackageNameData = {
-            template: ERROR_TABLE["invalid-package-name"],
-            errorId: params.errorId,
-            extra: {
-                public: params.public,
-            },
-        };
-
-        super(StructuredProblemReport.from(errorData));
-    }
-}
+            expect(unit).to.be.instanceOf(Error);
+        });
+    });
+});

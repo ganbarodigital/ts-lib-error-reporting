@@ -31,15 +31,13 @@
 // ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-import {
-    ErrorTable,
-    ErrorTableTemplate,
-    ExtraDataTemplate,
-    HttpStatusCode,
-    NoExtraDataTemplate,
-    PackageName,
-    ValueObject,
-} from "../internal";
+import { ErrorTable } from "../ErrorTable/ErrorTable";
+import { ErrorTableTemplate } from "../ErrorTableTemplate/ErrorTableTemplate";
+import { ExtraDataTemplate } from "../ExtraData/ExtraDataTemplate";
+import { HttpStatusCode } from "../internal/HttpStatusCode";
+import { NoExtraDataTemplate } from "../ExtraData/NoExtraDataTemplate";
+import { PackageName } from "../internal/PackageName/PackageName";
+import { ValueObject } from "../internal/types/ValueObject";
 import {
     StructuredProblemReportDataWithNoExtraData,
 } from "./StructuredProblemReportDataWithNoExtraData";

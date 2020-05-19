@@ -31,8 +31,8 @@
 // ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-import { InvalidPackageNameError } from "../../ErrorTable";
-import { OnError, THROW_THE_ERROR } from "../../internal";
+import { InvalidPackageNameError } from "../../Errors";
+import { OnError, THROW_THE_ERROR } from "../../OnError/OnError";
 import { isPackageNameData } from "./isPackageNameData";
 
 /**

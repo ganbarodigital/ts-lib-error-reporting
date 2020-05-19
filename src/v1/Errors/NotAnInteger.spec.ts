@@ -31,40 +31,21 @@
 // ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-import { ErrorTable } from "../ErrorTable/ErrorTable";
-import { ErrorTableTemplate } from "../ErrorTableTemplate/ErrorTableTemplate";
-import { ExtraDataTemplate } from "../ExtraData/ExtraDataTemplate";
-import { NoExtraDataTemplate } from "../ExtraData/NoExtraDataTemplate";
-import { StructuredProblemReport} from "../StructuredProblemReport/StructuredProblemReport";
-import { StructuredProblemReportDataWithNoExtraData } from "../StructuredProblemReport/StructuredProblemReportDataWithNoExtraData";
+import { expect } from "chai";
+import { describe } from "mocha";
 
-/**
- * base class for throwable Javascript Errors.
- *
- * It includes structured information about the error that is being
- * reported.
- */
-export class AppError<
-    T extends ErrorTable,
-    N extends keyof T,
-    M extends ErrorTableTemplate<T, N>,
-    E extends ExtraDataTemplate | NoExtraDataTemplate,
-    R extends StructuredProblemReportDataWithNoExtraData<T, N, M, E>,
-    S extends StructuredProblemReport<T, N, M, E, R>
-> extends Error {
-    /**
-     * information about what went wrong, in a type-safe structure
-     */
-    public readonly details: S;
+import { NotAnIntegerError } from ".";
 
-    /**
-     * call `AppError.from()` to create a new instance of AppError
-     */
-    protected constructor(details: S) {
-        super(details.detail);
-        this.details = details;
+describe("NotAnIntegerError", () => {
+    describe(".constructor()", () => {
+        it("creates a Javascript error", () => {
+            const unit = new NotAnIntegerError({
+                public: {
+                    input: 600.50,
+                },
+            });
 
-        // we want the error name to be ours
-        this.name = this.details.packageName + "/" + this.details.errorName;
-    }
-}
+            expect(unit).to.be.instanceOf(Error);
+        });
+    });
+});

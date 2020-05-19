@@ -31,53 +31,51 @@
 // ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-import {
-    AppError,
-    AppErrorParams,
-    ErrorTableTemplate,
-    ExtraPublicData,
-    StructuredProblemReport,
-    StructuredProblemReportDataWithExtraData,
-} from "../internal";
+import { AppError } from "../AppError/AppError";
+import { AppErrorParams } from "../AppError/AppErrorParams";
+import { ErrorTableTemplate } from "../ErrorTableTemplate/ErrorTableTemplate";
+import { ExtraPublicData } from "../ExtraData/ExtraPublicData";
+import { StructuredProblemReport } from "../StructuredProblemReport/StructuredProblemReport";
+import { StructuredProblemReportDataWithExtraData } from "../StructuredProblemReport/StructuredProblemReportDataWithExtraData";
 import { ERROR_TABLE, PackageErrorTable } from "./PackageErrorTable";
 
-interface NotAnIntegerExtraData extends ExtraPublicData {
+interface InvalidPackageNameExtraData extends ExtraPublicData {
     public: {
-        input: number;
+        packageName: string;
     };
 }
 
-export type NotAnIntegerTemplate = ErrorTableTemplate<
+export type InvalidPackageNameTemplate = ErrorTableTemplate<
     PackageErrorTable,
-    "not-an-integer"
+    "invalid-package-name"
 >;
 
-type NotAnIntegerData = StructuredProblemReportDataWithExtraData<
+type InvalidPackageNameData = StructuredProblemReportDataWithExtraData<
     PackageErrorTable,
-    "not-an-integer",
-    NotAnIntegerTemplate,
-    NotAnIntegerExtraData
+    "invalid-package-name",
+    InvalidPackageNameTemplate,
+    InvalidPackageNameExtraData
 >;
 
-type NotAnIntegerSPR = StructuredProblemReport<
+type InvalidPackageNameSPR = StructuredProblemReport<
     PackageErrorTable,
-    "not-an-integer",
-    NotAnIntegerTemplate,
-    NotAnIntegerExtraData,
-    NotAnIntegerData
+    "invalid-package-name",
+    InvalidPackageNameTemplate,
+    InvalidPackageNameExtraData,
+    InvalidPackageNameData
 >;
 
-export class NotAnIntegerError extends AppError<
+export class InvalidPackageNameError extends AppError<
     PackageErrorTable,
-    "not-an-integer",
-    NotAnIntegerTemplate,
-    NotAnIntegerExtraData,
-    NotAnIntegerData,
-    NotAnIntegerSPR
+    "invalid-package-name",
+    InvalidPackageNameTemplate,
+    InvalidPackageNameExtraData,
+    InvalidPackageNameData,
+    InvalidPackageNameSPR
 > {
-    public constructor(params: NotAnIntegerExtraData & AppErrorParams) {
-        const errorData: NotAnIntegerData = {
-            template: ERROR_TABLE["not-an-integer"],
+    public constructor(params: InvalidPackageNameExtraData & AppErrorParams) {
+        const errorData: InvalidPackageNameData = {
+            template: ERROR_TABLE["invalid-package-name"],
             errorId: params.errorId,
             extra: {
                 public: params.public,

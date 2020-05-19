@@ -31,8 +31,7 @@
 // ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-import { PackageErrorTable } from "../ErrorTable";
-import { PACKAGE_NAME } from "../ErrorTable/PackageErrorTable";
+import { PACKAGE_NAME, PackageErrorTable } from "../Errors/PackageErrorTable";
 import { HttpStatusCode } from "../internal/HttpStatusCode";
 import { NeverABrandedUuidTemplate } from "./NeverABrandedUuid";
 import { NeverAFlavouredUuidTemplate } from "./NeverAFlavouredUuid";

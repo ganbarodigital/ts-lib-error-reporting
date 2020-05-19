@@ -31,21 +31,10 @@
 // ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-import { expect } from "chai";
-import { describe } from "mocha";
 
-import { UnreachableCodeError } from "./UnreachableCode";
-
-describe("UnreachableCodeError", () => {
-    describe(".constructor()", () => {
-        it("creates a Javascript error", () => {
-            const unit = new UnreachableCodeError({
-                logsOnly: {
-                    reason: "something went wrong",
-                },
-            });
-
-            expect(unit).to.be.instanceOf(Error);
-        });
-    });
-});
+// export { PackageErrorTable, ERROR_TABLE } from "./PackageErrorTable";
+export { HttpStatusCodeOutOfRangeError } from "./HttpStatusCodeOutOfRange";
+export { InvalidPackageNameError } from "./InvalidPackageName";
+export { NotAnIntegerError } from "./NotAnInteger";
+export { NotImplementedError } from "./NotImplemented";
+export { UnreachableCodeError } from "./UnreachableCode";

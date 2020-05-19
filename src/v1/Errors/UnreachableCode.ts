@@ -31,16 +31,13 @@
 // ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-import {
-    AppError,
-    AppErrorParams,
-    ErrorTableTemplate,
-    ExtraLogsOnlyData,
-    StructuredProblemReport,
-    StructuredProblemReportDataWithExtraData,
-} from "../internal";
-import { ErrorTable } from "./ErrorTable";
-import { ERROR_TABLE } from "./PackageErrorTable";
+import { AppError } from "../AppError/AppError";
+import { AppErrorParams } from "../AppError/AppErrorParams";
+import { ErrorTableTemplate } from "../ErrorTableTemplate/ErrorTableTemplate";
+import { ExtraLogsOnlyData } from "../ExtraData/ExtraLogsOnlyData";
+import { StructuredProblemReport } from "../StructuredProblemReport/StructuredProblemReport";
+import { StructuredProblemReportDataWithExtraData } from "../StructuredProblemReport/StructuredProblemReportDataWithExtraData";
+import { ERROR_TABLE, PackageErrorTable } from "./PackageErrorTable";
 
 /**
  * the ExtraData that must be provided for each UnreachableCodeError
@@ -59,7 +56,7 @@ export interface UnreachableCodeExtraData extends ExtraLogsOnlyData {
  * @see ErrorReportingErrorTable
  */
 export type UnreachableCodeTemplate = ErrorTableTemplate<
-    ErrorTable,
+    PackageErrorTable,
     "unreachable-code"
 >;
 
@@ -67,7 +64,7 @@ export type UnreachableCodeTemplate = ErrorTableTemplate<
  * defines the data that goes into our StructuredProblemReport
  */
 export type UnreachableCodeData = StructuredProblemReportDataWithExtraData<
-    ErrorTable,
+    PackageErrorTable,
     "unreachable-code",
     UnreachableCodeTemplate,
     UnreachableCodeExtraData
@@ -77,7 +74,7 @@ export type UnreachableCodeData = StructuredProblemReportDataWithExtraData<
  * a type alias for our StructuredProblemReport
  */
 export type UnreachableCodeSRP = StructuredProblemReport<
-    ErrorTable,
+    PackageErrorTable,
     "unreachable-code",
     UnreachableCodeTemplate,
     UnreachableCodeExtraData,
@@ -93,7 +90,7 @@ export type UnreachableCodeSRP = StructuredProblemReport<
  * of input than it was originally written to support
  */
 export class UnreachableCodeError extends AppError<
-    ErrorTable,
+    PackageErrorTable,
     "unreachable-code",
     UnreachableCodeTemplate,
     UnreachableCodeExtraData,
