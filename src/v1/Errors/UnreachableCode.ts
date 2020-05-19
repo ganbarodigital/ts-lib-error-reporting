@@ -37,7 +37,7 @@ import { ErrorTableTemplate } from "../ErrorTableTemplate/ErrorTableTemplate";
 import { ExtraLogsOnlyData } from "../ExtraData/ExtraLogsOnlyData";
 import { StructuredProblemReport } from "../StructuredProblemReport/StructuredProblemReport";
 import { StructuredProblemReportDataWithExtraData } from "../StructuredProblemReport/StructuredProblemReportDataWithExtraData";
-import { ERROR_TABLE, PackageErrorTable } from "./PackageErrorTable";
+import { ERROR_TABLE, PackageErrorTable } from ".";
 
 /**
  * the ExtraData that must be provided for each UnreachableCodeError

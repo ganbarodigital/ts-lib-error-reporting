@@ -21,6 +21,11 @@ For each release, changes are grouped under these headings:
 
 The following changes have been completed, and will be included in the next tagged release.
 
+### Tests
+
+* Added a unit test for the PackageErrorTable itself
+  - satisfies the change in coverage reporting that occurred w/ TypeScript v3.9.x
+
 ## v0.3.3
 
 Released Tuesday, 19th May 2020.
