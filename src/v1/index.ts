@@ -35,6 +35,7 @@
 export * from "./AppError";
 export * from "./ErrorTable";
 export * from "./ErrorTableTemplate";
+export * from "./Errors";
 export * from "./ExtraData";
 export * from "./Helpers";
 export * from "./OnError";
