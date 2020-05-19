@@ -1,6 +1,6 @@
 {
   "name": "@ganbarodigital/ts-lib-error-reporting",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "description": "Structured errors for easier reporting and handling",
   "repository": "github:ganbarodigital/ts-lib-error-reporting",
   "main": "lib/index.js",
