@@ -34,44 +34,18 @@
 import { expect } from "chai";
 import { describe } from "mocha";
 
-import { mustBeHttpStatusCode } from ".";
-import { AnyAppError } from "../../AppError/AnyAppError";
-import { OnError } from "../../OnError/OnError";
+import { HttpStatusCodeOutOfRangeError } from ".";
 
-describe("mustBeHttpStatusCode()", () => {
-    const onError: OnError = (e: AnyAppError): never => {
-        throw new Error(JSON.stringify(e.details.extra));
-    };
+describe("HttpStatusCodeOutOfRangeError", () => {
+    describe(".constructor()", () => {
+        it("creates a Javascript error", () => {
+            const unit = new HttpStatusCodeOutOfRangeError({
+                public: {
+                    input: 600,
+                },
+            });
 
-    it("accepts integers in the range 100-599 inclusive", () => {
-        for (let inputValue = 100; inputValue < 600; inputValue++) {
-            mustBeHttpStatusCode(inputValue);
-        }
-    });
-
-    it("rejects non-integers in the range 100-599 inclusive", () => {
-        for (let inputValue = 100.5; inputValue < 600; inputValue++) {
-            const expectedMessage = "{\"input\":" + inputValue + "}";
-            expect(() => mustBeHttpStatusCode(inputValue, onError)).to.throw(expectedMessage);
-        }
-    });
-
-    it("rejects numbers below 100", () => {
-        for (let inputValue = -100; inputValue < 100; inputValue++) {
-            const expectedMessage = "{\"input\":" + inputValue + "}";
-            expect(() => mustBeHttpStatusCode(inputValue, onError)).to.throw(expectedMessage);
-        }
-    });
-
-    it("rejects numbers above 599", () => {
-        for (let inputValue = 600; inputValue < 1000; inputValue++) {
-            const expectedMessage = "{\"input\":" + inputValue + "}";
-            expect(() => mustBeHttpStatusCode(inputValue, onError)).to.throw(expectedMessage);
-        }
-    });
-
-    it("has a default error handler", () => {
-        const expectedMessage = "input falls outside the range of a valid HTTP status code";
-        expect(() => mustBeHttpStatusCode(700)).to.throw(expectedMessage);
+            expect(unit).to.be.instanceOf(Error);
+        });
     });
 });

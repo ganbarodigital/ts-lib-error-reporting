@@ -31,6 +31,10 @@ The following changes have been completed, and will be included in the next tagg
 * Moved reusable errors into their own folder, for ease of maintenance
 * Eliminated the `internals` import file
 
+### Dependencies
+
+* Moved to TypeScript v3.9.x
+
 ## v0.3.1
 
 Released Tuesday, 5th May 2020.
