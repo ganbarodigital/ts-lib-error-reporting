@@ -34,7 +34,7 @@
 import { expect } from "chai";
 import { describe } from "mocha";
 
-import { PackageErrorTable } from ".";
+import { PackageErrorTable } from "./PackageErrorTable";
 
 describe("PackageErrorTable", () => {
     it("instantiates", () => {
