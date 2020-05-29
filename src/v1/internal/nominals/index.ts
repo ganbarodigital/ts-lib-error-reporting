@@ -34,4 +34,5 @@
 
 export * from "./Branded";
 export * from "./Factory";
+export * from "./FormatterFactory";
 export * from "./Flavoured";

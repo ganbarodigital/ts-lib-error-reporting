@@ -21,6 +21,11 @@ For each release, changes are grouped under these headings:
 
 The following changes have been completed, and will be included in the next tagged release.
 
+### New
+
+* Internals
+  - added `makeRefinedTypeFactoryWithFormatter()`
+
 ### Tests
 
 * Added a unit test for the PackageErrorTable itself
