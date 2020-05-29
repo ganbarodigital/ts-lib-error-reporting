@@ -21,6 +21,10 @@ For each release, changes are grouped under these headings:
 
 The following changes have been completed, and will be included in the next tagged release.
 
+## v0.3.4
+
+Released Friday, 29th May 2020.
+
 ### New
 
 * Internals
