@@ -31,8 +31,15 @@
 // ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
+import { expect } from "chai";
+import { describe } from "mocha";
 
-export * from "./Branded";
-export * from "./Factory";
-export * from "./FormatterFactory";
-export * from "./Flavoured";
+import { PackageErrorTable } from "./PackageErrorTable";
+
+describe("PackageErrorTable", () => {
+    it("instantiates", () => {
+        const unit = new PackageErrorTable();
+
+        expect(unit).to.be.instanceOf(Object);
+    });
+});

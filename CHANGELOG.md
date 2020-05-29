@@ -21,6 +21,20 @@ For each release, changes are grouped under these headings:
 
 The following changes have been completed, and will be included in the next tagged release.
 
+## v0.3.4
+
+Released Friday, 29th May 2020.
+
+### New
+
+* Internals
+  - added `makeRefinedTypeFactoryWithFormatter()`
+
+### Tests
+
+* Added a unit test for the PackageErrorTable itself
+  - satisfies the change in coverage reporting that occurred w/ TypeScript v3.9.x
+
 ## v0.3.3
 
 Released Tuesday, 19th May 2020.

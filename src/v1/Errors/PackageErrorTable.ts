@@ -52,6 +52,11 @@ import { UnreachableCodeTemplate } from "./UnreachableCode";
 export const PACKAGE_NAME = "@ganbarodigital/ts-lib-error-reporting/lib/v1" as PackageName;
 
 /**
+ * shorthand. The index type for our PackageErrorTable below.
+ */
+type PackageErrorTableIndex<T extends ErrorTable> = ErrorTableTemplate<T, string>;
+
+/**
  * the ErrorTable for the package `@ganbarodigital/ts-lib-error-reporting`
  *
  * You can extend this in your own package, if you want to reuse the errors
@@ -59,7 +64,7 @@ export const PACKAGE_NAME = "@ganbarodigital/ts-lib-error-reporting/lib/v1" as P
  */
 export class PackageErrorTable implements ErrorTable {
     // everything in this class has to follow the same structure
-    [key: string]: ErrorTableTemplate<any, string>;
+    [key: string]: PackageErrorTableIndex<PackageErrorTable>;
 
     public "http-status-code-out-of-range": HttpStatusCodeOutOfRangeTemplate = {
         packageName: PACKAGE_NAME,
